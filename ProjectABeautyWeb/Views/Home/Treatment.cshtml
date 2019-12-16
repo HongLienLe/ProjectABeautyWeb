@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ProjectABeautyWeb.Models.Treatment>
+@{
+}
+
+<h1 style="text-align:center">Prices</h1>
+
+
+<div class="container" >
+    <table class="table">
+        <tr style=" background-color : lightgrey">
+            <th>Id </th>
+            <th>Treatment Type</th>
+            <th>Name</th>
+            <th>Duration</th>
+            <th>Price</th>
+        </tr>
+        @foreach (var treatment in Model)
+        {
+        <tr><td>@treatment.Id</td>
+            <td>@treatment.TreatmentType</td>
+            <td>@treatment.TreatmentName</td>
+            <td>@treatment.Duration</td>
+            <td>@treatment.Price</td>
+        </tr>
+        }
+    </table>
+</div>
+
