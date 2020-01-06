@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjectABeautyWeb.Data;
 using ProjectABeautyWeb.Models;
+using ProjectABeautyWeb.ViewModel;
 
 namespace ProjectABeautyWeb.Controllers
 {
@@ -46,24 +48,29 @@ namespace ProjectABeautyWeb.Controllers
         // GET: AdminTreatment/Create
         public IActionResult Create()
         {
-            Treatment treatment = new Treatment();
-            return View(treatment);
+            // Get user profile information from the session
+            //var model = new AdminTreatmentViewModel();
+
+            //var treatmentTypes = GetSelectListItems();
+            //model.TreatmentTypesSelectedListItems = treatmentTypes;
+
+            var model = new Treatment();
+
+            return View(model);
         }
 
-        // POST: AdminTreatment/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,TreatmentType,TreatmentName,Price,Duration")] Treatment treatment)
+        public async Task<IActionResult> Create([Bind("Id,TreatmentType,TreatmentName,Price,Duration")] Treatment model)
         {
+
             if (ModelState.IsValid)
             {
-                _context.Add(treatment);
+                _context.Treatments.Add(model);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(treatment);
+            return View(model);
         }
 
         // GET: AdminTreatment/Edit/5
@@ -149,6 +156,47 @@ namespace ProjectABeautyWeb.Controllers
         private bool TreatmentExists(int id)
         {
             return _context.Treatments.Any(e => e.Id == id);
+        }
+
+        public IEnumerable<SelectListItem> GetSelectListItems()
+        {
+            var selectList = new List<SelectListItem>();
+
+            // Get all values of the Industry enum
+            var enumValues = Enum.GetValues(typeof(TreatmentType)) as TreatmentType[];
+            if (enumValues == null)
+                return null;
+
+            foreach (var enumValue in enumValues)
+            {
+                // Create a new SelectListItem element and set its 
+                // Value and Text to the enum value and description.
+                selectList.Add(new SelectListItem
+                {
+                    Value = enumValue.ToString(),
+                    // GetIndustryName just returns the Display.Name value
+                    // of the enum - check out the next chapter for the code of this function.
+                    Text = GetTreatmentTypeName(enumValue)
+                });
+            }
+
+            return selectList;
+        }
+
+        public string GetTreatmentTypeName(TreatmentType value)
+        {
+            // Get the MemberInfo object for supplied enum value
+            var memberInfo = value.GetType().GetMember(value.ToString());
+            if (memberInfo.Length != 1)
+                return null;
+
+            // Get DisplayAttibute on the supplied enum value
+            var displayAttribute = memberInfo[0].GetCustomAttributes(typeof(DisplayAttribute), false)
+                                   as DisplayAttribute[];
+            if (displayAttribute == null || displayAttribute.Length != 1)
+                return null;
+
+            return displayAttribute[0].Name;
         }
     }
 }

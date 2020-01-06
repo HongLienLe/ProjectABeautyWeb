@@ -59,7 +59,7 @@ namespace ProjectABeautyWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(enquiry);
+                _context.Enquiries.Add(enquiry);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

@@ -1,0 +1,36 @@
+﻿@model ProjectABeautyWeb.Models.BookedAppointment
+
+@{
+}
+
+@using (Html.BeginForm())
+{
+    <br/>
+    @Html.EditorFor(model => model.Date, new { htmlAttributes = new {@class="datepicker" } })
+}
+
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+@section scripts{
+    
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+
+
+    <script>
+
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "yy/mm/dd",
+                changeMonth: true,
+                changeYear: true,
+                //yearRange : "-10:+10"
+                minDate: new Date(2017, 0, 1),
+                maxDate: new Date(2018, 0, 1),
+                showOn: "both",
+                buttonText : "<i class='fa fa-calendar'></i>"
+            });
+        });
+    </script>
+    
+    }

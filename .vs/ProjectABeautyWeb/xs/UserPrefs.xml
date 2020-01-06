@@ -1,37 +1,26 @@
-﻿<Properties StartupConfiguration="{F9C07E17-A83E-4286-9B3C-04864C88F1DC}|Default">
+﻿<Properties StartupConfiguration="{A0D9833A-2A37-42A4-9FEA-91CEDCF5EF2A}|Default">
   <MonoDevelop.Ide.ItemProperties.ProjectABeautyWeb PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ProjectABeautyWeb/Views/AdminTreatment/Create.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Appointment/Models/Treatment.cs">
     <Files>
-      <File FileName="ProjectABeautyWeb/wwwroot/css/site.css" Line="78" Column="13" />
-      <File FileName="ProjectABeautyWeb/Views/Home/Index.cshtml" />
-      <File FileName="ProjectABeautyWeb/Views/Shared/_Layout.cshtml" Line="26" Column="121" />
-      <File FileName="ProjectABeautyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap.css" />
-      <File FileName="ProjectABeautyWeb/Views/Home/Treatment.cshtml" Line="18" Column="10" />
-      <File FileName="ProjectABeautyWeb/Controllers/HomeController.cs" />
-      <File FileName="ProjectABeautyWeb/Controllers/ContactController.cs" />
-      <File FileName="ProjectABeautyWeb/Controllers/TreatmentController.cs" Line="16" Column="1" />
-      <File FileName="ProjectABeautyWeb/Program.cs" Line="18" Column="1" />
-      <File FileName="ProjectABeautyWeb/Controllers/AdminTreatmentController.cs" Line="51" Column="10" />
-      <File FileName="ProjectABeautyWeb/Views/AdminTreatment/Index.cshtml" Line="1" Column="1" />
-      <File FileName="ProjectABeautyWeb/Views/AdminTreatment/Create.cshtml" Line="1" Column="1" />
+      <File FileName="Appointment/AvaliableAppointment.cs" Line="101" Column="10" IsPinned="True" />
+      <File FileName="Appointment/Controllers/AvaliableAppointmentController.cs" Line="18" Column="1" />
+      <File FileName="Appointment/BookingAppointment.cs" Line="28" Column="48" />
+      <File FileName="Appointment/Models/BookingPageAvalibility.cs" Line="15" Column="1" />
+      <File FileName="Appointment/Controllers/BookingAppointmentController.cs" Line="23" Column="27" />
+      <File FileName="Appointment/Models/Employee.cs" Line="10" Column="63" />
+      <File FileName="Appointment/Data.cs" Line="6" Column="9" />
+      <File FileName="Appointment/Models/Treatment.cs" Line="1" Column="1" />
+      <File FileName="Appointment/Models/ClientAccount.cs" Line="1" Column="1" />
+      <File FileName="Appointment/ValidationCheck.cs" Line="26" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ProjectABeautyWeb" expanded="True">
-            <Node name="ProjectABeautyWeb" expanded="True">
+            <Node name="Appointment" expanded="True">
               <Node name="Controllers" expanded="True" />
-              <Node name="Models" expanded="True" />
-              <Node name="Views" expanded="True">
-                <Node name="AdminTreatment" expanded="True">
-                  <Node name="Create.cshtml" selected="True" />
-                </Node>
-                <Node name="Contact" expanded="True" />
-                <Node name="Home" expanded="True" />
-                <Node name="Shared" expanded="True" />
-              </Node>
-              <Node name="wwwroot" expanded="True">
-                <Node name="css" expanded="True" />
+              <Node name="Models" expanded="True">
+                <Node name="Treatment.cs" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -39,6 +28,7 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Appointment PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

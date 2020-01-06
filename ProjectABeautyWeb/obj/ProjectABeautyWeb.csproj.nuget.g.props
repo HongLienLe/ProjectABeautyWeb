@@ -16,6 +16,7 @@
     <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore.design/3.1.0/build/netcoreapp2.0/Microsoft.EntityFrameworkCore.Design.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore.design/3.1.0/build/netcoreapp2.0/Microsoft.EntityFrameworkCore.Design.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <PkgMicrosoft_CodeAnalysis_Analyzers Condition=" '$(PkgMicrosoft_CodeAnalysis_Analyzers)' == '' ">/Users/hongle/.nuget/packages/microsoft.codeanalysis.analyzers/2.9.3</PkgMicrosoft_CodeAnalysis_Analyzers>
+    <PkgjQuery Condition=" '$(PkgjQuery)' == '' ">/Users/hongle/.nuget/packages/jquery/1.12.4</PkgjQuery>
+    <PkgjQuery_UI_Combined Condition=" '$(PkgjQuery_UI_Combined)' == '' ">/Users/hongle/.nuget/packages/jquery.ui.combined/1.12.1</PkgjQuery_UI_Combined>
   </PropertyGroup>
 </Project>

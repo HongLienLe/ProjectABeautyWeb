@@ -20,9 +20,12 @@ namespace ProjectABeautyWeb.Controllers
         }
 
         // GET: /<controller>/
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Treatments.ToListAsync());
+
+            var TreatmentPriceList = _context.Treatments.ToList();
+
+            return View(TreatmentPriceList );
         }
     }
 }
