@@ -1,17 +1,18 @@
 ﻿<Properties StartupConfiguration="{A0D9833A-2A37-42A4-9FEA-91CEDCF5EF2A}|Default">
   <MonoDevelop.Ide.ItemProperties.ProjectABeautyWeb PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Appointment/Models/Treatment.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Appointment/Models/Employee.cs">
     <Files>
-      <File FileName="Appointment/AvaliableAppointment.cs" Line="101" Column="10" IsPinned="True" />
-      <File FileName="Appointment/Controllers/AvaliableAppointmentController.cs" Line="18" Column="1" />
-      <File FileName="Appointment/BookingAppointment.cs" Line="28" Column="48" />
-      <File FileName="Appointment/Models/BookingPageAvalibility.cs" Line="15" Column="1" />
-      <File FileName="Appointment/Controllers/BookingAppointmentController.cs" Line="23" Column="27" />
-      <File FileName="Appointment/Models/Employee.cs" Line="10" Column="63" />
-      <File FileName="Appointment/Data.cs" Line="6" Column="9" />
-      <File FileName="Appointment/Models/Treatment.cs" Line="1" Column="1" />
-      <File FileName="Appointment/Models/ClientAccount.cs" Line="1" Column="1" />
-      <File FileName="Appointment/ValidationCheck.cs" Line="26" Column="6" />
+      <File FileName="Appointment/Controllers/BookingAppointmentController.cs" Line="100" Column="1" IsPinned="True" />
+      <File FileName="Appointment/BookingAppWithDetail.cs" />
+      <File FileName="Appointment/ValidationCheck.cs" />
+      <File FileName="Appointment/EmployeeAvalibility.cs" />
+      <File FileName="Appointment/AvaliableAppointment.cs" />
+      <File FileName="Appointment/EmployeeData.cs" />
+      <File FileName="Appointment/Controllers/AvaliableAppointmentController.cs" />
+      <File FileName="Appointment/Models/BookAppointmentDetail.cs" />
+      <File FileName="Appointment/Models/EditBookAppointmentDetails.cs" />
+      <File FileName="Appointment/ReservationData.cs" />
+      <File FileName="Appointment/Models/Employee.cs" Line="14" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -20,7 +21,7 @@
             <Node name="Appointment" expanded="True">
               <Node name="Controllers" expanded="True" />
               <Node name="Models" expanded="True">
-                <Node name="Treatment.cs" selected="True" />
+                <Node name="Employee.cs" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -30,7 +31,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.Appointment PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

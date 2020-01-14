@@ -7,26 +7,24 @@ namespace Appointment
 {
     public class AvaliableAppointment
     {
-        internal OpeningTimes OpeningTimes;
         internal ValidationCheck ValidationCheck;
-        public Dictionary<DateTime, TimePeriodCollection> Reservations;
+        public Data Reservation;
+        
 
-
-        public AvaliableAppointment()
-        {
-            OpeningTimes = new OpeningTimes();
-            ValidationCheck = new ValidationCheck(OpeningTimes);
-            Reservations = new Dictionary<DateTime, TimePeriodCollection>()
-            { {new DateTime(2020, 1, 1), new TimePeriodCollection() } };
+        public AvaliableAppointment( ValidationCheck validationCheck)
+        {   
+            ValidationCheck = validationCheck;
+            Reservation = Data.Instance;
         }
 
-        //Get All Avaliable Dates for the month
-        public TimePeriodCollection AvaliableDatesForMonth(int month)
+        public TimePeriodCollection AvaliableDatesForMonth(int year, int month)
         {
-            var openingDates = new TimePeriodCollection( new Month(2020, (YearMonth)month).GetDays());
+            var openingDates = new TimePeriodCollection( new Month(year, (YearMonth)month).GetDays());
 
             for (int i = 0; i < openingDates.Count; i++)
             {
+                openingDates[i] = GetTimeRange(openingDates[i].Start);
+
                 if (!ValidationCheck.IsDateAvaliable(openingDates[i].Start))
                 {
                     openingDates.RemoveAt(i);
@@ -36,67 +34,34 @@ namespace Appointment
             return openingDates;
         }
 
-        //Get All Avaliable pointments for the given date
-        public TimePeriodCollection AvaliableAppDate(DateTime app)
+        public ITimePeriodCollection AvaliableAppDate(DateTime date)
         {
-
-            var appDate = app.Date;
-
-            if (!ValidationCheck.IsDateAvaliable(appDate))
+            if (!ValidationCheck.IsDateAvaliable(date))
             {
                 return null;
             }
 
-            if (!Reservations.ContainsKey(appDate))
-            {
-                Reservations.Add(appDate, new TimePeriodCollection());
-            }
-
-            var timeRange = getOpeningHoursRange(app);
-
             var timegapcalculator = new TimeGapCalculator<TimeRange>(new TimeCalendar());
 
-            var avaliability = timegapcalculator.GetGaps(Reservations[appDate], timeRange);
+            var workingHoursForDay = GetTimeRange(date);
 
-            var allTimeGapsAvaliable = new TimePeriodCollection();
-
-            foreach (var time in avaliability)
+            if (!Reservation.getAllReservations().ContainsKey(date.Date))
             {
-                var compareTime = time.Start;
-                var endTime = time.End;
-
-                while (compareTime <= endTime)
-                {
-                    allTimeGapsAvaliable.Add(new TimeRange(compareTime));
-
-                    compareTime = compareTime.Add(new TimeSpan(0, 15, 0));
-                }
+                return timegapcalculator.GetGaps(new TimePeriodCollection(), workingHoursForDay);
             }
 
-            return allTimeGapsAvaliable;
+            return timegapcalculator.GetGaps(Reservation.getAllReservations()[date.Date], workingHoursForDay);
         }
 
-        //Get OpeningHours
-        public TimeRange getOpeningHoursRange(DateTime date)
+        public TimeRange GetTimeRange(DateTime dateTime)
         {
-            var openingTimesForDate = OpeningTimes.OpeningHours[date.Date.DayOfWeek.ToString()];
-            var firstAvaliableApp = new DateTime(
-                date.Year,
-                date.Month,
-                date.Day,
-                openingTimesForDate.Start.Hour,
-                openingTimesForDate.Start.Minute,
-                openingTimesForDate.Start.Second);
+            var hourRange = Reservation.getWorkHours()[dateTime.DayOfWeek.ToString()];
+            var range = new TimeSpan(
+                hourRange.End.Hour - hourRange.Start.Hour,
+                hourRange.End.Minute - hourRange.Start.Minute,
+                hourRange.End.Second - hourRange.Start.Second);
 
-            var lastAvaliableApp = new DateTime(
-                date.Year,
-                date.Month,
-                date.Day,
-                openingTimesForDate.End.Hour,
-                openingTimesForDate.End.Minute,
-                openingTimesForDate.End.Second);
-
-            return new TimeRange(firstAvaliableApp, lastAvaliableApp);
+            return new TimeRange(hourRange.Start.ToDateTime(dateTime.Date), range);
 
         }
     }

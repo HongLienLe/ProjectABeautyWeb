@@ -2,39 +2,47 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Appointment.Models;
 using Itenso.TimePeriod;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Appointment.Controllers
 {
     [Route("api/[controller]")]
     public class AvaliableAppointmentController : Controller
     {
+        ValidationCheck ValidationCheck;
+        Data ReservationData;
         AvaliableAppointment AvaliableAppointment;
+        EmployeeAvalibility EmployeeAvalibility;
 
         public AvaliableAppointmentController()
         {
-            AvaliableAppointment = new AvaliableAppointment();
+            ValidationCheck = new ValidationCheck();
+            ReservationData = Data.Instance;
+            AvaliableAppointment = new AvaliableAppointment( ValidationCheck);
+            EmployeeAvalibility = new EmployeeAvalibility(AvaliableAppointment);
         }
-
 
         [HttpGet] // Get all current Keys
         public IActionResult Get()
         {
-            var allKeys = AvaliableAppointment.Reservations.Keys;
+            var allKeys = ReservationData.getAllConfirmedAppointments().Keys;
 
             if (allKeys == null)
             {
                 return Ok("Empty Keys");
             }
 
+
             return Ok(allKeys);
         }
 
-        [HttpGet("Month/{month}")]//Get avaliable days in the month
-        public IActionResult GetMonth(int month)
+        [HttpGet("Date/{year}/{month}")]//Get avaliable days in the month
+        public IActionResult GetAvalibleDateForMonth(int year, int month)
         {
-            var choosenMonth = AvaliableAppointment.AvaliableDatesForMonth(month);
+            var choosenMonth = AvaliableAppointment.AvaliableDatesForMonth(year,month);
 
             if(choosenMonth == null)
             {
@@ -44,9 +52,8 @@ namespace Appointment.Controllers
             return Ok(choosenMonth);
         }
 
-
         [HttpGet("Date/{year}/{month}/{day}")] // get avaliable times for requested date
-        public IActionResult Get(int year, int month, int day)
+        public IActionResult GetAvaliableTimeForDate(int year, int month, int day)
         {
             DateTime requestedDay = new DateTime(year, month, day);
             var avaliableReservations = AvaliableAppointment.AvaliableAppDate(requestedDay);
@@ -59,32 +66,40 @@ namespace Appointment.Controllers
             return Ok(avaliableReservations);
         }
 
+        //Get Month Avalible dates for this employee
+        [HttpGet("Date/Employee/{employeeId}/{year}/{month}")]
+        public IActionResult GetAvalibilityByEmployeeIdForMonth(int employeeId,int year, int month)
+        {
+            var allMonthAvalibleDates = EmployeeAvalibility.EmployeeAvalibilityDateForMonth(employeeId, month);
 
+            if(allMonthAvalibleDates == null)
+            {
+                return Ok($"Employee id = {employeeId} is not working for the month");
+            }
 
+            return Ok(allMonthAvalibleDates);
+        }
 
-        //[HttpGet("{id}")]
-        //public ITimePeriod ConfirmBooking(TimeRange bookedApp)
-        //{
-        //    var appBookings = AvaliableAppointment.AvaliableAppDate(bookedApp.Start.Date);
-        //    var bookAppConfirm = appBookings.IndexOf(appBookings);
-        //    return appBookings[bookAppConfirm];
-        //}
+        [HttpGet("Date/Employee/{employeeId}/{year}/{month}/{day}")]
+        public IActionResult GetAvalibilityByEmployeeIdForDate(int employeeId, int year, int month, int day)
+        {
+            DateTime requestedDay = new DateTime(year, month, day);
 
-        // POST api/values
-        //[HttpPost]
-        //public IActionResult Post([FromBody]TimeRange app)
-        //{
-           
+            if(!EmployeeAvalibility.isEmployeeWorking(employeeId, requestedDay))
+            {
+                return Ok("Not Working Today");
+            }
 
-        //  var confirmApp =  AvaliableAppointment.BookAppointment(app);
+            if (!ReservationData.getAllReservations().ContainsKey(requestedDay.Date))
+            {
 
-        //    if(confirmApp == null)
-        //    {
-        //        return Content("Not Avaliable");
-        //    }
+                return Ok(AvaliableAppointment.AvaliableAppDate(requestedDay));
+            }
+            var workingHours = ReservationData.getAllReservations()[requestedDay.Date];
 
-        //    return CreatedAtAction(nameof(ConfirmBooking), new { id = app.GetDescription() }, app);
-        //}
+            var workHoursDate = EmployeeAvalibility.EmployeeAvalibilityTimeSlots(employeeId, workingHours);
 
+            return Ok(workHoursDate);
+        }
     }
 }
