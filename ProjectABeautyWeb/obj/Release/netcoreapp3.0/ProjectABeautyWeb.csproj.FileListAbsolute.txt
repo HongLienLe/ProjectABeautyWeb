@@ -90,3 +90,16 @@
 /Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/obj/Release/netcoreapp3.0/ProjectABeautyWeb.csproj.CopyComplete
 /Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/obj/Release/netcoreapp3.0/ProjectABeautyWeb.dll
 /Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/obj/Release/netcoreapp3.0/ProjectABeautyWeb.pdb
+/Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/bin/Release/netcoreapp3.0/dotnet-aspnet-codegenerator-design.exe
+/Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/obj/Release/netcoreapp3.0/Razor/Views/AdminTreatment/Create.cshtml.g.cs
+/Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/obj/Release/netcoreapp3.0/Razor/Views/AdminTreatment/Delete.cshtml.g.cs
+/Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/obj/Release/netcoreapp3.0/Razor/Views/AdminTreatment/Details.cshtml.g.cs
+/Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/obj/Release/netcoreapp3.0/Razor/Views/AdminTreatment/Edit.cshtml.g.cs
+/Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/obj/Release/netcoreapp3.0/Razor/Views/AdminTreatment/Index.cshtml.g.cs
+/Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/obj/Release/netcoreapp3.0/Razor/Views/Book/BookingPage.cshtml.g.cs
+/Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/obj/Release/netcoreapp3.0/Razor/Views/Contact/Create.cshtml.g.cs
+/Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/obj/Release/netcoreapp3.0/Razor/Views/Contact/Delete.cshtml.g.cs
+/Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/obj/Release/netcoreapp3.0/Razor/Views/Contact/Details.cshtml.g.cs
+/Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/obj/Release/netcoreapp3.0/Razor/Views/Contact/Edit.cshtml.g.cs
+/Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/obj/Release/netcoreapp3.0/Razor/Views/Contact/Index.cshtml.g.cs
+/Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/obj/Release/netcoreapp3.0/Razor/Views/Treatment/Index.cshtml.g.cs
