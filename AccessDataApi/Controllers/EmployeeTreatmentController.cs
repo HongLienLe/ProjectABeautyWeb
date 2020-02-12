@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net;
+using System.Net.Http;
 using AccessDataApi.Data;
 using AccessDataApi.HTTPModels;
 using AccessDataApi.Repo;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccessDataApi.Controllers
@@ -20,44 +17,38 @@ namespace AccessDataApi.Controllers
         {
             _employeeTreatmentRepo = new EmployeeTreatmentRepo(context);
         }
-        // GET: api/EmployeeTreatment
-        //[HttpGet]
-        //public IActionResult Get()
-        //{
-        //    //var employeeTreatment = _employeeTreatmentRepo.GetTreatmentsByEmployee
-        //    //return new string[] { "value1", "value2" };
-        //}
 
-        // GET: api/EmployeeTreatment/5
         [HttpGet("{employeeId}")]
         public IActionResult Get(int employeeId)
         { 
             var employeeTreatments = _employeeTreatmentRepo.GetTreatmentsByEmployee(employeeId);
 
+
+            if(employeeTreatments == null)
+            {
+                return NotFound();
+            }
+
+
             return Ok(employeeTreatments);
         }
 
-        // POST: api/EmployeeTreatment
-        [HttpPost()]
-        public void Post([FromBody] AddEmployeeTreatment employeeTreatment)
+        [HttpPost("employee/treatments")]
+        public void AddTreatments([FromBody] EmployeeTreatmentCrud employeeTreatment)
         {
-
-            var employeeId = employeeTreatment.EmployeeId;
-            var treatmentIds = employeeTreatment.TreatmentIds;
-
-            _employeeTreatmentRepo.AddTreatmentToEmployee(employeeId, treatmentIds);
+            _employeeTreatmentRepo.AddEmployeeTreatment(employeeTreatment);
         }
 
-        // PUT: api/EmployeeTreatment/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost("treatment/add/employees")]
+        public void AddEmployees([FromBody] EmployeeTreatmentCrud employeeTreatment)
         {
+            _employeeTreatmentRepo.AddEmployeeTreatment(employeeTreatment);
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public void Delete([FromBody]EmployeeTreatmentCrud employeeTreatment )
         {
+            _employeeTreatmentRepo.RemoveEmployeeTreatment(employeeTreatment);
         }
     }
 }

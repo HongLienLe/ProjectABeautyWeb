@@ -28,15 +28,13 @@ namespace AccessDataApi.Repo
 
         public void UpdateOperatingTime(int id, OperatingTime oper)
         {
-            using (var context = _context)
-            {
-                var choosenDay = context.OperatingTimes.First(x => x.Id == id);
 
-                choosenDay.StartTime = oper.StartTime;
-                choosenDay.EndTime = oper.EndTime;
+            var choosenDay = _context.OperatingTimes.First(x => x.Id == id);
+            choosenDay.StartTime = oper.StartTime;
+            choosenDay.EndTime = oper.EndTime;
+            choosenDay.isOpen = oper.isOpen;
 
-                context.SaveChanges();
-            }
+            _context.SaveChanges();
         }
     }
 }

@@ -14,6 +14,7 @@ namespace AccessDataApi.Data
         public DbSet<ClientAccount> ClientAccounts { get; set; }
         public DbSet<BookApp> BookApps { get; set; }
         public DbSet<OperatingTime> OperatingTimes { get; set; }
+        public DbSet<OperatingTimeEmployee> workSchedules { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
@@ -39,7 +40,24 @@ namespace AccessDataApi.Data
 
             });
 
-            modelBuilder.Entity<OperatingTime>(e => e.HasKey(k => k.Id));
+            modelBuilder.Entity<OperatingTime>(e =>
+            {
+                e.HasKey(k => k.Id);
+
+            });
+
+            modelBuilder.Entity<OperatingTimeEmployee>(e =>
+            {
+                e.HasKey(k => new { k.EmployeeId, k.OperatingTimeId });
+
+                e.HasOne<Employee>(e => e.Employee)
+                .WithMany(o => o.workschedule)
+                .HasForeignKey(ofk => ofk.OperatingTimeId);
+
+                e.HasOne<OperatingTime>(o => o.OperatingTime)
+                .WithMany(e => e.Employees)
+                .HasForeignKey(efk => efk.EmployeeId);
+            });
 
             //modelBuilder.Entity<Employee>(entity =>
             //{
@@ -87,10 +105,6 @@ namespace AccessDataApi.Data
                  .WithMany(x => x.bookApps)
                  .HasForeignKey(x => x.DateTimeKeyId);
 
-                entity.HasOne(x => x.Employee)
-                .WithMany(x => x.BookApps)
-                .HasForeignKey(x => x.EmployeeId);
-
                 entity.HasOne(x => x.Reservation)
                  .WithOne(x => x.BookApp)
                  .HasForeignKey<Reservation>(x => x.BookAppId);
@@ -100,6 +114,8 @@ namespace AccessDataApi.Data
                 .HasForeignKey(x => x.TreatmentId);
 
             });
+
+            
         }
     }
 }

@@ -8,6 +8,8 @@ namespace AccessDataApi.Models
     {
         [Key]
         public string DateTimeKeyId { get; set; }
+
+        [Required]
         public DateTime date { get; set; }
 
         public virtual ICollection<BookApp> bookApps { get; set; }

@@ -10,9 +10,12 @@ namespace AccessDataApi.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ClientAccountId { get; set; }
+
+        [Required]
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
+        [Required]
         public string ContactNumber { get; set; }
 
         public virtual ICollection<BookApp> Appointments { get; set; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AccessDataApi.Data;
+using AccessDataApi.HTTPModels;
 using AccessDataApi.Models;
 using AccessDataApi.Repo;
 using Microsoft.AspNetCore.Mvc;
@@ -14,11 +15,11 @@ namespace AccessDataApi.Controllers
     [Route("api/[controller]")]
     public class EmployeeController : Controller
     {
-        private EmployeeRepo _employeeRepo;
+        private IEmployeeRepo _employeeRepo;
 
-        public EmployeeController(ApplicationContext context)
+        public EmployeeController(ApplicationContext context, IEmployeeRepo employeeRepo)
         {
-            _employeeRepo = new EmployeeRepo(context);
+            _employeeRepo = employeeRepo;
         }
 
         [HttpGet]
@@ -33,11 +34,16 @@ namespace AccessDataApi.Controllers
         {
             var employee = _employeeRepo.GetEmployee(id);
 
+            if(employee == null)
+            {
+                return NotFound();
+            }
+
             return Ok(employee);
         }
 
         // POST api/values
-        [HttpPost]
+        [HttpPost("add")]
         public void Post([FromBody]Employee employee)
         {
             _employeeRepo.AddEmployee(employee);
@@ -45,8 +51,8 @@ namespace AccessDataApi.Controllers
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Employee employee)
+        [HttpPost("{id}")]
+        public void Post(int id, [FromBody]Employee employee)
         {
             _employeeRepo.UpdateEmployee(id, employee);
         }
@@ -57,5 +63,8 @@ namespace AccessDataApi.Controllers
         {
             _employeeRepo.DeleteEmployee(id);
         }
+
+        
+
     }
 }

@@ -1,20 +1,18 @@
 ﻿<Properties StartupConfiguration="{3517FF51-7355-41C9-8381-5A774FD65C35}|Default">
   <MonoDevelop.Ide.ItemProperties.ProjectABeautyWeb PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AccessDataApi/Repo/EmployeeTreatmentRepo.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AccessDataApi/Repo/IEmployeeRepo.cs">
     <Files>
-      <File FileName="AccessDataApi/Repo/OperatingTimeRepo.cs" Line="38" Column="39" />
-      <File FileName="AccessDataApi/Repo/EmployeeRepo.cs" Line="62" Column="10" />
-      <File FileName="AccessDataApi/Controllers/OperatingTimeController.cs" Line="47" Column="1" />
-      <File FileName="AccessDataApi/Controllers/EmployeeController.cs" Line="59" Column="10" />
-      <File FileName="AccessDataApi/Repo/EmployeeTreatmentRepo.cs" Line="20" Column="1" />
-      <File FileName="AccessDataApi/Controllers/EmployeeTreatmentController.cs" Line="47" Column="1" />
-      <File FileName="AccessDataApi/Controllers/TreatmentController.cs" Line="1" Column="1" />
-      <File FileName="AccessDataApi/Startup.cs" Line="33" Column="21" />
-      <File FileName="AccessDataApi/HTTPModels/AddEmployeeTreatmentModel.cs" Line="9" Column="38" />
-      <File FileName="AccessDataApi/Models/Employee.cs" Line="22" Column="1" />
-      <File FileName="AccessDataApi/Models/Treatment.cs" Line="32" Column="1" />
-      <File FileName="AccessDataApi/Program.cs" Line="16" Column="1" />
-      <File FileName="AccessDataApi/Program.cs" Line="16" Column="1" />
+      <File FileName="AccessDataApi/Controllers/AvalibilityController.cs" Line="56" Column="10" />
+      <File FileName="AccessDataApi/Controllers/BookAppController.cs" Line="24" Column="18" />
+      <File FileName="AccessDataApi/Controllers/EmployeeController.cs" Line="67" Column="9" />
+      <File FileName="AccessDataApi/Startup.cs" Line="44" Column="47" />
+      <File FileName="AccessDataApi/Repo/ClientAccountRepo.cs" Line="7" Column="29" />
+      <File FileName="AccessDataApi/Repo/EmployeeTreatmentRepo.cs" Line="10" Column="64" />
+      <File FileName="AccessDataApi/Repo/WorkScheduleRepo.cs" Line="10" Column="38" />
+      <File FileName="AccessDataApi/Repo/EmployeeRepo.cs" Line="23" Column="1" />
+      <File FileName="AccessDataApi/Controllers/WorkScheduleController.cs" Line="31" Column="10" />
+      <File FileName="AccessDataApi/Repo/IWorkScheduleRepo.cs" Line="15" Column="1" />
+      <File FileName="AccessDataApi/Repo/IEmployeeRepo.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -22,12 +20,10 @@
           <Node name="ProjectABeautyWeb" expanded="True">
             <Node name="AccessDataApi" expanded="True">
               <Node name="Controllers" expanded="True" />
-              <Node name="Data" expanded="True" />
               <Node name="HTTPModels" expanded="True" />
-              <Node name="Migrations" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Repo" expanded="True">
-                <Node name="EmployeeTreatmentRepo.cs" selected="True" />
+                <Node name="IEmployeeRepo.cs" selected="True" />
               </Node>
             </Node>
           </Node>

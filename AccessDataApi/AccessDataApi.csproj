@@ -24,11 +24,21 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0" />
+    <PackageReference Include="Unity" Version="5.11.3" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Models\" />
     <Folder Include="Repo\" />
     <Folder Include="HTTPModels\" />
+    <Folder Include="Service\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Views\OperatingTime\Edit.cshtml" />
+    <Content Remove="Views\OperatingTime\Delete.cshtml" />
+    <Content Remove="Views\OperatingTime\Create.cshtml" />
+    <Content Remove="Views\OperatingTime\Index.cshtml" />
+    <Content Remove="Views\OperatingTime\Details.cshtml" />
   </ItemGroup>
 </Project>

@@ -137,9 +137,27 @@ namespace AccessDataApi.Migrations
                     b.Property<TimeSpan>("StartTime")
                         .HasColumnType("time");
 
+                    b.Property<bool>("isOpen")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.ToTable("OperatingTimes");
+                });
+
+            modelBuilder.Entity("AccessDataApi.Models.OperatingTimeEmployee", b =>
+                {
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OperatingTimeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EmployeeId", "OperatingTimeId");
+
+                    b.HasIndex("OperatingTimeId");
+
+                    b.ToTable("workSchedules");
                 });
 
             modelBuilder.Entity("AccessDataApi.Models.Reservation", b =>
@@ -203,7 +221,7 @@ namespace AccessDataApi.Migrations
                         .HasForeignKey("DateTimeKeyId");
 
                     b.HasOne("AccessDataApi.Models.Employee", "Employee")
-                        .WithMany("BookApps")
+                        .WithMany("BookApp")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -226,6 +244,21 @@ namespace AccessDataApi.Migrations
                     b.HasOne("AccessDataApi.Models.Treatment", "Treatment")
                         .WithMany("EmployeeTreatments")
                         .HasForeignKey("TreatmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AccessDataApi.Models.OperatingTimeEmployee", b =>
+                {
+                    b.HasOne("AccessDataApi.Models.OperatingTime", "OperatingTime")
+                        .WithMany("Employees")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AccessDataApi.Models.Employee", "Employee")
+                        .WithMany("workschedule")
+                        .HasForeignKey("OperatingTimeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

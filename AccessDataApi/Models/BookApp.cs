@@ -16,14 +16,14 @@ namespace AccessDataApi.Models
 
         [Column("Client_Id")]
         public int ClientAccountId { get; set; }
-        public virtual ClientAccount ClientAccount { get; set; }
+        public ClientAccount ClientAccount { get; set; }
 
         public string DateTimeKeyId { get; set; }
-        public virtual DateTimeKey DateTimeKey { get; set; }
+        public DateTimeKey DateTimeKey { get; set; }
 
         [Column("Employee_Id")]
         public int EmployeeId { get; set; }
-        public virtual Employee Employee { get; set; }
+        public Employee Employee { get; set; }
 
         [Column("Treatment_Id")]
         public int TreatmentId { get; set; }

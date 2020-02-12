@@ -70,7 +70,6 @@ namespace AccessDataApi.Repo
             }
         }
 
-        //Delete
         public void DeleteTreatment(int id)
         {
             using(var context = _context)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AccessDataApi.Data;
+using AccessDataApi.Repo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
 namespace AccessDataApi
 {
@@ -33,7 +35,17 @@ namespace AccessDataApi
             options.UseSqlServer(
                          Configuration.GetConnectionString("ProjectABeautyDb"))
                     );
+
+            services.AddScoped<IAvalibilityRepo, AvalibilityRepo>();
+            services.AddScoped<IBookAppRepo, BookAppRepo>();
+            services.AddScoped<IClientAccountRepo, ClientAccountRepo>();
+            services.AddScoped<IEmployeeRepo, EmployeeRepo>();
+            services.AddScoped<IEmployeeTreatmentRepo, EmployeeTreatmentRepo>();
+            services.AddScoped<IWorkScheduleRepo, WorkScheduleRepo>();
+
             services.AddControllers();
+
+            services.AddSwaggerGen(c => c.SwaggerDoc(name: "v1", new OpenApiInfo {Title = "Api", Version = "v1" }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +55,13 @@ namespace AccessDataApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(
+                c => { c.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "Api");
+                    c.RoutePrefix = string.Empty;
+                });
 
             app.UseHttpsRedirection();
 
