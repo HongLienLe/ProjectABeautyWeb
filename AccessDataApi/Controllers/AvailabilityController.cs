@@ -26,7 +26,7 @@ namespace AccessDataApi.Controllers
             var response = _availbiliyRepo.GetAvailableTime(choosenDate);
 
             if (response == null)
-                return BadRequest(Response);
+                return BadRequest("No avaliable time");
             return Ok(response);
         }
 

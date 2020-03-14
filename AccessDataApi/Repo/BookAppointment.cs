@@ -15,7 +15,6 @@ namespace AccessDataApi.Repo
         public BookAppointment(ApplicationContext context) : base(context)
         {
             _context = context;
-
         }
 
         public string CreateAppointment(DateTime date,AppointmentDetails book)
@@ -88,7 +87,7 @@ namespace AccessDataApi.Repo
 
             //get availability
 
-          //  var isAvailable = get
+            //var isAvailable = get
 
             //return null
 
@@ -97,7 +96,7 @@ namespace AccessDataApi.Repo
             return GetAppointment(bookAppId);
         }
 
-        public bool bookAppValidation(AppointmentDetails bookApp)
+        private bool bookAppValidation(AppointmentDetails bookApp)
         {
             var treatmentExist = _context.Treatments.Any(x => x.TreatmentId == bookApp.TreatmentId);
 
