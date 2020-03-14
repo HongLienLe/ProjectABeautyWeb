@@ -1,0 +1,17 @@
+/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/bin/Debug/netcoreapp3.1/appsettings.Development.json
+/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/bin/Debug/netcoreapp3.1/appsettings.json
+/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
+/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/bin/Debug/netcoreapp3.1/PaymentAPI.deps.json
+/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/bin/Debug/netcoreapp3.1/PaymentAPI.runtimeconfig.json
+/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/bin/Debug/netcoreapp3.1/PaymentAPI.runtimeconfig.dev.json
+/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/bin/Debug/netcoreapp3.1/PaymentAPI.dll
+/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/bin/Debug/netcoreapp3.1/PaymentAPI.pdb
+/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/obj/Debug/netcoreapp3.1/PaymentAPI.csprojAssemblyReference.cache
+/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/obj/Debug/netcoreapp3.1/PaymentAPI.MvcApplicationPartsAssemblyInfo.cache
+/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/obj/Debug/netcoreapp3.1/PaymentAPI.AssemblyInfoInputs.cache
+/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/obj/Debug/netcoreapp3.1/PaymentAPI.AssemblyInfo.cs
+/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/obj/Debug/netcoreapp3.1/PaymentAPI.RazorTargetAssemblyInfo.cache
+/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/obj/Debug/netcoreapp3.1/staticwebassets/PaymentAPI.StaticWebAssets.Manifest.cache
+/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/obj/Debug/netcoreapp3.1/staticwebassets/PaymentAPI.StaticWebAssets.xml
+/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/obj/Debug/netcoreapp3.1/PaymentAPI.dll
+/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/obj/Debug/netcoreapp3.1/PaymentAPI.pdb

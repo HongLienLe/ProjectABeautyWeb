@@ -35,14 +35,25 @@ namespace AccessDataApi.Controllers
         {
             var openingTimeForDay = _operatingTimeRepo.GetOperatingTime(id);
 
+            if (openingTimeForDay == null)
+                return NotFound(openingTimeForDay);
+
             return Ok(openingTimeForDay);
         }
 
         // POST: api/OperatingTimeRepo
         [HttpPost("{id}")]
-        public void Post(int id, [FromBody] OperatingTime operatingTime)
+        public IActionResult Post(int id, [FromBody] OperatingTime operatingTime)
         {
-            _operatingTimeRepo.UpdateOperatingTime(id, operatingTime);
+            var response =_operatingTimeRepo.UpdateOperatingTime(id, operatingTime);
+
+            if (response.StartsWith("D"))
+                return NotFound(response);
+
+            if (response.StartsWith("e"))
+                return BadRequest(response);
+
+            return Ok(response);
         }
     }
 }

@@ -21,7 +21,9 @@ namespace AccessDataApi.Repo
 
                 if (et.isEmployeeId)
                 {
-                     var treatment = _context.EmployeeTreatment.Where(x => et.Ids.Contains(x.TreatmentId) && x.EmployeeId == et.Id).Select(x => x.TreatmentId);
+                     var treatment = _context.EmployeeTreatment
+                        .Where(x => et.Ids.Contains(x.TreatmentId) && x.EmployeeId == et.Id)
+                        .Select(x => x.TreatmentId);
 
                      var notAddedTreatmentsToEmployee = et.Ids.Except(treatment);
 
@@ -44,7 +46,10 @@ namespace AccessDataApi.Repo
 
                 }
 
-            var employee = _context.EmployeeTreatment.Where(x => et.Ids.Contains(x.EmployeeId) && x.TreatmentId == et.Id).Select(x => x.EmployeeId);
+            var employee = _context.EmployeeTreatment
+                .Where(x => et.Ids.Contains(x.EmployeeId) && x.TreatmentId == et.Id)
+                .Select(x => x.EmployeeId);
+
             var notAddedEmployeesToTreatment = et.Ids.Except(employee);
 
             foreach (var employeeId in notAddedEmployeesToTreatment)
@@ -65,30 +70,31 @@ namespace AccessDataApi.Repo
 
         public List<Treatment> GetTreatmentsByEmployee(int employeeId)
         {
-                return _context.EmployeeTreatment.Where(x => x.EmployeeId == employeeId).Select(x => x.Treatment).ToList();
+            return _context.EmployeeTreatment.Where(x => x.EmployeeId == employeeId).Select(x => x.Treatment).ToList();
         }
 
         public List<Employee> GetEmployeesByTreatment(int treatmentId)
         {
-                return _context.EmployeeTreatment.Where(x => x.TreatmentId == treatmentId).Select(x => x.Employee).ToList();
-
+            return _context.EmployeeTreatment.Where(x => x.TreatmentId == treatmentId).Select(x => x.Employee).ToList();
         }
 
         public void RemoveEmployeeTreatment(EmployeeTreatmentCrud et)
         {
 
-                if (et.isEmployeeId)
-                {
-                    var etList = _context.EmployeeTreatment.Where(x => x.EmployeeId == et.Id && et.Ids.Contains(x.TreatmentId));
+            if (et.isEmployeeId)
+            {
+                var etList = _context.EmployeeTreatment
+                    .Where(x => x.EmployeeId == et.Id && et.Ids.Contains(x.TreatmentId));
 
-                _context.EmployeeTreatment.RemoveRange(etList);
+            _context.EmployeeTreatment.RemoveRange(etList);
 
-                _context.SaveChanges();
+            _context.SaveChanges();
 
-                    return;
-                }
+                return;
+            }
 
-                var teList = _context.EmployeeTreatment.Where(x => x.TreatmentId == et.Id && et.Ids.Contains(x.TreatmentId));
+            var teList = _context.EmployeeTreatment
+                .Where(x => x.TreatmentId == et.Id && et.Ids.Contains(x.TreatmentId));
 
             _context.EmployeeTreatment.RemoveRange(teList);
 

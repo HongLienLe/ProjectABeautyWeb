@@ -11,12 +11,15 @@ namespace AccessDataApi.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ReservationId { get; set; }
 
+        [Required]
         public DateTime StartTime { get; set; }
+
+        [Required]
         public DateTime EndTime { get; set; }
 
-        [ForeignKey("BookApp")]
-        public int BookAppId { get; set; }
-        public virtual BookApp BookApp { get; set; }
+        [ForeignKey("AppointmentDetails")]
+        public int AppointmentDetailsId { get; set; }
+        public virtual AppointmentDetails AppointmentDetails { get; set; }
 
     }
 }

@@ -30,18 +30,24 @@ namespace AccessDataApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<ApplicationContext>(options =>
+            // Use SQL Database if in Azure, otherwise, use SQLite
+            //if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            //    services.AddDbContext<ApplicationContext>(options =>
+            //            options.UseSqlServer(Configuration.GetConnectionString("TestDataAzure")));
+            //else
+                services.AddDbContext<ApplicationContext>(options =>
+                        options.UseSqlite("Data Source=localdatabase.db"));
 
-            options.UseSqlServer(
-                         Configuration.GetConnectionString("ProjectABeautyDb"))
-                    );
+            // Automatically perform database migration
+           // services.BuildServiceProvider().GetService<ApplicationContext>().Database.Migrate();
 
-            services.AddScoped<IAvalibilityRepo, AvalibilityRepo>();
-            services.AddScoped<IBookAppRepo, BookAppRepo>();
-            services.AddScoped<IClientAccountRepo, ClientAccountRepo>();
-            services.AddScoped<IEmployeeRepo, EmployeeRepo>();
-            services.AddScoped<IEmployeeTreatmentRepo, EmployeeTreatmentRepo>();
-            services.AddScoped<IWorkScheduleRepo, WorkScheduleRepo>();
+            services.AddTransient<IAvailabilityRepo, AvailabilityRepo>();
+            services.AddTransient<IBookAppointment, BookAppointment>();
+            services.AddTransient<IClientAccountRepo, ClientAccountRepo>();
+            services.AddTransient<IEmployeeRepo, EmployeeRepo>();
+            services.AddTransient<IEmployeeTreatmentRepo, EmployeeTreatmentRepo>();
+            services.AddTransient<IWorkScheduleRepo, WorkScheduleRepo>();
+            services.AddTransient<ITreatmentRepo, TreatmentRepo>();
 
             services.AddControllers();
 

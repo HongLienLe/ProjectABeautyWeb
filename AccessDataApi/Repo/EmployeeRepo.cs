@@ -42,7 +42,7 @@ namespace AccessDataApi.Repo
 
         public string UpdateEmployee(int employeeId, Employee employee)
         {
-            if(doesEmployeeExist(employeeId))
+            if(!doesEmployeeExist(employeeId))
             {
                 return "Does not exist, make a new one";
             }
@@ -57,10 +57,7 @@ namespace AccessDataApi.Repo
 
         public void DeleteEmployee(int id)
         {
-
-            var employee = new Employee() { EmployeeId = id };
-
-            _context.Entry(employee).State = EntityState.Deleted;
+            _context.Remove(_context.Employees.Single(x => x.EmployeeId == id));
 
             _context.SaveChanges();
             

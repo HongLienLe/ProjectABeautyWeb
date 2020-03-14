@@ -58,24 +58,22 @@ namespace AccessDataApi.Repo
 
         public List<OperatingTime> GetEmployeeWorkSchedule(int employeeId)
         {
-            var employee = _context.workSchedules.Where(x => x.EmployeeId == employeeId);
+            if (!_context.Employees.Any(x => x.EmployeeId == employeeId))
+                return null;
 
-            var workDays = employee.Select(x => x.OperatingTimeId).ToList();
+            var employeeWorkSchedule = _context.workSchedules.Where(x => x.EmployeeId == employeeId).Select(x => x.OperatingTime).ToList();
 
-            var workDaysObj = _context.OperatingTimes.Where(x => workDays.Contains(x.Id)).ToList();
-
-            return workDaysObj;
+            return employeeWorkSchedule;
         }
 
         public List<Employee> GetEmployeeByWorkDay(int dayId)
         {
-            var workDay = _context.workSchedules.Where(x => x.OperatingTimeId == dayId);
+            if (!_context.OperatingTimes.Any(x => x.Id == dayId))
+                return null;
 
-            var employee = workDay.Select(x => x.EmployeeId).ToList();
+            var employeesWorkingOnChoosenDay = _context.workSchedules.Where(x => x.OperatingTimeId == dayId).Select(x => x.Employee).ToList();
 
-            var employees = _context.Employees.Where(x => employee.Contains(x.EmployeeId)).ToList();
-
-            return employees;
+            return employeesWorkingOnChoosenDay;
         }
 
         public bool doesEmployeeExist(int employeeId)

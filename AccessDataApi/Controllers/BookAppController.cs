@@ -14,45 +14,43 @@ namespace AccessDataApi.Controllers
     [Route("api/[controller]")]
     public class BookAppController : Controller
     {
-        private IBookAppRepo _bookAppRepo;
+        private IBookAppointment _bookAppRepo;
 
-        public BookAppController(ApplicationContext context, IBookAppRepo bookAppRepo)
+        public BookAppController(IBookAppointment bookAppRepo)
         {
             _bookAppRepo = bookAppRepo;
-        }
-        // GET: api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
         }
 
         // POST api/values
         [HttpPost("date/{year}/{month}/{day}/book")]
-        public IActionResult Post(int year, int month, int day, [FromBody]BookApp bookApp)
+        public IActionResult CreateAppointment(int year, int month, int day, [FromBody]AppointmentDetails bookApp)
         {
             DateTime dateTime = new DateTime(year, month, day);
 
-            return Ok(_bookAppRepo.CreateAppointment(dateTime, bookApp));
+            if (bookApp.Reservation.StartTime > DateTime.Today)
+                return BadRequest("Past date not available");
+
+            var response = _bookAppRepo.CreateAppointment(dateTime, bookApp);
+
+            if (response.EndsWith("e"))
+                return NotFound(response);
+
+            if (response.StartsWith("T"))
+                return NotFound(response);
+
+            return Ok(response);
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpGet("AppointmentId/{Id}")]
+        public IActionResult GetAppointmentById(int Id)
         {
-        }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            var response = _bookAppRepo.GetAppointment(Id);
+
+            if (response == null)
+                return NotFound(response);
+
+            return Ok(response);
         }
     }
 }

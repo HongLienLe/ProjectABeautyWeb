@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appointment", "Appointment\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessDataApi", "AccessDataApi\AccessDataApi.csproj", "{3517FF51-7355-41C9-8381-5A774FD65C35}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentAPI", "PaymentAPI\PaymentAPI.csproj", "{2EAC42D1-EC2D-440C-92A9-523FFD41262E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcessDataAPITest", "AcessDataAPI\AcessDataAPITest.csproj", "{8FA3CEF2-8181-4B5D-8FC8-1C851C9C81B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,5 +29,13 @@ Global
 		{3517FF51-7355-41C9-8381-5A774FD65C35}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3517FF51-7355-41C9-8381-5A774FD65C35}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3517FF51-7355-41C9-8381-5A774FD65C35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EAC42D1-EC2D-440C-92A9-523FFD41262E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EAC42D1-EC2D-440C-92A9-523FFD41262E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EAC42D1-EC2D-440C-92A9-523FFD41262E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EAC42D1-EC2D-440C-92A9-523FFD41262E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FA3CEF2-8181-4B5D-8FC8-1C851C9C81B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FA3CEF2-8181-4B5D-8FC8-1C851C9C81B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FA3CEF2-8181-4B5D-8FC8-1C851C9C81B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FA3CEF2-8181-4B5D-8FC8-1C851C9C81B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

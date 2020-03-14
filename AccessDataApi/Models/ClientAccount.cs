@@ -14,15 +14,18 @@ namespace AccessDataApi.Models
         [Required]
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        [Required]
         public string Email { get; set; }
+
         [Required]
         public string ContactNumber { get; set; }
 
-        public virtual ICollection<BookApp> Appointments { get; set; }
+        public virtual ICollection<AppointmentDetails> Appointments { get; set; }
 
         public ClientAccount()
         {
-            Appointments = new List<BookApp>();
+            Appointments = new List<AppointmentDetails>();
         }
     }
 }

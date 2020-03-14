@@ -17,7 +17,7 @@ namespace AccessDataApi.Controllers
     {
         private IEmployeeRepo _employeeRepo;
 
-        public EmployeeController(ApplicationContext context, IEmployeeRepo employeeRepo)
+        public EmployeeController(IEmployeeRepo employeeRepo)
         {
             _employeeRepo = employeeRepo;
         }
@@ -36,7 +36,7 @@ namespace AccessDataApi.Controllers
 
             if(employee == null)
             {
-                return NotFound();
+                return NotFound(employee);
             }
 
             return Ok(employee);

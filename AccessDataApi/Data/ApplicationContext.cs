@@ -12,14 +12,14 @@ namespace AccessDataApi.Data
         public DbSet<DateTimeKey> DateTimeKeys { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ClientAccount> ClientAccounts { get; set; }
-        public DbSet<BookApp> BookApps { get; set; }
+        public DbSet<AppointmentDetails> AppointmentDetails { get; set; }
         public DbSet<OperatingTime> OperatingTimes { get; set; }
         public DbSet<OperatingTimeEmployee> workSchedules { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
-           Database.EnsureCreated();
-      //     Database.EnsureDeleted();
+               Database.EnsureCreated();
+             //  Database.EnsureDeleted();
           
         }
 
@@ -40,23 +40,17 @@ namespace AccessDataApi.Data
 
             });
 
-            modelBuilder.Entity<OperatingTime>(e =>
-            {
-                e.HasKey(k => k.Id);
-
-            });
-
             modelBuilder.Entity<OperatingTimeEmployee>(e =>
             {
                 e.HasKey(k => new { k.EmployeeId, k.OperatingTimeId });
 
-                e.HasOne<Employee>(e => e.Employee)
+                e.HasOne(e => e.Employee)
                 .WithMany(o => o.workschedule)
-                .HasForeignKey(ofk => ofk.OperatingTimeId);
+                .HasForeignKey(ofk => ofk.EmployeeId);
 
-                e.HasOne<OperatingTime>(o => o.OperatingTime)
+                e.HasOne(o => o.OperatingTime)
                 .WithMany(e => e.Employees)
-                .HasForeignKey(efk => efk.EmployeeId);
+                .HasForeignKey(efk => efk.OperatingTimeId);
             });
 
             //modelBuilder.Entity<Employee>(entity =>
@@ -93,24 +87,24 @@ namespace AccessDataApi.Data
             //    .WithOne(x => x.Treatment);
             //});
 
-            modelBuilder.Entity<BookApp>(entity =>
+            modelBuilder.Entity<AppointmentDetails>(entity =>
             {
-                entity.HasKey(x => x.BookAppId);
+                entity.HasKey(x => x.AppointmentDetailsId);
 
                 entity.HasOne(x => x.ClientAccount)
                 .WithMany(x => x.Appointments)
                 .HasForeignKey(x => x.ClientAccountId);
 
-                entity.HasOne<DateTimeKey>(x => x.DateTimeKey)
-                 .WithMany(x => x.bookApps)
+                entity.HasOne(x => x.DateTimeKey)
+                 .WithMany(x => x.Appointments)
                  .HasForeignKey(x => x.DateTimeKeyId);
 
                 entity.HasOne(x => x.Reservation)
-                 .WithOne(x => x.BookApp)
-                 .HasForeignKey<Reservation>(x => x.BookAppId);
+                 .WithOne(x => x.AppointmentDetails)
+                 .HasForeignKey<Reservation>(x => x.AppointmentDetailsId);
 
                 entity.HasOne(x => x.Treatment)
-                .WithMany(x => x.bookApps)
+                .WithMany(x => x.Appointments)
                 .HasForeignKey(x => x.TreatmentId);
 
             });

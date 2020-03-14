@@ -12,11 +12,11 @@ namespace AccessDataApi.Models
         [Required]
         public DateTime date { get; set; }
 
-        public virtual ICollection<BookApp> bookApps { get; set; }
+        public virtual ICollection<AppointmentDetails> Appointments { get; set; }
 
         public DateTimeKey()
         {
-            bookApps = new List<BookApp>();
+            Appointments = new List<AppointmentDetails>();
         }
     }
 }

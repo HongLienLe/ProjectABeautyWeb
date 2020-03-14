@@ -14,14 +14,18 @@ namespace AccessDataApi.Models
         [Required]
         public string EmployeName { get; set; }
 
-        public ICollection<BookApp> BookApp { get; set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        public ICollection<AppointmentDetails> Appointments { get; set; }
         public ICollection<EmployeeTreatment> EmployeeTreatments { get; set; }
         public ICollection<OperatingTimeEmployee> workschedule { get; set; }
 
         public Employee()
         {
             EmployeeTreatments = new List<EmployeeTreatment>();
-            BookApp = new List<BookApp>();
+            Appointments = new List<AppointmentDetails>();
             workschedule = new List<OperatingTimeEmployee>();
         }
 

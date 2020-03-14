@@ -15,14 +15,11 @@ namespace AccessDataApi.Controllers
     [Route("api/[controller]")]
     public class TreatmentController : Controller
     {
-        private TreatmentRepo _treatmentRepo;
-        private readonly ILogger<TreatmentController> _logger;
+        private ITreatmentRepo _treatmentRepo;
 
-
-        public TreatmentController(ApplicationContext context, ILogger<TreatmentController> logger)
+        public TreatmentController(ITreatmentRepo treatmentRepo)
         {
-            _treatmentRepo = new TreatmentRepo(context);
-            _logger = logger;
+            _treatmentRepo = treatmentRepo;
         }
 
         // GET: api/values
@@ -37,6 +34,9 @@ namespace AccessDataApi.Controllers
         public IActionResult Get(int id)
         {
             var treatment = _treatmentRepo.GetTreatment(id);
+
+            if (treatment == null)
+                return BadRequest(treatment);
             return Ok(treatment);
         }
 
@@ -57,9 +57,16 @@ namespace AccessDataApi.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            _treatmentRepo.DeleteTreatment(id);
+           var response = _treatmentRepo.DeleteTreatment(id);
+
+            if (response == null)
+                return NotFound(response);
+
+            return Ok(response);
         }
+
+        //get by type
     }
 }

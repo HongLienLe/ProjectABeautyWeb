@@ -23,11 +23,18 @@ namespace AccessDataApi.Repo
 
         public OperatingTime GetOperatingTime(int id)
         {
+            if (!_context.OperatingTimes.Any(x => x.Id == id))
+                return null;
             return _context.OperatingTimes.First(x => x.Id == id);
         }
 
-        public void UpdateOperatingTime(int id, OperatingTime oper)
+        public string UpdateOperatingTime(int id, OperatingTime oper)
         {
+            if (!_context.OperatingTimes.Any(x => x.Id == id))
+                return "Day Id does not exist";
+
+            if (!isEndTimeLaterThanStartTime(oper))
+                return "end time can not be later than start time";
 
             var choosenDay = _context.OperatingTimes.First(x => x.Id == id);
             choosenDay.StartTime = oper.StartTime;
@@ -35,6 +42,13 @@ namespace AccessDataApi.Repo
             choosenDay.isOpen = oper.isOpen;
 
             _context.SaveChanges();
+
+            return $"Opening time {id} has been updated"; 
+        }
+
+        private bool isEndTimeLaterThanStartTime(OperatingTime operatingTime)
+        {
+            return operatingTime.EndTime > operatingTime.StartTime ? true : false;
         }
     }
 }

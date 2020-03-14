@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AccessDataApi.Repo
 {
-    public class TreatmentRepo
+    public class TreatmentRepo : ITreatmentRepo
     {
         private ApplicationContext _context;
 
@@ -26,60 +26,57 @@ namespace AccessDataApi.Repo
             var treatmentList = _context.Treatments.Where(x => x.TreatmentType == treatmentType).ToList();
 
             if(treatmentList != null)
-            {
                 return treatmentList;
-            }
-
             return null;
         }
 
-        public Treatment GetTreatment(int treatmentId)
+        public Treatment GetTreatment(int id)
         {
-            var treatment = _context.Treatments.First(x => x.TreatmentId == treatmentId);
+            if (!DoesTreatmentExist(id))
+                return null;
 
-            if(treatment != null)
-            {
+            var treatment = _context.Treatments.First(x => x.TreatmentId == id);
                 return treatment;
-            }
-
-            return null;
         }
 
         public void AddTreatment(Treatment treatment)
         {
-            using(var context = _context)
-            {
-                _context.Treatments.Add(treatment);
-                _context.SaveChanges();
-
-            }
+            _context.Treatments.Add(treatment);
+            _context.SaveChanges();
         }
 
-        public void UpdateTreatment(int id, Treatment treatment)
+        public Treatment UpdateTreatment(int id, Treatment treatment)
         {
-            using (var context = _context)
-            {
+            if (!DoesTreatmentExist(id))
+                return null;
 
-                var oldTreatment = context.Treatments.First(x => x.TreatmentId == id);
+            var oldTreatment = _context.Treatments.First(x => x.TreatmentId == id);
 
-                oldTreatment.TreatmentName = treatment.TreatmentName;
-                oldTreatment.Price = treatment.Price;
-                oldTreatment.Duration = treatment.Duration;
+            oldTreatment.TreatmentName = treatment.TreatmentName;
+            oldTreatment.Price = treatment.Price;
+            oldTreatment.Duration = treatment.Duration;
 
-                context.SaveChanges();
-            }
+            _context.SaveChanges();
+
+            return GetTreatment(id);
+
         }
 
-        public void DeleteTreatment(int id)
+        public string DeleteTreatment(int id)
         {
-            using(var context = _context)
-            {
-                var treatment = new Treatment() { TreatmentId = id };
+            if (!DoesTreatmentExist(id))
+                return null;
 
-                context.Entry(treatment).State = EntityState.Deleted;
+            _context.Remove(_context.Treatments.Single(x => x.TreatmentId == id));
 
-                context.SaveChanges();
-            }
+            _context.SaveChanges();
+
+            return "Successfully deleted treatment";
+        }
+
+        private bool DoesTreatmentExist(int id)
+        {
+            return _context.Treatments.Any(x => x.TreatmentId == id);
         }
     }
 }

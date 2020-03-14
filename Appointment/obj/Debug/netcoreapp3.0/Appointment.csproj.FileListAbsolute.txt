@@ -2,7 +2,6 @@
 /Users/hongle/Projects/ProjectABeautyWeb/Appointment/bin/Debug/netcoreapp3.0/appsettings.json
 /Users/hongle/Projects/ProjectABeautyWeb/Appointment/bin/Debug/netcoreapp3.0/mono_crash.42f6ec106.0.json
 /Users/hongle/Projects/ProjectABeautyWeb/Appointment/bin/Debug/netcoreapp3.0/Properties/launchSettings.json
-/Users/hongle/Projects/ProjectABeautyWeb/Appointment/bin/Debug/netcoreapp3.0/Appointment
 /Users/hongle/Projects/ProjectABeautyWeb/Appointment/bin/Debug/netcoreapp3.0/Appointment.deps.json
 /Users/hongle/Projects/ProjectABeautyWeb/Appointment/bin/Debug/netcoreapp3.0/Appointment.runtimeconfig.json
 /Users/hongle/Projects/ProjectABeautyWeb/Appointment/bin/Debug/netcoreapp3.0/Appointment.runtimeconfig.dev.json
@@ -67,12 +66,12 @@
 /Users/hongle/Projects/ProjectABeautyWeb/Appointment/bin/Debug/netcoreapp3.0/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
 /Users/hongle/Projects/ProjectABeautyWeb/Appointment/bin/Debug/netcoreapp3.0/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
 /Users/hongle/Projects/ProjectABeautyWeb/Appointment/obj/Debug/netcoreapp3.0/Appointment.csprojAssemblyReference.cache
-/Users/hongle/Projects/ProjectABeautyWeb/Appointment/obj/Debug/netcoreapp3.0/staticwebassets/Appointment.StaticWebAssets.Manifest.cache
-/Users/hongle/Projects/ProjectABeautyWeb/Appointment/obj/Debug/netcoreapp3.0/staticwebassets/Appointment.StaticWebAssets.xml
 /Users/hongle/Projects/ProjectABeautyWeb/Appointment/obj/Debug/netcoreapp3.0/Appointment.MvcApplicationPartsAssemblyInfo.cache
 /Users/hongle/Projects/ProjectABeautyWeb/Appointment/obj/Debug/netcoreapp3.0/Appointment.AssemblyInfoInputs.cache
 /Users/hongle/Projects/ProjectABeautyWeb/Appointment/obj/Debug/netcoreapp3.0/Appointment.AssemblyInfo.cs
 /Users/hongle/Projects/ProjectABeautyWeb/Appointment/obj/Debug/netcoreapp3.0/Appointment.RazorTargetAssemblyInfo.cache
 /Users/hongle/Projects/ProjectABeautyWeb/Appointment/obj/Debug/netcoreapp3.0/Appointment.csproj.CopyComplete
+/Users/hongle/Projects/ProjectABeautyWeb/Appointment/obj/Debug/netcoreapp3.0/staticwebassets/Appointment.StaticWebAssets.Manifest.cache
+/Users/hongle/Projects/ProjectABeautyWeb/Appointment/obj/Debug/netcoreapp3.0/staticwebassets/Appointment.StaticWebAssets.xml
 /Users/hongle/Projects/ProjectABeautyWeb/Appointment/obj/Debug/netcoreapp3.0/Appointment.dll
 /Users/hongle/Projects/ProjectABeautyWeb/Appointment/obj/Debug/netcoreapp3.0/Appointment.pdb

@@ -1,29 +1,42 @@
-﻿<Properties StartupConfiguration="{3517FF51-7355-41C9-8381-5A774FD65C35}|Default">
+﻿<Properties StartupConfiguration="{3517FF51-7355-41C9-8381-5A774FD65C35}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
+  <MonoDevelop.Ide.ItemProperties.AcessDataAPITest PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.ItemProperties.ProjectABeautyWeb PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AccessDataApi/Repo/IEmployeeRepo.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AccessDataApi/Repo/AppointmentService.cs">
     <Files>
-      <File FileName="AccessDataApi/Controllers/AvalibilityController.cs" Line="56" Column="10" />
-      <File FileName="AccessDataApi/Controllers/BookAppController.cs" Line="24" Column="18" />
-      <File FileName="AccessDataApi/Controllers/EmployeeController.cs" Line="67" Column="9" />
-      <File FileName="AccessDataApi/Startup.cs" Line="44" Column="47" />
-      <File FileName="AccessDataApi/Repo/ClientAccountRepo.cs" Line="7" Column="29" />
-      <File FileName="AccessDataApi/Repo/EmployeeTreatmentRepo.cs" Line="10" Column="64" />
-      <File FileName="AccessDataApi/Repo/WorkScheduleRepo.cs" Line="10" Column="38" />
-      <File FileName="AccessDataApi/Repo/EmployeeRepo.cs" Line="23" Column="1" />
-      <File FileName="AccessDataApi/Controllers/WorkScheduleController.cs" Line="31" Column="10" />
-      <File FileName="AccessDataApi/Repo/IWorkScheduleRepo.cs" Line="15" Column="1" />
-      <File FileName="AccessDataApi/Repo/IEmployeeRepo.cs" Line="1" Column="1" />
+      <File FileName="AccessDataApi/Data/ApplicationContextExtension.cs" Line="166" Column="1" />
+      <File FileName="AcessDataAPI/RepoTest/BookAppTest.cs" Line="42" Column="15" />
+      <File FileName="AccessDataApi/Startup.cs" Line="78" Column="13" />
+      <File FileName="AccessDataApi/Controllers/BookAppController.cs" Line="46" Column="10" />
+      <File FileName="AccessDataApi/Data/ApplicationContext.cs" Line="1" Column="1" />
+      <File FileName="AccessDataApi/Repo/BookAppointment.cs" Line="64" Column="1" />
+      <File FileName="AccessDataApi/Repo/AppointmentService.cs" Line="22" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ProjectABeautyWeb" expanded="True">
             <Node name="AccessDataApi" expanded="True">
+              <Node name="Dependencies" expanded="True" />
               <Node name="Controllers" expanded="True" />
-              <Node name="HTTPModels" expanded="True" />
-              <Node name="Models" expanded="True" />
+              <Node name="Data" expanded="True" />
               <Node name="Repo" expanded="True">
-                <Node name="IEmployeeRepo.cs" selected="True" />
+                <Node name="AppointmentService.cs" selected="True" />
+              </Node>
+              <Node name="appsettings.json" expanded="True" />
+            </Node>
+            <Node name="AcessDataAPITest" expanded="True">
+              <Node name="ControllerTest" expanded="True" />
+              <Node name="RepoTest" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="ProjectABeautyWeb" expanded="True">
+            <Node name="AcessDataAPITest" expanded="True">
+              <Node name="AcessDataAPITest" expanded="True">
+                <Node name="RepoTest" expanded="True" />
               </Node>
             </Node>
           </Node>
@@ -35,7 +48,11 @@
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/hongle/Projects/ProjectABeautyWeb/AcessDataAPI/ControllerTest/619ssvlg.koc~" relfile="AcessDataAPI/ControllerTest/619ssvlg.koc~" line="27" column="1" />
+      <Breakpoint file="/Users/hongle/Projects/ProjectABeautyWeb/AcessDataAPI/ControllerTest/BookAppControllerTest.cs" relfile="AcessDataAPI/ControllerTest/BookAppControllerTest.cs" line="69" column="1" />
+      <Breakpoint file="/Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/Controllers/EmployeeController.cs" relfile="AccessDataApi/Controllers/EmployeeController.cs" line="35" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.AccessDataApi PreferredExecutionTarget="/Applications/Google Chrome.app" />

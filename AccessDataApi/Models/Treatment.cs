@@ -18,17 +18,23 @@ namespace AccessDataApi.Models
         public int TreatmentId { get; set; }
         //[Range(0, int.MaxValue, ErrorMessage = "Select a correct Treatment Type")]
         public TreatmentType TreatmentType { get; set; }
+
+        [Required]
         public string TreatmentName { get; set; }
+
+        [Required]
         public double Price { get; set; }
+
+        [Required]
         public int Duration { get; set; }
 
         public virtual ICollection<EmployeeTreatment> EmployeeTreatments { get; set; }
-        public virtual ICollection<BookApp> bookApps { get; set; }
+        public virtual ICollection<AppointmentDetails> Appointments { get; set; }
 
         public Treatment()
         {
             EmployeeTreatments = new List<EmployeeTreatment>();
-            bookApps = new List<BookApp>();
+            Appointments = new List<AppointmentDetails>();
         }
     }
 

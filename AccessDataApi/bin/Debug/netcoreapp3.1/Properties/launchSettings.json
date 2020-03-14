@@ -20,7 +20,7 @@
     "AccessDataApi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/treatment",
+      "launchUrl": "swagger/v1/swagger.json",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
