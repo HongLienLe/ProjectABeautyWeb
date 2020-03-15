@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AccessDataApi.Data;
+using AccessDataApi.HTTPModels;
 using AccessDataApi.Models;
 using AccessDataApi.Repo;
 using Microsoft.AspNetCore.Mvc;
@@ -52,5 +53,18 @@ namespace AccessDataApi.Controllers
 
             return Ok(response);
         }
+
+        //private AppointmentDetails CastToAppointmentDetails(BookAppointmentForm bkappForm)
+        //{
+        //    AppointmentDetails appointment = new AppointmentDetails()
+        //    {
+        //        DateTimeKeyId = bkappForm.DateTimeFormatt,
+        //        EmployeeId = 0,
+        //        TreatmentId = 1,
+
+        //    };
+
+        //    var treatmentDuration = 
+        //}
     }
 }

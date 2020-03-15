@@ -29,13 +29,14 @@ namespace AccessDataApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
 
             // Use SQL Database if in Azure, otherwise, use SQLite
             //if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
             //    services.AddDbContext<ApplicationContext>(options =>
             //            options.UseSqlServer(Configuration.GetConnectionString("TestDataAzure")));
             //else
-                services.AddDbContext<ApplicationContext>(options =>
+            services.AddDbContext<ApplicationContext>(options =>
                         options.UseSqlite("Data Source=localdatabase.db"));
 
             // Automatically perform database migration
@@ -49,6 +50,7 @@ namespace AccessDataApi
             services.AddTransient<IWorkScheduleRepo, WorkScheduleRepo>();
             services.AddTransient<ITreatmentRepo, TreatmentRepo>();
 
+
             services.AddControllers();
 
             services.AddSwaggerGen(c => c.SwaggerDoc(name: "v1", new OpenApiInfo {Title = "Api", Version = "v1" }));
@@ -61,6 +63,13 @@ namespace AccessDataApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(options =>
+            {
+                options.AllowAnyOrigin();
+                options.AllowAnyHeader();
+                options.AllowAnyMethod();
+            });
 
             app.UseSwagger();
 
