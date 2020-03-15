@@ -1,19 +1,9 @@
 ﻿<Properties StartupConfiguration="{3517FF51-7355-41C9-8381-5A774FD65C35}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
   <MonoDevelop.Ide.ItemProperties.AcessDataAPITest PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.ItemProperties.ProjectABeautyWeb PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AccessDataApi/Properties/launchSettings.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AccessDataApi/Controllers/AvailabilityController.cs">
     <Files>
-      <File FileName="AccessDataApi/Data/ApplicationContextExtension.cs" Line="13" Column="1" />
-      <File FileName="AcessDataAPI/RepoTest/BookAppTest.cs" Line="42" Column="15" />
-      <File FileName="AccessDataApi/Startup.cs" Line="78" Column="13" />
-      <File FileName="AccessDataApi/Controllers/BookAppController.cs" Line="46" Column="10" />
-      <File FileName="AccessDataApi/Data/ApplicationContext.cs" Line="22" Column="16" />
-      <File FileName="AccessDataApi/Repo/BookAppointment.cs" Line="99" Column="16" />
-      <File FileName="AccessDataApi/Repo/AppointmentService.cs" Line="22" Column="1" />
-      <File FileName="AccessDataApi/Controllers/AvailabilityController.cs" Line="29" Column="53" />
-      <File FileName="AccessDataApi/Repo/AvailabilityRepo.cs" Line="1" Column="1" />
-      <File FileName="AccessDataApi/appsettings.json" Line="1" Column="1" />
-      <File FileName="AccessDataApi/Properties/launchSettings.json" Line="1" Column="1" />
+      <File FileName="AccessDataApi/Controllers/AvailabilityController.cs" Line="24" Column="48" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -21,17 +11,9 @@
           <Node name="ProjectABeautyWeb" expanded="True">
             <Node name="AccessDataApi" expanded="True">
               <Node name="Dependencies" expanded="True" />
-              <Node name="Controllers" expanded="True" />
-              <Node name="Data" expanded="True" />
-              <Node name="Properties" expanded="True">
-                <Node name="launchSettings.json" selected="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name=".DS_Store" selected="True" />
               </Node>
-              <Node name="Repo" expanded="True" />
-              <Node name="appsettings.json" expanded="True" />
-            </Node>
-            <Node name="AcessDataAPITest" expanded="True">
-              <Node name="ControllerTest" expanded="True" />
-              <Node name="RepoTest" expanded="True" />
             </Node>
           </Node>
         </State>
@@ -43,7 +25,7 @@
               <Node name="AcessDataAPITest" expanded="True">
                 <Node name="RepoTest" expanded="True">
                   <Node name="AvalibilityTest" expanded="True">
-                    <Node name="GetAvaliableTimesForGivenDate" selected="True" />
+                    <Node name="GetAvaliableTimesViaTreatmentDateShouldBeTrue" selected="True" />
                   </Node>
                 </Node>
               </Node>
