@@ -32,15 +32,16 @@ namespace AcessDataAPITest.RepoTest
         public void GetAvaliableTimesForGivenDate()
         {
             var date = new DateTime(2020, 3, 9);
-            var expectedDate = new TimeRange(new DateTime(2020, 3, 9, 10, 0, 0), new DateTime(2020, 3, 9, 19, 0, 0));
+            var expectedDate = GetFreeSlots();
             var freeTimePeriods = _availbilityRepo.GetAvailableTime(date);
 
             EndConnection();
 
-            foreach(var timeperiod in freeTimePeriods)
+            for(int i = 0; i < expectedDate.Count; i++)
             {
-                Console.WriteLine($"Avaliable Time : {timeperiod}");
-                Assert.IsTrue(expectedDate.Equals(timeperiod));
+                Console.WriteLine($" Result Avaliable Time : {freeTimePeriods[i].ToShortTimeString()}");
+
+                Assert.IsTrue(freeTimePeriods[i] == expectedDate[i]);
             }
         }
 
@@ -48,16 +49,16 @@ namespace AcessDataAPITest.RepoTest
         public void GetAvaliableTimesViaTreatmentDateShouldBeTrue()
         {
             var date = new DateTime(2020, 3, 9);
-            var expectedDate = new TimeRange(new DateTime(2020, 3, 9, 10, 0, 0), new DateTime(2020, 3, 9, 19, 0, 0));
+            var expectedDate = GetFreeSlots();
             var freeTimePeriodsForInFillAcrylic = _availbilityRepo.GetAvailableTimeWithTreatment(date, 1);
 
             EndConnection();
 
-            foreach(var timeperiod in freeTimePeriodsForInFillAcrylic)
+            for (int i = 0; i < expectedDate.Count; i++)
             {
-                Console.WriteLine($"Avaliable Time : {timeperiod}");
-                Assert.IsTrue(timeperiod.Start.Equals(expectedDate.Start));
-                Assert.IsTrue(timeperiod.End.Equals(expectedDate.End));
+                Console.WriteLine($" Result Avaliable Time : {freeTimePeriodsForInFillAcrylic[i].ToShortTimeString()}");
+
+                Assert.IsTrue(freeTimePeriodsForInFillAcrylic[i] == expectedDate[i]);
             }
         }
 
@@ -76,6 +77,34 @@ namespace AcessDataAPITest.RepoTest
             }
         }
 
+
+        //test that it can compress and give the time with the added booking applications
+
         //test if they are trying to request bookings from the past
+
+        private List<DateTime> GetFreeSlots()
+        {
+            List<DateTime> avaliableTimeSlots = new List<DateTime>();
+
+            TimePeriodCollection timePeriods = new TimePeriodCollection()
+            {
+                new TimeRange(new DateTime(2020,3,9,10,00,00), new DateTime(2020,3,9,19,00,00))
+            };
+
+            foreach (var period in timePeriods)
+            {
+                var startTimePeriod = period.Start;
+                var endTimePeriod = period.End.Subtract(new TimeSpan(0, 30, 0));
+
+                while (startTimePeriod < endTimePeriod)
+                {
+                    avaliableTimeSlots.Add(startTimePeriod);
+
+                    startTimePeriod = startTimePeriod.AddMinutes(15);
+                }
+            }
+
+            return avaliableTimeSlots;
+        }
     }
 }

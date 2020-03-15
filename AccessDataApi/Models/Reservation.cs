@@ -11,6 +11,7 @@ namespace AccessDataApi.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ReservationId { get; set; }
 
+
         [Required]
         public DateTime StartTime { get; set; }
 

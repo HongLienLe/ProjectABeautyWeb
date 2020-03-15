@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using AccessDataApi.Data;
+using AccessDataApi.HTTPModels;
 using AccessDataApi.Models;
 using AccessDataApi.Repo;
 using NUnit.Framework;
@@ -18,6 +20,33 @@ namespace AcessDataAPITest.RepoTest
             _context.Employees.AddRange(GetEmployees());
             _context.SaveChanges();
             _employeeRepo = new EmployeeRepo(_context);
+        }
+
+        // Add employeefromtheform return success
+
+        [Test]
+        public void CanAddNewEmployeeWithForm()
+        {
+            EmployeeDetails employeeForm = new EmployeeDetails()
+            {
+                EmployeeName = "UnitTest",
+                Email ="UTest@gmail.com"
+            };
+
+            var employee = new Employee()
+            {
+                EmployeName = employeeForm.EmployeeName,
+                Email = employeeForm.Email
+            };
+
+            var result = _employeeRepo.AddEmployee(employee);
+            var doesNewEmployeeExist = _context.Employees.First(x => x.EmployeName == "UnitTest");
+
+            EndConnection();
+
+            Assert.IsTrue(result == "Sucessfully Added new employee");
+            Assert.IsNotNull(doesNewEmployeeExist);
+
         }
 
         [Test]

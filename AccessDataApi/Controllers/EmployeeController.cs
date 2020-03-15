@@ -25,7 +25,25 @@ namespace AccessDataApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_employeeRepo.GetEmployees());
+            var employees = _employeeRepo.GetEmployees();
+
+            if (employees == null)
+                return NoContent();
+
+            var responseEmployeeDetails = new List<EmployeeDetails>();
+
+            foreach (var employee in employees)
+            {
+                responseEmployeeDetails.Add( new EmployeeDetails
+                {
+                    Id = employee.EmployeeId,
+                    EmployeeName = employee.EmployeName,
+                    Email = employee.Email
+                    }
+                );
+            }
+
+                return Ok(responseEmployeeDetails);
         }
 
         // GET api/values/5
@@ -34,26 +52,41 @@ namespace AccessDataApi.Controllers
         {
             var employee = _employeeRepo.GetEmployee(id);
 
-            if(employee == null)
+            if (employee == null)
             {
                 return NotFound(employee);
             }
 
-            return Ok(employee);
+                return Ok(new EmployeeDetails() {
+                    Id = employee.EmployeeId,
+                    EmployeeName = employee.EmployeName,
+                    Email = employee.Email });
         }
 
         // POST api/values
         [HttpPost("add")]
-        public void Post([FromBody]Employee employee)
+        public void Post([FromBody]EmployeeForm newEmployee)
         {
+            var employee = new Employee()
+            {
+                EmployeName = newEmployee.EmployeeName,
+                Email = newEmployee.Email
+            };
+
             _employeeRepo.AddEmployee(employee);
 
         }
 
         // PUT api/values/5
         [HttpPost("{id}")]
-        public void Post(int id, [FromBody]Employee employee)
+        public void Post(int id, [FromBody]EmployeeForm UpdatedEmployee)
         {
+            var employee = new Employee()
+            {
+                EmployeName = UpdatedEmployee.EmployeeName,
+                Email = UpdatedEmployee.Email
+            };
+
             _employeeRepo.UpdateEmployee(id, employee);
         }
 
@@ -64,7 +97,7 @@ namespace AccessDataApi.Controllers
             _employeeRepo.DeleteEmployee(id);
         }
 
-        
-
     }
+
+    
 }

@@ -32,7 +32,11 @@ namespace AccessDataApi.Repo
 
         public TimeRange CastBookingToTimeRange(AppointmentDetails booking)
         {
-            return new TimeRange(booking.Reservation.StartTime, booking.Reservation.EndTime);
+            if(!_context.Reservations.Any(x => x.AppointmentDetailsId == booking.AppointmentDetailsId))
+                return new TimeRange(booking.Reservation.StartTime, booking.Reservation.EndTime);
+
+            var timeSlot = _context.Reservations.Single(x => x.AppointmentDetailsId == booking.AppointmentDetailsId);
+                return new TimeRange(timeSlot.StartTime, timeSlot.EndTime);
         }
 
         public ITimePeriodCollection GetGapsInBooking(DateTime date, ICollection<AppointmentDetails> bookings)
@@ -42,6 +46,9 @@ namespace AccessDataApi.Repo
             var operatingHours = GetTimeRange(date);
 
             ITimePeriodCollection bookingPeriods = new TimePeriodCollection();
+
+            if(bookings.Count == 0)
+                return timegapcalculator.GetGaps(bookingPeriods, operatingHours);
 
             foreach (var booking in bookings)
             {
@@ -61,6 +68,9 @@ namespace AccessDataApi.Repo
 
         public ITimePeriodCollection GetAvailbilityByEmployee(DateTime date, Employee employee)
         {
+            if (!_context.AppointmentDetails.Any(x => x.DateTimeKeyId == date.ToShortDateString() && x.EmployeeId == employee.EmployeeId))
+                return GetGapsInBooking(date, new List<AppointmentDetails>());
+
             var bookApp = _context.AppointmentDetails.Where(x => x.Employee == employee && x.DateTimeKeyId == date.ToShortDateString()).ToList();
             return GetGapsInBooking(date, bookApp);
         }

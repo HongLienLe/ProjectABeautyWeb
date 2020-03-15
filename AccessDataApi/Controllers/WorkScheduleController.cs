@@ -29,13 +29,48 @@ namespace AccessDataApi.Controllers
         [HttpGet("get/work/schedule/employee/{employeeId}")]
         public IActionResult GetWorkScheduleByEmployeeId(int employeeId)
         {
-            return Ok(_workScheduleRepo.GetEmployeeWorkSchedule(employeeId));
+            var workDays = _workScheduleRepo.GetEmployeeWorkSchedule(employeeId);
+
+            if (workDays == null)
+                return NotFound(workDays);
+
+            List<OpeningTimeDetail> responseOperatingTimeDetails = new List<OpeningTimeDetail>();
+
+            foreach (var day in workDays)
+            {
+                responseOperatingTimeDetails.Add(new OpeningTimeDetail()
+                {
+                    Id = day.Id,
+                    Day = day.Day,
+                    StartTime = day.StartTime.ToString(),
+                    EndTime = day.EndTime.ToString(),
+                    isOpen = day.isOpen
+                });
+            }
+            return Ok(responseOperatingTimeDetails);
         }
 
         [HttpGet("get/employee/by/dayofweek/{dayId}")]
         public IActionResult GetEmployeeByWorkDay(int dayId)
         {
-            return Ok(_workScheduleRepo.GetEmployeeByWorkDay(dayId));
+            var employees = _workScheduleRepo.GetEmployeeByWorkDay(dayId);
+
+            if (employees == null)
+                return NotFound(employees);
+
+            List<EmployeeDetails> responseEmployeeDetails = new List<EmployeeDetails>();
+
+            foreach (var employee in employees)
+            {
+                responseEmployeeDetails.Add(new EmployeeDetails
+                {
+                    Id = employee.EmployeeId,
+                    EmployeeName = employee.EmployeName,
+                    Email = employee.Email
+                }
+                );
+            }
+            return Ok(responseEmployeeDetails);
         }
     }
 }

@@ -10,7 +10,8 @@ namespace AccessDataApi.Data
     {
         public static void CreateSeedData(this ApplicationContext context)
         {
-            context.SaveChanges();
+            //context.Database.EnsureDeleted();
+            //return;
 
             if (context.Employees.Any())
                 return;
@@ -164,16 +165,21 @@ namespace AccessDataApi.Data
                 date = date
             };
 
+            context.DateTimeKeys.Add(datetimekey);
+            context.SaveChanges();
+
             var requestedBookApp = new AppointmentDetails()
             {
                 ClientAccount = new ClientAccount() { FirstName = "Test", Email = "Fake@gmail.com", ContactNumber = "12345678901" },
-                TreatmentId = 1,
-                EmployeeId = 1,
+                Treatment = context.Treatments.Single(x => x.TreatmentId == 1),
+                Employee = context.Employees.Single(x => x.EmployeeId == 1),
                 DateTimeKey = datetimekey,
                 Reservation = new Reservation() { StartTime = date.AddHours(10), EndTime = date.AddHours(10).AddMinutes(45) }
             };
 
-            context.AppointmentDetails.Add(requestedBookApp);
+            datetimekey.Appointments.Add(requestedBookApp);
+
+           // context.AppointmentDetails.Add(requestedBookApp);
             context.SaveChanges();
 
 

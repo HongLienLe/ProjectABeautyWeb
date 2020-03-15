@@ -39,10 +39,12 @@ namespace AccessDataApi.Repo
                 return treatment;
         }
 
-        public void AddTreatment(Treatment treatment)
+        public string AddTreatment(Treatment treatment)
         {
             _context.Treatments.Add(treatment);
             _context.SaveChanges();
+
+            return "Sucessfully Added Treatment";
         }
 
         public Treatment UpdateTreatment(int id, Treatment treatment)
@@ -52,6 +54,7 @@ namespace AccessDataApi.Repo
 
             var oldTreatment = _context.Treatments.First(x => x.TreatmentId == id);
 
+            oldTreatment.TreatmentType = treatment.TreatmentType;
             oldTreatment.TreatmentName = treatment.TreatmentName;
             oldTreatment.Price = treatment.Price;
             oldTreatment.Duration = treatment.Duration;

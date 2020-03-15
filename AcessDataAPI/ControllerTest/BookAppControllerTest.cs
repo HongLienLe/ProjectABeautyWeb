@@ -22,7 +22,7 @@ namespace AcessDataAPITest.ControllerTest
             {
                 ClientAccount = new ClientAccount() { FirstName = "Test", Email = "Fake@gmail.com", ContactNumber = "12345678901" },
                 TreatmentId = 1,
-                Reservation = new Reservation() { StartTime = date.AddHours(10), EndTime = date.AddHours(10).AddMinutes(45) }
+                Reservation = new Reservation() { StartTime = date.AddHours(10), EndTime = date.AddHours(10).AddMinutes(45) } 
             };
 
             var mockBookApp = new Mock<IBookAppointment>();
@@ -49,7 +49,7 @@ namespace AcessDataAPITest.ControllerTest
             {
                 ClientAccount = new ClientAccount() { FirstName = "Test", Email = "Fake@gmail.com", ContactNumber = "12345678901" },
                 TreatmentId = 1,
-                Reservation = new Reservation() { StartTime = date.AddHours(10), EndTime = date.AddHours(10).AddMinutes(45) }
+                Reservation = new Reservation() { StartTime = date.AddHours(10), EndTime = date.AddHours(10).AddMinutes(45) } 
             };
 
             mockBookApp.Setup(x => x.CreateAppointment(date, requestedBookApp))
@@ -100,7 +100,10 @@ namespace AcessDataAPITest.ControllerTest
             {
                 ClientAccount = new ClientAccount() { FirstName = "Test", Email = "Fake@gmail.com", ContactNumber = "12345678901" },
                 TreatmentId = 1,
-                Reservation = new Reservation() { StartTime = date.AddHours(10), EndTime = date.AddHours(10).AddMinutes(45) }
+                Reservation = new Reservation()
+                {
+                    StartTime = date.AddHours(10), EndTime = date.AddHours(10).AddMinutes(45) 
+                }
             };
 
             var mockBookApp = new Mock<IBookAppointment>();
@@ -125,7 +128,10 @@ namespace AcessDataAPITest.ControllerTest
             {
                 ClientAccount = new ClientAccount() { FirstName = "Test", Email = "Fake@gmail.com", ContactNumber = "12345678901" },
                 TreatmentId = 1,
-                Reservation = new Reservation() { StartTime = date.AddHours(10), EndTime = date.AddHours(10).AddMinutes(45) }
+                Reservation = new Reservation()
+                {
+                    StartTime = date.AddHours(10), EndTime = date.AddHours(10).AddMinutes(45) 
+                }
             };
 
             var mockBookApp = new Mock<IBookAppointment>();

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using AccessDataApi.Data;
@@ -29,8 +30,23 @@ namespace AccessDataApi.Controllers
                 return NotFound();
             }
 
+            List<TreatmentDetails> responseTreatmentDetails = new List<TreatmentDetails>();
 
-            return Ok(employeeTreatments);
+            foreach (var treatment in employeeTreatments)
+            {
+                responseTreatmentDetails.Add(new TreatmentDetails()
+                {
+                    Id = treatment.TreatmentId,
+                    TreatmentType = treatment.TreatmentType,
+                    TreatmentName = treatment.TreatmentName,
+                    Price = treatment.Price,
+                    Duration = treatment.Duration
+                });
+            }
+
+
+
+            return Ok(responseTreatmentDetails);
         }
 
         [HttpPost("employee/treatments")]
@@ -50,5 +66,7 @@ namespace AccessDataApi.Controllers
         {
             _employeeTreatmentRepo.RemoveEmployeeTreatment(employeeTreatment);
         }
+
+        //get employees by treatment id
     }
 }

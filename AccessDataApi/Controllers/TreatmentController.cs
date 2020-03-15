@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AccessDataApi.Data;
+using AccessDataApi.HTTPModels;
 using AccessDataApi.Models;
 using AccessDataApi.Repo;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,26 @@ namespace AccessDataApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_treatmentRepo.GetTreatments());
+            var treatments = _treatmentRepo.GetTreatments();
+
+            if (treatments == null)
+                return NotFound(treatments);
+
+            List<TreatmentDetails> responseTreatmentDetails = new List<TreatmentDetails>();
+
+            foreach(var treatment in treatments)
+            {
+                responseTreatmentDetails.Add(new TreatmentDetails()
+                {
+                    Id = treatment.TreatmentId,
+                    TreatmentType = treatment.TreatmentType,
+                    TreatmentName = treatment.TreatmentName,
+                    Price = treatment.Price,
+                    Duration = treatment.Duration
+                });
+            }
+
+            return Ok(responseTreatmentDetails);
         }
 
         // GET api/values/5
@@ -37,27 +57,66 @@ namespace AccessDataApi.Controllers
 
             if (treatment == null)
                 return BadRequest(treatment);
-            return Ok(treatment);
+            return Ok(new TreatmentDetails()
+            {
+                Id = treatment.TreatmentId,
+                TreatmentType = treatment.TreatmentType,
+                TreatmentName = treatment.TreatmentName,
+                Price = treatment.Price,
+                Duration = treatment.Duration
+            });
         }
 
         // POST api/values
-        [HttpPost]
-        public void Post([FromBody]Treatment treatment)
+        [HttpPost("add")]
+        public IActionResult AddingTreatment([FromBody]TreatmentForm treatmentForm)
         {
-            _treatmentRepo.AddTreatment(treatment);
+            var treatment = new Treatment()
+            {
+                TreatmentType = treatmentForm.TreatmentType,
+                TreatmentName = treatmentForm.TreatmentName,
+                Price = treatmentForm.Price,
+                Duration = treatmentForm.Duration
+            };
+
+           return Ok( _treatmentRepo.AddTreatment(treatment));
 
         }
 
         // PUT api/values/5
-        [HttpPost("{id}")]
-        public void Put(int id, [FromBody]Treatment treatment)
+        [HttpPost("update/{id}")]
+        public IActionResult UpdatingTreatment(int id, [FromBody]TreatmentForm treatmentForm)
         {
-            _treatmentRepo.UpdateTreatment(id,treatment);
+            var treatment = new Treatment()
+            {
+                TreatmentType = treatmentForm.TreatmentType,
+                TreatmentName = treatmentForm.TreatmentName,
+                Price = treatmentForm.Price,
+                Duration = treatmentForm.Duration
+            };
+
+            var response =  _treatmentRepo.UpdateTreatment(id,treatment);
+
+            if (response == null)
+                return NotFound(response);
+
+            var returnTreatment = new TreatmentDetails()
+            {
+                Id = response.TreatmentId,
+                TreatmentType = response.TreatmentType,
+                isAddOn = response.isAddOn,
+                TreatmentName = response.TreatmentName,
+                Price = response.Price,
+                Duration = response.Duration
+            };
+
+            return Ok(new { response = "Successfully updated Treatment", treatment = returnTreatment });
+
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult DeletingTreatment(int id)
         {
            var response = _treatmentRepo.DeleteTreatment(id);
 

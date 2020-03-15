@@ -20,6 +20,8 @@ namespace AcessDataAPITest.RepoTest
             _treatmentRepo = new TreatmentRepo(_context);
         }
 
+        //"Sucessfully Added Treatment" test the add 
+
         [Test]
         public void ReturnAllTreatmentsList()
         {

@@ -35,7 +35,7 @@ namespace AccessDataApi.Controllers
         public IActionResult GetWorkingEmployeesByDateAndTreatment(int year, int month, int day, int treatmentId)
         {
             DateTime choosenDate = new DateTime(year, month, day);
-            var response = _availbiliyRepo.GetWorkingEmployeesByDateAndTreatment(choosenDate, treatmentId);
+            var response = _availbiliyRepo.GetAvailableTimeWithTreatment(choosenDate, treatmentId);
 
             if (response == null)
                 return BadRequest(response);

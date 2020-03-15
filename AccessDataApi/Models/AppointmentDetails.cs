@@ -18,7 +18,7 @@ namespace AccessDataApi.Models
         public int ClientAccountId { get; set; }
         public ClientAccount ClientAccount { get; set; }
 
-        [Column("DateTimeAppointment")]
+        [Column("DateTimeAppointment_Id")]
         public string DateTimeKeyId { get; set; }
         public DateTimeKey DateTimeKey { get; set; }
 

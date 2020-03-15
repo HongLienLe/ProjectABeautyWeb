@@ -38,7 +38,10 @@ namespace AcessDataAPITest.RepoTest
             {
                 ClientAccount = new ClientAccount() { FirstName = "Test", Email = "Fake@gmail.com", ContactNumber = "12345678901" },
                 TreatmentId = 1,
-                Reservation = new Reservation() { StartTime = date.AddHours(10), EndTime = date.AddHours(10).AddMinutes(45) }
+                Reservation = new Reservation()
+                {
+                    StartTime = date.AddHours(10), EndTime = date.AddHours(10).AddMinutes(45) 
+                }
             };
 
            var response = _bookAppRepo.CreateAppointment(date, requestedBookApp);
@@ -63,7 +66,7 @@ namespace AcessDataAPITest.RepoTest
                 ClientAccount = new ClientAccount() { FirstName = "Test", Email = "Fake@gmail.com", ContactNumber = "12345678901" },
                 EmployeeId = 1,
                 TreatmentId = 1,
-                Reservation = new Reservation() { StartTime = invalidDate.AddHours(10), EndTime = invalidDate.AddHours(10).AddMinutes(45) }
+                Reservation = new Reservation() { StartTime = invalidDate.AddHours(10), EndTime = invalidDate.AddHours(10).AddMinutes(45) } 
             };
             var response = _bookAppRepo.CreateAppointment(invalidDate, requestedBookApp);
             var shouldBeFalseNotAddedToDB = _context.DateTimeKeys.Any() && _context.AppointmentDetails.Any() ? true : false;
@@ -84,7 +87,7 @@ namespace AcessDataAPITest.RepoTest
             {
                 ClientAccount = new ClientAccount() { FirstName = "Test", Email = "Fake@gmail.com", ContactNumber = "12345678901" },
                 TreatmentId = 1,
-                Reservation = new Reservation() { StartTime = date.AddHours(10), EndTime = date.AddHours(10).AddMinutes(45) }
+                Reservation = new Reservation() { StartTime = date.AddHours(10), EndTime = date.AddHours(10).AddMinutes(45) } 
             };
 
             var response = _bookAppRepo.CreateAppointment(date, requestedBookApp);
@@ -110,7 +113,10 @@ namespace AcessDataAPITest.RepoTest
             {
                 ClientAccount = new ClientAccount() { FirstName = "Test", Email = "Fake@gmail.com", ContactNumber = "12345678901" },
                 TreatmentId = 1,
-                Reservation = new Reservation() { StartTime = date.AddHours(11), EndTime = date.AddHours(11).AddMinutes(45)}
+                Reservation = new Reservation()
+                {
+                     StartTime = date.AddHours(11), EndTime = date.AddHours(11).AddMinutes(45) 
+                }
             };
 
             FullyBookedAllDay(2);
@@ -137,7 +143,10 @@ namespace AcessDataAPITest.RepoTest
             {
                 ClientAccount = new ClientAccount() { FirstName = "Test", Email = "Fake@gmail.com", ContactNumber = "12345678901" },
                 TreatmentId = 1,
-                Reservation = new Reservation() { StartTime = date.AddHours(11), EndTime = date.AddHours(11).AddMinutes(45) }
+                Reservation = new Reservation()
+                {
+                    StartTime = date.AddHours(11), EndTime = date.AddHours(11).AddMinutes(45) 
+                }
             };
 
             FullyBookedAllDay(1);
@@ -168,7 +177,10 @@ namespace AcessDataAPITest.RepoTest
                 {
                     ClientAccount = new ClientAccount() { FirstName = "Test", Email = "Fake@gmail.com", ContactNumber = "12345678901" },
                     TreatmentId = 1,
-                    Reservation = new Reservation() { StartTime = date.AddHours(10), EndTime = date.AddHours(19) }
+                    Reservation = new Reservation()
+                    {
+                        StartTime = date.AddHours(10), EndTime = date.AddHours(19)
+                    }
                 };
 
                 _bookAppRepo.CreateAppointment(date,requestedBookApp);

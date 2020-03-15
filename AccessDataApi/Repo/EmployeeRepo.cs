@@ -33,11 +33,13 @@ namespace AccessDataApi.Repo
             return _context.Employees.First(x => x.EmployeeId == employeeId);    
         }
 
-        public void AddEmployee(Employee employee)
+        public string AddEmployee(Employee employee)
         {
             _context.Employees.Add(employee);
 
             _context.SaveChanges();
+
+            return "Sucessfully Added new employee";
         }
 
         public string UpdateEmployee(int employeeId, Employee employee)

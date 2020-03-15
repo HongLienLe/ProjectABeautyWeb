@@ -16,37 +16,38 @@ namespace AccessDataApi.Repo
             _context = context;
         }
 
-        public ITimePeriodCollection GetAvailableTime(DateTime date)
+        public List<DateTime> GetAvailableTime(DateTime date)
         {
             if (!isOperating(date))
             {
                 return null;
             }
 
-            var hasBookings = _context.DateTimeKeys.Any(x => x.DateTimeKeyId == date.ToShortDateString());
-
-                if (!hasBookings)
+                if (!_context.DateTimeKeys.Any(x => x.DateTimeKeyId == date.ToShortDateString()))
                 {
                     var timeRange = GetTimeRange(date);
 
-                    return new TimePeriodCollection() { timeRange };
+                    return GetFreeSlots( new TimePeriodCollection() { timeRange });
                 }
 
-                TimePeriodCollection allAvailbleTimeForDate = new TimePeriodCollection();
+            TimePeriodCollection availableTimeForEmployees = new TimePeriodCollection();
 
-            var employees = _context.workSchedules.Where(x => x.OperatingTimeId == date.Day).Select(x => x.Employee);
+            var employees = _context.workSchedules.Where(x => x.OperatingTimeId == (int)date.DayOfWeek).Select(x => x.Employee);
 
             foreach(var employee in employees)
             {
-                var availableTimePeriods = GetAvailbilityByEmployee(date, employee);
+                var employeeFreeTimeSlots = GetAvailbilityByEmployee(date, employee);
 
-                allAvailbleTimeForDate.Add(availableTimePeriods);
+                availableTimeForEmployees.Add(employeeFreeTimeSlots);
             }
 
-            return allAvailbleTimeForDate;
+            TimePeriodCombiner<TimeRange> periodCombiner = new TimePeriodCombiner<TimeRange>();
+            ITimePeriodCollection combinedPeriods = periodCombiner.CombinePeriods(availableTimeForEmployees);
+
+            return GetFreeSlots(combinedPeriods);
         }
 
-        public ITimePeriodCollection GetAvailableTimeWithTreatment(DateTime date, int treatmentId)
+        public List<DateTime> GetAvailableTimeWithTreatment(DateTime date, int treatmentId)
         {
             TimePeriodCollection availableTimeForTreatment = new TimePeriodCollection();
 
@@ -57,8 +58,30 @@ namespace AccessDataApi.Repo
                 availableTimeForTreatment.Add(employeeFreeReservations);
             }
 
-            return availableTimeForTreatment;
+            TimePeriodCombiner<TimeRange> periodCombiner = new TimePeriodCombiner<TimeRange>();
+            ITimePeriodCollection combinedPeriods = periodCombiner.CombinePeriods(availableTimeForTreatment);
+
+            return GetFreeSlots(combinedPeriods);
         }
 
+        private List<DateTime> GetFreeSlots(ITimePeriodCollection timePeriods)
+        {          
+            List<DateTime> avaliableTimeSlots = new List<DateTime>();
+
+            foreach(var period in timePeriods)
+            {
+                var startTimePeriod = period.Start;
+                var endTimePeriod = period.End.Subtract(new TimeSpan(0,30,0));
+
+                while(startTimePeriod < endTimePeriod)
+                {
+                    avaliableTimeSlots.Add(startTimePeriod);
+
+                    startTimePeriod = startTimePeriod.AddMinutes(15);
+                }
+            }
+
+            return avaliableTimeSlots;
+        }
     }
 }

@@ -109,7 +109,14 @@ namespace AccessDataApi.Data
 
             });
 
-            
+            modelBuilder.Entity<DateTimeKey>(entity =>
+              {
+                  entity.HasMany(x => x.Appointments)
+                 .WithOne(x => x.DateTimeKey)
+                 .HasForeignKey(x => x.DateTimeKeyId);
+
+               });
+
         }
     }
 }

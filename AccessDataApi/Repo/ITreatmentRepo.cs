@@ -12,7 +12,7 @@ namespace AccessDataApi.Repo
 
         public Treatment GetTreatment(int id);
 
-        public void AddTreatment(Treatment treatment);
+        public string AddTreatment(Treatment treatment);
 
         public Treatment UpdateTreatment(int id, Treatment treatment);
 

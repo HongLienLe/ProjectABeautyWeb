@@ -22,6 +22,8 @@ namespace AccessDataApi.Models
         [Required]
         public string TreatmentName { get; set; }
 
+        public bool isAddOn { get; set; } = false;
+
         [Required]
         public double Price { get; set; }
 
@@ -49,9 +51,7 @@ namespace AccessDataApi.Models
         [Display(Name = "Natural Nail Care")]
         NaturalNail,
         [Display(Name = "Gel Polish")]
-        GelPolish,
-        [Display(Name = "Add On")]
-        AddOn
+        GelPolish
     }
 
 }

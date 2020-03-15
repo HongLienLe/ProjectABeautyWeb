@@ -9,7 +9,7 @@ namespace AccessDataApi.Repo
     {
         public List<Employee> GetEmployees();
         public Employee GetEmployee(int employeeId);
-        public void AddEmployee(Employee employee);
+        public string AddEmployee(Employee employee);
         public string UpdateEmployee(int employeeId, Employee employee);
         public void DeleteEmployee(int employeeId);
 

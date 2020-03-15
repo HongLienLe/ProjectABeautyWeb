@@ -7,8 +7,7 @@ namespace AccessDataApi.Repo
 {
     public interface IAvailabilityRepo
     {
-        public List<Employee> GetWorkingEmployeesByDateAndTreatment(DateTime date, int treatmentId);
-        public ITimePeriodCollection GetAvailbilityByEmployee(DateTime date, Employee employee);
-        public ITimePeriodCollection GetAvailableTime(DateTime date);
+        public List<DateTime> GetAvailableTime(DateTime date);
+        public List<DateTime> GetAvailableTimeWithTreatment(DateTime date, int treatmentId);
     }
 }
