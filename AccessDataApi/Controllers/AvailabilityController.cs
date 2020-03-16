@@ -35,10 +35,7 @@ namespace AccessDataApi.Controllers
         [HttpPost("date/treatments")]
         public IActionResult GetWorkingEmployeesByDateAndTreatment([FromBody]TimeSlotForTreatmentForm timeSlotForTreatmentForm)
         {
-
-
-            DateTime choosenDate = DateTime.Parse(timeSlotForTreatmentForm.Date);
-            var response = _availbiliyRepo.GetAvailableTimeWithTreatment(choosenDate, timeSlotForTreatmentForm.Treatments);
+            var response = _availbiliyRepo.GetAvailableTimeWithTreatment(timeSlotForTreatmentForm.Date, timeSlotForTreatmentForm.Treatments);
 
             if (response == null)
                 return BadRequest(response);

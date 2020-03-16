@@ -6,7 +6,6 @@
 /Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/bin/Debug/netcoreapp3.1/PaymentAPI.runtimeconfig.dev.json
 /Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/bin/Debug/netcoreapp3.1/PaymentAPI.dll
 /Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/bin/Debug/netcoreapp3.1/PaymentAPI.pdb
-/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/obj/Debug/netcoreapp3.1/PaymentAPI.csprojAssemblyReference.cache
 /Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/obj/Debug/netcoreapp3.1/PaymentAPI.MvcApplicationPartsAssemblyInfo.cache
 /Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/obj/Debug/netcoreapp3.1/PaymentAPI.AssemblyInfoInputs.cache
 /Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/obj/Debug/netcoreapp3.1/PaymentAPI.AssemblyInfo.cs

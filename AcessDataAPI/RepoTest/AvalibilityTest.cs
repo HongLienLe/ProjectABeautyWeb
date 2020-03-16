@@ -28,23 +28,6 @@ namespace AcessDataAPITest.RepoTest
             _availbilityRepo = new AvailabilityRepo(_context);
         }
 
-        //[Test]
-        //public void GetAvaliableTimesForGivenDate()
-        //{
-        //    var date = new DateTime(2020, 3, 9);
-        //    var expectedDate = GetFreeSlots();
-        //    var freeTimePeriods = _availbilityRepo.GetAvailableTime(date);
-
-        //    EndConnection();
-
-        //    for(int i = 0; i < expectedDate.Count; i++)
-        //    {
-        //        Console.WriteLine($" Result Avaliable Time : {freeTimePeriods[i].ToShortTimeString()}");
-
-        //        Assert.IsTrue(freeTimePeriods[i] == expectedDate[i]);
-        //    }
-        //}
-
         [Test]
         public void GetAvaliableTimesViaTreatmentDateShouldBeTrue()
         {
@@ -106,5 +89,22 @@ namespace AcessDataAPITest.RepoTest
 
             return avaliableTimeSlots;
         }
+
+        //[Test]
+        //public void GetAvaliableTimesForGivenDate()
+        //{
+        //    var date = new DateTime(2020, 3, 9);
+        //    var expectedDate = GetFreeSlots();
+        //    var freeTimePeriods = _availbilityRepo.GetAvailableTime(date);
+
+        //    EndConnection();
+
+        //    for(int i = 0; i < expectedDate.Count; i++)
+        //    {
+        //        Console.WriteLine($" Result Avaliable Time : {freeTimePeriods[i].ToShortTimeString()}");
+
+        //        Assert.IsTrue(freeTimePeriods[i] == expectedDate[i]);
+        //    }
+        //}
     }
 }

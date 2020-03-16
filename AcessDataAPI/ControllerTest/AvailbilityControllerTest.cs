@@ -13,6 +13,38 @@ namespace AcessDataAPITest.ControllerTest
 {
     public class AvailbilityControllerTest
     {
+
+        [Test]
+        public void Return400BadRequestIfRequestIsFullyBookedByDateAndTreatmentId()
+        {
+
+        }
+
+        private List<DateTime> GetFreeSlots()
+        {
+            List<DateTime> avaliableTimeSlots = new List<DateTime>();
+
+            TimePeriodCollection timePeriods = new TimePeriodCollection()
+            {
+                new TimeRange(new DateTime(2020,3,9,10,00,00), new DateTime(2020,3,9,19,00,00))
+            };
+
+            foreach (var period in timePeriods)
+            {
+                var startTimePeriod = period.Start;
+                var endTimePeriod = period.End.Subtract(new TimeSpan(0, 30, 0));
+
+                while (startTimePeriod < endTimePeriod)
+                {
+                    avaliableTimeSlots.Add(startTimePeriod);
+
+                    startTimePeriod = startTimePeriod.AddMinutes(15);
+                }
+            }
+
+            return avaliableTimeSlots;
+        }
+
         //[Test]
         //public void ReturnNullWhenNonOperatingDateIsGiven()
         //{
@@ -61,37 +93,6 @@ namespace AcessDataAPITest.ControllerTest
         //    Console.WriteLine(response);
         //    Assert.IsTrue(200 == response.StatusCode);
         //}
-
-        [Test]
-        public void Return400BadRequestIfRequestIsFullyBookedByDateAndTreatmentId()
-        {
-
-        }
-
-        private List<DateTime> GetFreeSlots()
-        {
-            List<DateTime> avaliableTimeSlots = new List<DateTime>();
-
-            TimePeriodCollection timePeriods = new TimePeriodCollection()
-            {
-                new TimeRange(new DateTime(2020,3,9,10,00,00), new DateTime(2020,3,9,19,00,00))
-            };
-
-            foreach (var period in timePeriods)
-            {
-                var startTimePeriod = period.Start;
-                var endTimePeriod = period.End.Subtract(new TimeSpan(0, 30, 0));
-
-                while (startTimePeriod < endTimePeriod)
-                {
-                    avaliableTimeSlots.Add(startTimePeriod);
-
-                    startTimePeriod = startTimePeriod.AddMinutes(15);
-                }
-            }
-
-            return avaliableTimeSlots;
-        }
 
     }
 }
