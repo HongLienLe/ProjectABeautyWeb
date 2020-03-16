@@ -19,15 +19,14 @@ namespace AccessDataApi.Repo
             _context = context;
         }
 
-        public string MakeAppointment(BookAppointmentForm bookAppointmentForm)
+        public string MakeAppointment(DateTime date,BookAppointmentForm bookAppointmentForm)
         {
-            var apps = CastToAppointmentDetails(bookAppointmentForm);
-            var choosenDate = DateTime.Parse(bookAppointmentForm.DateTimeFormatt);
+            var apps = CastToAppointmentDetails(date,bookAppointmentForm);
 
             StringBuilder returnResponse = new StringBuilder();
 
             foreach (var app in apps) {
-               returnResponse.AppendLine( CreateAppointment(choosenDate, app));
+               returnResponse.AppendLine( CreateAppointment(date, app));
             };
 
             return returnResponse.ToString();
@@ -126,7 +125,7 @@ namespace AccessDataApi.Repo
             return true;
         }
 
-        private List<AppointmentDetails> CastToAppointmentDetails(BookAppointmentForm bkappForm)
+        private List<AppointmentDetails> CastToAppointmentDetails(DateTime date, BookAppointmentForm bkappForm)
         {
             var appointments = new List<AppointmentDetails>();
 
@@ -143,16 +142,21 @@ namespace AccessDataApi.Repo
                 };
             }
 
-            foreach(var treatmentId in bkappForm.TreatmentIds)
+            var toDateTimeStartTime = date.Add(TimeSpan.Parse(bkappForm.StartTime));
+
+            foreach (var treatmentId in bkappForm.TreatmentIds)
             {
+                var timeSlotReserved = CastReservation(toDateTimeStartTime, treatmentId);
                 appointments.Add(new AppointmentDetails()
                 {
                     ClientAccount = client,
-                    DateTimeKeyId = bkappForm.DateTimeFormatt,
+                    DateTimeKeyId = date.ToShortDateString(),
                     EmployeeId = 0,
                     TreatmentId = treatmentId,
-                    Reservation = CastReservation(bkappForm.DateTimeFormatt, bkappForm.StartTime, treatmentId),
+                    Reservation = timeSlotReserved,
                 });
+
+                toDateTimeStartTime = timeSlotReserved.EndTime;
             }
 
 
@@ -160,14 +164,13 @@ namespace AccessDataApi.Repo
 
         }
 
-        private Reservation CastReservation(string date, string StartTime, int treatmentId)
+        private Reservation CastReservation(DateTime StartTime, int treatmentId)
         {
             var treatmentDuration = _context.Treatments.Single(x => x.TreatmentId == treatmentId).Duration;
-            var toDateTimeStartTime = DateTime.Parse(date);
             var reservation = new Reservation()
             {
-                StartTime = toDateTimeStartTime,
-                EndTime = toDateTimeStartTime.AddMinutes(treatmentDuration),
+                StartTime = StartTime,
+                EndTime = StartTime.AddMinutes(treatmentDuration),
             };
 
             return reservation;

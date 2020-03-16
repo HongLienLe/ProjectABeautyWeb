@@ -1,23 +1,20 @@
 ﻿<Properties StartupConfiguration="{3517FF51-7355-41C9-8381-5A774FD65C35}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
   <MonoDevelop.Ide.ItemProperties.AcessDataAPITest PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.ItemProperties.ProjectABeautyWeb PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AcessDataAPI/RepoTest/BookAppTest.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AccessDataApi/Repo/BookAppointment.cs">
     <Files>
-      <File FileName="AccessDataApi/Controllers/TreatmentController.cs" Line="1" Column="1" />
-      <File FileName="AccessDataApi/Controllers/AvailabilityController.cs" />
-      <File FileName="AccessDataApi/HTTPModels/TimeSlotForTreatmentForm.cs" />
-      <File FileName="AccessDataApi/Repo/AvailabilityRepo.cs" />
-      <File FileName="AccessDataApi/Repo/AppointmentService.cs" />
-      <File FileName="AccessDataApi/Repo/IAppointmentService.cs" />
-      <File FileName="AccessDataApi/Repo/IAvailabilityRepo.cs" />
-      <File FileName="AccessDataApi/Repo/BookAppointment.cs" Line="33" Column="46" />
-      <File FileName="AccessDataApi/Models/AppointmentDetails.cs" />
-      <File FileName="AcessDataAPI/RepoTest/AvalibilityTest.cs" />
-      <File FileName="AcessDataAPI/ControllerTest/AvailbilityControllerTest.cs" />
-      <File FileName="AccessDataApi/Controllers/BookAppController.cs" Line="1" Column="1" />
-      <File FileName="AccessDataApi/HTTPModels/BookAppointmentForm.cs" Line="9" Column="38" />
-      <File FileName="AcessDataAPI/RepoTest/BookAppTest.cs" Line="53" Column="1" />
+      <File FileName="AccessDataApi/Repo/AvailabilityRepo.cs" Line="96" Column="51" />
+      <File FileName="AccessDataApi/Repo/IAppointmentService.cs" Line="14" Column="87" />
+      <File FileName="AccessDataApi/Repo/IAvailabilityRepo.cs" Line="14" Column="1" />
+      <File FileName="AccessDataApi/Repo/BookAppointment.cs" Line="43" Column="1" />
+      <File FileName="AccessDataApi/Controllers/BookAppController.cs" Line="34" Column="1" />
+      <File FileName="AccessDataApi/HTTPModels/BookAppointmentForm.cs" Line="8" Column="1" />
+      <File FileName="AcessDataAPI/RepoTest/BookAppTest.cs" Line="33" Column="40" />
       <File FileName="AcessDataAPI/RepoTest/BaseTest.cs" Line="19" Column="1" />
+      <File FileName="AccessDataApi/Repo/IBookAppointment.cs" Line="9" Column="53" />
+      <File FileName="AccessDataApi/Models/ClientAccount.cs" Line="29" Column="1" />
+      <File FileName="AccessDataApi/Models/Treatment.cs" Line="40" Column="1" />
+      <File FileName="AccessDataApi/Repo/AppointmentService.cs" Line="22" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -28,13 +25,13 @@
               <Node name="Data" expanded="True" />
               <Node name="HTTPModels" expanded="True" />
               <Node name="Models" expanded="True" />
-              <Node name="Repo" expanded="True" />
+              <Node name="Repo" expanded="True">
+                <Node name="BookAppointment.cs" selected="True" />
+              </Node>
             </Node>
             <Node name="AcessDataAPITest" expanded="True">
               <Node name="ControllerTest" expanded="True" />
-              <Node name="RepoTest" expanded="True">
-                <Node name="BookAppTest.cs" selected="True" />
-              </Node>
+              <Node name="RepoTest" expanded="True" />
             </Node>
           </Node>
         </State>
@@ -47,9 +44,7 @@
                 <Node name="ControllerTest" expanded="True" />
                 <Node name="RepoTest" expanded="True">
                   <Node name="AvalibilityTest" expanded="True" />
-                  <Node name="BookAppTest" expanded="True">
-                    <Node name="BookTheFirstAppointmentWithValidModel" selected="True" />
-                  </Node>
+                  <Node name="BookAppTest" expanded="True" selected="True" />
                 </Node>
               </Node>
             </Node>
@@ -63,7 +58,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/hongle/Projects/ProjectABeautyWeb/AcessDataAPI/RepoTest/BookAppTest.cs" relfile="AcessDataAPI/RepoTest/BookAppTest.cs" line="47" column="1" />
+      <Breakpoint file="/Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/Controllers/BookAppController.cs" relfile="AccessDataApi/Controllers/BookAppController.cs" line="27" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

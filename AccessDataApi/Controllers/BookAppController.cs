@@ -31,7 +31,7 @@ namespace AccessDataApi.Controllers
             if (dateTime > DateTime.Today)
                 return BadRequest("Past date not available");
 
-            var response = _bookAppRepo.MakeAppointment(bookApp);
+            var response = _bookAppRepo.MakeAppointment(dateTime,bookApp);
 
             if (response.EndsWith("e"))
                 return NotFound(response);
