@@ -24,14 +24,14 @@ namespace AccessDataApi.Controllers
 
         // POST api/values
         [HttpPost("date/{year}/{month}/{day}/book")]
-        public IActionResult CreateAppointment(int year, int month, int day, [FromBody]AppointmentDetails bookApp)
+        public IActionResult CreateAppointment(int year, int month, int day, [FromBody]BookAppointmentForm bookApp)
         {
             DateTime dateTime = new DateTime(year, month, day);
 
-            if (bookApp.Reservation.StartTime > DateTime.Today)
+            if (dateTime > DateTime.Today)
                 return BadRequest("Past date not available");
 
-            var response = _bookAppRepo.CreateAppointment(dateTime, bookApp);
+            var response = _bookAppRepo.MakeAppointment(bookApp);
 
             if (response.EndsWith("e"))
                 return NotFound(response);
@@ -51,20 +51,16 @@ namespace AccessDataApi.Controllers
             if (response == null)
                 return NotFound(response);
 
-            return Ok(response);
+            return Ok(new
+            {
+                id = response.AppointmentDetailsId,
+                Name = $"{response.ClientAccount.FirstName} {response.ClientAccount.LastName}",
+                Treatmemt = $"{response.Treatment.TreatmentName}",
+                StartTime = response.Reservation.StartTime.ToString(),
+                EndTime = response.Reservation.EndTime.ToString()
+            });
         }
 
-        //private AppointmentDetails CastToAppointmentDetails(BookAppointmentForm bkappForm)
-        //{
-        //    AppointmentDetails appointment = new AppointmentDetails()
-        //    {
-        //        DateTimeKeyId = bkappForm.DateTimeFormatt,
-        //        EmployeeId = 0,
-        //        TreatmentId = 1,
-
-        //    };
-
-        //    var treatmentDuration = 
-        //}
+        
     }
 }

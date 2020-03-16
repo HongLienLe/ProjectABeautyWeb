@@ -8,6 +8,6 @@ namespace AccessDataApi.Repo
     public interface IAvailabilityRepo
     {
         public List<DateTime> GetAvailableTime(DateTime date);
-        public List<DateTime> GetAvailableTimeWithTreatment(DateTime date, int treatmentId);
+        public List<DateTime> GetAvailableTimeWithTreatment(DateTime date, List<int> treatmentIds);
     }
 }

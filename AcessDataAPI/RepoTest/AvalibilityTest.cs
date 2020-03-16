@@ -28,29 +28,29 @@ namespace AcessDataAPITest.RepoTest
             _availbilityRepo = new AvailabilityRepo(_context);
         }
 
-        [Test]
-        public void GetAvaliableTimesForGivenDate()
-        {
-            var date = new DateTime(2020, 3, 9);
-            var expectedDate = GetFreeSlots();
-            var freeTimePeriods = _availbilityRepo.GetAvailableTime(date);
+        //[Test]
+        //public void GetAvaliableTimesForGivenDate()
+        //{
+        //    var date = new DateTime(2020, 3, 9);
+        //    var expectedDate = GetFreeSlots();
+        //    var freeTimePeriods = _availbilityRepo.GetAvailableTime(date);
 
-            EndConnection();
+        //    EndConnection();
 
-            for(int i = 0; i < expectedDate.Count; i++)
-            {
-                Console.WriteLine($" Result Avaliable Time : {freeTimePeriods[i].ToShortTimeString()}");
+        //    for(int i = 0; i < expectedDate.Count; i++)
+        //    {
+        //        Console.WriteLine($" Result Avaliable Time : {freeTimePeriods[i].ToShortTimeString()}");
 
-                Assert.IsTrue(freeTimePeriods[i] == expectedDate[i]);
-            }
-        }
+        //        Assert.IsTrue(freeTimePeriods[i] == expectedDate[i]);
+        //    }
+        //}
 
         [Test]
         public void GetAvaliableTimesViaTreatmentDateShouldBeTrue()
         {
             var date = new DateTime(2020, 3, 9);
             var expectedDate = GetFreeSlots();
-            var freeTimePeriodsForInFillAcrylic = _availbilityRepo.GetAvailableTimeWithTreatment(date, 1);
+            var freeTimePeriodsForInFillAcrylic = _availbilityRepo.GetAvailableTimeWithTreatment(date, new List<int>() { 1 });
 
             EndConnection();
 
@@ -66,7 +66,7 @@ namespace AcessDataAPITest.RepoTest
         public void GetAvaliableTimesViaTreatmentDateShouldBeNull()
         {
             var date = new DateTime(2020, 3, 9);
-            var freeTimePeriodsForPedicure = _availbilityRepo.GetAvailableTimeWithTreatment(date, 6);
+            var freeTimePeriodsForPedicure = _availbilityRepo.GetAvailableTimeWithTreatment(date, new List<int>() { 6 });
 
             EndConnection();
 
@@ -94,7 +94,7 @@ namespace AcessDataAPITest.RepoTest
             foreach (var period in timePeriods)
             {
                 var startTimePeriod = period.Start;
-                var endTimePeriod = period.End.Subtract(new TimeSpan(0, 30, 0));
+                var endTimePeriod = period.End.Subtract(new TimeSpan(0, 60, 0));
 
                 while (startTimePeriod < endTimePeriod)
                 {

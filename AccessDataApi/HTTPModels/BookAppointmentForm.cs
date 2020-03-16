@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace AccessDataApi.HTTPModels
 {
     public class BookAppointmentForm : ClientForm
     {
         public string DateTimeFormatt { get; set; }
-        public int TreatmentId { get; set; }
+        public List<int> TreatmentIds { get; set; }
         public string StartTime { get; set; }
 
     }

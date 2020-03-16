@@ -7,6 +7,7 @@ using Moq;
 using AccessDataApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using AccessDataApi.HTTPModels;
 
 namespace AcessDataAPITest.ControllerTest
 {
@@ -32,7 +33,7 @@ namespace AcessDataAPITest.ControllerTest
 
             var controller = new BookAppController(mockBookApp.Object);
 
-            var response = controller.CreateAppointment(2020, 3, 9, requestedBookApp) as ObjectResult;
+            var response = controller.CreateAppointment(2020, 3, 9, (BookAppointmentForm)null) as ObjectResult;
 
             Assert.IsTrue(200 == response.StatusCode);
         }
@@ -57,7 +58,7 @@ namespace AcessDataAPITest.ControllerTest
 
             var controller = new BookAppController(mockBookApp.Object);
 
-            var response = controller.CreateAppointment(2020, 3, 9, requestedBookApp) as ObjectResult;
+            var response = controller.CreateAppointment(2020, 3, 9, (BookAppointmentForm)null) as ObjectResult;
 
             Assert.IsTrue(404 == response.StatusCode);
         }
@@ -113,7 +114,7 @@ namespace AcessDataAPITest.ControllerTest
 
             var controller = new BookAppController(mockBookApp.Object);
 
-            var response = controller.CreateAppointment(2020, 3, 9, requestedBookApp) as ObjectResult;
+            var response = controller.CreateAppointment(2020, 3, 9, (BookAppointmentForm)null) as ObjectResult;
 
             Assert.IsTrue(404 == response.StatusCode);
         }
@@ -141,7 +142,7 @@ namespace AcessDataAPITest.ControllerTest
 
             var controller = new BookAppController(mockBookApp.Object);
 
-            var response = controller.CreateAppointment(2020, 3, 9, requestedBookApp) as ObjectResult;
+            var response = controller.CreateAppointment(2020, 3, 9, (BookAppointmentForm)null) as ObjectResult;
 
             Assert.IsTrue(404 == response.StatusCode);
         }

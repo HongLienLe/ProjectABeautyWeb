@@ -11,7 +11,7 @@ namespace AccessDataApi.Repo
         public TimeRange GetTimeRange(DateTime dateTime);
         public TimeRange CastBookingToTimeRange(AppointmentDetails booking);
         public ITimePeriodCollection GetGapsInBooking(DateTime date, ICollection<AppointmentDetails> bookings);
-        public List<Employee> GetWorkingEmployeesByDateAndTreatment(DateTime date, int treatmentId);
+        public List<Employee> GetWorkingEmployeesByDateAndTreatment(DateTime date, int treatmentIds);
         public ITimePeriodCollection GetAvailbilityByEmployee(DateTime date, Employee employee);
 
 

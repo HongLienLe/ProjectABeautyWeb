@@ -30,6 +30,8 @@ namespace AcessDataAPITest.RepoTest
             _bookAppRepo = new BookAppointment(_context);
         }
 
+        // test with multiple bookings 
+
         [Test]
         public void BookTheFirstAppointmentWithValidModel()
         {
@@ -47,12 +49,14 @@ namespace AcessDataAPITest.RepoTest
            var response = _bookAppRepo.CreateAppointment(date, requestedBookApp);
 
             var appointmentwasbooked = _context.AppointmentDetails.Any();
+            var wasClientAdded = _context.ClientAccounts.Any();
             EndConnection();
 
             Console.WriteLine(response);
 
-            Assert.IsTrue(response == "Booking has been successful");
+            Assert.IsTrue(response == "Booking has been successful, Order App 1");
             Assert.IsTrue(appointmentwasbooked);
+            Assert.IsTrue(wasClientAdded);
         // check if the appointment was made in reservation && booked App
         }
 
@@ -97,7 +101,7 @@ namespace AcessDataAPITest.RepoTest
             var employeeBookings = _context.Employees.First(x => x.EmployeeId == 1).Appointments.ToList();
             EndConnection();
 
-            Assert.IsTrue(response == "Booking has been successful");
+            Assert.IsTrue(response == "Booking has been successful, Order App 1");
             Assert.IsTrue(employeeBookings.Contains(requestedBookApp));
             Assert.IsTrue(employeeBookings[0].DateTimeKeyId == date.ToShortDateString());
             Assert.IsTrue(employeeBookings[0].Reservation.StartTime == requestedBookApp.Reservation.StartTime);
@@ -159,7 +163,7 @@ namespace AcessDataAPITest.RepoTest
             EndConnection();
 
             Console.WriteLine(response);
-            Assert.IsTrue(response == "Booking has been successful");
+            Assert.IsTrue(response == "Booking has been successful, Order App 2");
             Assert.IsNotNull(bookings);
             Assert.IsTrue(employeeBookings.Contains(requestedBookApp));
             Assert.IsTrue(employeeBookings[0].DateTimeKeyId == date.ToShortDateString());

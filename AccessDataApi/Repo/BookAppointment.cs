@@ -5,6 +5,8 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Itenso.TimePeriod;
 using System.Collections.Generic;
+using AccessDataApi.HTTPModels;
+using System.Text;
 
 namespace AccessDataApi.Repo
 {
@@ -15,6 +17,21 @@ namespace AccessDataApi.Repo
         public BookAppointment(ApplicationContext context) : base(context)
         {
             _context = context;
+        }
+
+        public string MakeAppointment(BookAppointmentForm bookAppointmentForm)
+        {
+            var apps = CastToAppointmentDetails(bookAppointmentForm);
+            var choosenDate = DateTime.Parse(bookAppointmentForm.DateTimeFormatt);
+
+            StringBuilder returnResponse = new StringBuilder();
+
+            foreach (var app in apps) {
+               returnResponse.AppendLine( CreateAppointment(choosenDate, app));
+            };
+
+            return returnResponse.ToString();
+
         }
 
         public string CreateAppointment(DateTime date,AppointmentDetails book)
@@ -59,7 +76,7 @@ namespace AccessDataApi.Repo
 
             _context.SaveChanges();
 
-            return "Booking has been successful";
+            return $"Booking has been successful, Order App {requestedBookingDetails.AppointmentDetailsId}";
         }
 
         public string DeleteAppointment(DateTime date, int bookAppId)
@@ -107,6 +124,64 @@ namespace AccessDataApi.Repo
             var isEmployeeAvaliable = GetAvailbilityByEmployee(bookApp.DateTimeKey.date, bookApp.Employee);
 
             return true;
+        }
+
+        private List<AppointmentDetails> CastToAppointmentDetails(BookAppointmentForm bkappForm)
+        {
+            var appointments = new List<AppointmentDetails>();
+
+            ClientAccount client = GetClient(bkappForm.ContactNumber);
+
+            if (client == null)
+            {
+                client = new ClientAccount()
+                {
+                    FirstName = bkappForm.FirstName,
+                    LastName = bkappForm.LastName,
+                    Email = bkappForm.Email,
+                    ContactNumber = bkappForm.ContactNumber
+                };
+            }
+
+            foreach(var treatmentId in bkappForm.TreatmentIds)
+            {
+                appointments.Add(new AppointmentDetails()
+                {
+                    ClientAccount = client,
+                    DateTimeKeyId = bkappForm.DateTimeFormatt,
+                    EmployeeId = 0,
+                    TreatmentId = treatmentId,
+                    Reservation = CastReservation(bkappForm.DateTimeFormatt, bkappForm.StartTime, treatmentId),
+                });
+            }
+
+
+            return appointments;
+
+        }
+
+        private Reservation CastReservation(string date, string StartTime, int treatmentId)
+        {
+            var treatmentDuration = _context.Treatments.Single(x => x.TreatmentId == treatmentId).Duration;
+            var toDateTimeStartTime = DateTime.Parse(date);
+            var reservation = new Reservation()
+            {
+                StartTime = toDateTimeStartTime,
+                EndTime = toDateTimeStartTime.AddMinutes(treatmentDuration),
+            };
+
+            return reservation;
+        }
+
+        private ClientAccount GetClient(string contactNo)
+        {
+            if (_context.ClientAccounts.Any(x => x.ContactNumber == contactNo))
+            {
+
+                return _context.ClientAccounts.Single(x => x.ContactNumber == contactNo);
+            }
+
+            return null;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AccessDataApi.Data;
+using AccessDataApi.HTTPModels;
 using AccessDataApi.Repo;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,11 +32,13 @@ namespace AccessDataApi.Controllers
         }
 
 
-        [HttpGet("date/{year}/{month}/{day}/treatment/{treatmentId}")]
-        public IActionResult GetWorkingEmployeesByDateAndTreatment(int year, int month, int day, int treatmentId)
+        [HttpPost("date/treatments")]
+        public IActionResult GetWorkingEmployeesByDateAndTreatment([FromBody]TimeSlotForTreatmentForm timeSlotForTreatmentForm)
         {
-            DateTime choosenDate = new DateTime(year, month, day);
-            var response = _availbiliyRepo.GetAvailableTimeWithTreatment(choosenDate, treatmentId);
+
+
+            DateTime choosenDate = DateTime.Parse(timeSlotForTreatmentForm.Date);
+            var response = _availbiliyRepo.GetAvailableTimeWithTreatment(choosenDate, timeSlotForTreatmentForm.Treatments);
 
             if (response == null)
                 return BadRequest(response);
