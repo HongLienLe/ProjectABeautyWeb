@@ -156,3 +156,4 @@
 /Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/obj/Debug/netcoreapp3.1/staticwebassets/AccessDataApi.StaticWebAssets.xml
 /Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/obj/Debug/netcoreapp3.1/AccessDataApi.dll
 /Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/obj/Debug/netcoreapp3.1/AccessDataApi.pdb
+/Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/obj/Debug/netcoreapp3.1/AccessDataApi.csprojAssemblyReference.cache

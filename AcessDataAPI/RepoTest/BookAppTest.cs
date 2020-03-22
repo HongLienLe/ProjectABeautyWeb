@@ -7,6 +7,7 @@ using AccessDataApi.Repo;
 using Itenso.TimePeriod;
 using NUnit.Framework;
 using System.Linq;
+using AccessDataApi.HTTPModels;
 
 namespace AcessDataAPITest.RepoTest
 {
@@ -35,18 +36,18 @@ namespace AcessDataAPITest.RepoTest
         [Test]
         public void BookTheFirstAppointmentWithValidModel()
         {
-            var date = new DateTime(2020, 3, 9);
-            var requestedBookApp = new AppointmentDetails()
+            var requestedBookApp = new BookAppointmentForm()
             {
-                ClientAccount = new ClientAccount() { FirstName = "Test", Email = "Fake@gmail.com", ContactNumber = "12345678901" },
-                TreatmentId = 1,
-                Reservation = new Reservation()
-                {
-                    StartTime = date.AddHours(10), EndTime = date.AddHours(10).AddMinutes(45) 
-                }
+                FirstName = "Hong",
+                LastName = "Le",
+                ContactNumber = "123",
+                Email = "Hong@mail.com",
+                DateTimeFormatt = "2020-3-9",
+                StartTime = "10:00:00",
+                TreatmentIds = new List<int>() { 1 }  
             };
 
-           var response = _bookAppRepo.CreateAppointment(date, requestedBookApp);
+           var response = _bookAppRepo.MakeAppointment(requestedBookApp);
 
             var appointmentwasbooked = _context.AppointmentDetails.Any();
             var wasClientAdded = _context.ClientAccounts.Any();
@@ -54,7 +55,7 @@ namespace AcessDataAPITest.RepoTest
 
             Console.WriteLine(response);
 
-            Assert.IsTrue(response == "Booking has been successful, Order App 1");
+            Assert.IsTrue(response.Contains("Booking has been successful, Order App 1"));
             Assert.IsTrue(appointmentwasbooked);
             Assert.IsTrue(wasClientAdded);
         // check if the appointment was made in reservation && booked App
@@ -63,16 +64,18 @@ namespace AcessDataAPITest.RepoTest
         [Test]
         public void ReturnCorrectResponseWhenDateIsInvalidOperatingTime()
         {
-            var invalidDate = new DateTime(2020, 3, 8);
-
-            var requestedBookApp = new AppointmentDetails()
+            var invalidDateApp = new BookAppointmentForm()
             {
-                ClientAccount = new ClientAccount() { FirstName = "Test", Email = "Fake@gmail.com", ContactNumber = "12345678901" },
-                EmployeeId = 1,
-                TreatmentId = 1,
-                Reservation = new Reservation() { StartTime = invalidDate.AddHours(10), EndTime = invalidDate.AddHours(10).AddMinutes(45) } 
+                FirstName = "Hong",
+                LastName = "Le",
+                ContactNumber = "123",
+                Email = "Hong@mail.com",
+                DateTimeFormatt = "2020-3-8",
+                StartTime = "10:00:00",
+                TreatmentIds = new List<int>() { 1 }
             };
-            var response = _bookAppRepo.CreateAppointment(invalidDate, requestedBookApp);
+
+            var response = _bookAppRepo.MakeAppointment(invalidDateApp);
             var shouldBeFalseNotAddedToDB = _context.DateTimeKeys.Any() && _context.AppointmentDetails.Any() ? true : false;
 
 
@@ -80,82 +83,80 @@ namespace AcessDataAPITest.RepoTest
 
             Console.WriteLine(response);
             Assert.IsFalse(shouldBeFalseNotAddedToDB);
-            Assert.IsTrue(response == "Business is closed on requested date");
+            Assert.IsTrue(response.Contains("Business is closed on requested date"));
         }
 
         [Test]
         public void CanAllocateCorrectEmployeeIfChoosenEmployeeIs0IsAny()
         {
-            var date = new DateTime(2020, 3, 9);
-            var requestedBookApp = new AppointmentDetails()
+            var requestedBooking = new BookAppointmentForm()
             {
-                ClientAccount = new ClientAccount() { FirstName = "Test", Email = "Fake@gmail.com", ContactNumber = "12345678901" },
-                TreatmentId = 1,
-                Reservation = new Reservation() { StartTime = date.AddHours(10), EndTime = date.AddHours(10).AddMinutes(45) } 
+                FirstName = "Hong",
+                LastName = "Le",
+                ContactNumber = "123",
+                Email = "Hong@mail.com",
+                DateTimeFormatt = "2020-3-9",
+                StartTime = "10:00:00",
+                TreatmentIds = new List<int>() { 1 }
             };
 
-            var response = _bookAppRepo.CreateAppointment(date, requestedBookApp);
-
+            var response = _bookAppRepo.MakeAppointment(requestedBooking);
             Console.WriteLine(response);
 
             var employeeBookings = _context.Employees.First(x => x.EmployeeId == 1).Appointments.ToList();
             EndConnection();
 
-            Assert.IsTrue(response == "Booking has been successful, Order App 1");
-            Assert.IsTrue(employeeBookings.Contains(requestedBookApp));
-            Assert.IsTrue(employeeBookings[0].DateTimeKeyId == date.ToShortDateString());
-            Assert.IsTrue(employeeBookings[0].Reservation.StartTime == requestedBookApp.Reservation.StartTime);
-            Assert.IsTrue(employeeBookings[0].Reservation.EndTime == requestedBookApp.Reservation.EndTime);
-            Assert.IsTrue(employeeBookings[0].TreatmentId == requestedBookApp.TreatmentId);
+            Assert.IsTrue(response.Contains("Booking has been successful, Order App 1"));
+            Assert.IsTrue(employeeBookings.Count() == 1);
+            Assert.IsTrue(employeeBookings[0].DateTimeKey.date == new DateTime(2020,3,9));
+            Assert.IsTrue(employeeBookings[0].TreatmentId == 1);
         }
 
         [Test]
         public void CanReturnInvalidResponseIfEmployeeNotAvaliableAndNotSaveAnyData()
         {
-            var date = new DateTime(2020, 3, 9);
-            var requestedBookApp = new AppointmentDetails()
+            var requestedBooking = new BookAppointmentForm()
             {
-                ClientAccount = new ClientAccount() { FirstName = "Test", Email = "Fake@gmail.com", ContactNumber = "12345678901" },
-                TreatmentId = 1,
-                Reservation = new Reservation()
-                {
-                     StartTime = date.AddHours(11), EndTime = date.AddHours(11).AddMinutes(45) 
-                }
+                FirstName = "Hong",
+                LastName = "Le",
+                ContactNumber = "123",
+                Email = "Hong@mail.com",
+                DateTimeFormatt = "2020-3-9",
+                StartTime = "11:00:00",
+                TreatmentIds = new List<int>() { 1 }
             };
 
             FullyBookedAllDay(2);
 
-            var response = _bookAppRepo.CreateAppointment(date, requestedBookApp);
-            var employeeBookings = _context.Employees.First(x => x.EmployeeId == 1).Appointments.ToList();
-
+            var response = _bookAppRepo.MakeAppointment(requestedBooking);
+            var employeeBookings = _context.AppointmentDetails.Where(x => x.EmployeeId != 3).ToList();
+            var madeNewClient = _context.ClientAccounts.Any(x => x.FirstName == "Hong");
 
             EndConnection();
 
             Console.WriteLine(response);
-            Assert.IsTrue(response == "Time Slots for choosen treatment is not avaliable");
-            Assert.IsFalse(employeeBookings.Contains(requestedBookApp));
-            Assert.IsTrue(employeeBookings[0].DateTimeKeyId == date.ToShortDateString());
-            Assert.IsFalse(employeeBookings[0].Reservation.StartTime == requestedBookApp.Reservation.StartTime);
-            Assert.IsFalse(employeeBookings[0].Reservation.EndTime == requestedBookApp.Reservation.EndTime);
+            Assert.IsTrue(response.Contains("Time Slots for choosen treatment is not avaliable"));
+            Assert.IsTrue(employeeBookings.Count() == 2);
+            Assert.IsFalse(madeNewClient);
         }
 
         [Test]
         public void CanBookAppointmentWithExistingDateTimeKey()
         {
-            var date = new DateTime(2020, 3, 9);
-            var requestedBookApp = new AppointmentDetails()
+            var requestedBooking = new BookAppointmentForm()
             {
-                ClientAccount = new ClientAccount() { FirstName = "Test", Email = "Fake@gmail.com", ContactNumber = "12345678901" },
-                TreatmentId = 1,
-                Reservation = new Reservation()
-                {
-                    StartTime = date.AddHours(11), EndTime = date.AddHours(11).AddMinutes(45) 
-                }
+                FirstName = "Hong",
+                LastName = "Le",
+                ContactNumber = "123",
+                Email = "Hong@mail.com",
+                DateTimeFormatt = "2020-3-9",
+                StartTime = "11:00:00",
+                TreatmentIds = new List<int>() { 1 }
             };
 
             FullyBookedAllDay(1);
 
-            var response = _bookAppRepo.CreateAppointment(date, requestedBookApp);
+            var response = _bookAppRepo.MakeAppointment(requestedBooking);
 
             var employeeBookings = _context.Employees.First(x => x.EmployeeId == 2).Appointments.ToList();
             var bookings = _context.AppointmentDetails.First(x => x.EmployeeId == 2);
@@ -163,12 +164,12 @@ namespace AcessDataAPITest.RepoTest
             EndConnection();
 
             Console.WriteLine(response);
-            Assert.IsTrue(response == "Booking has been successful, Order App 2");
+            Assert.IsTrue(response.Contains("Booking has been successful, Order App 2"));
             Assert.IsNotNull(bookings);
-            Assert.IsTrue(employeeBookings.Contains(requestedBookApp));
-            Assert.IsTrue(employeeBookings[0].DateTimeKeyId == date.ToShortDateString());
-            Assert.IsTrue(employeeBookings[0].Reservation.StartTime == requestedBookApp.Reservation.StartTime);
-            Assert.IsTrue(employeeBookings[0].Reservation.EndTime == requestedBookApp.Reservation.EndTime);
+            Assert.IsTrue(employeeBookings.Count() == 1);
+            Assert.IsTrue(employeeBookings[0].DateTimeKey.date == new DateTime(2020, 3, 9));
+            Assert.IsTrue(employeeBookings[0].Reservation.StartTime == new DateTime(2020,3,9,11,0,0));
+            Assert.IsTrue(employeeBookings[0].Reservation.EndTime == new DateTime(2020,3,9,11,45,0));
         }
 
         private void FullyBookedAllDay(int count)

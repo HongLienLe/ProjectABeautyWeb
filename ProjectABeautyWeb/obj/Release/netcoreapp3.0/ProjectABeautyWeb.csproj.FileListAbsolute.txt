@@ -1,7 +1,6 @@
 /Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/bin/Release/netcoreapp3.0/appsettings.Development.json
 /Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/bin/Release/netcoreapp3.0/appsettings.json
 /Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/bin/Release/netcoreapp3.0/Properties/launchSettings.json
-/Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/bin/Release/netcoreapp3.0/ProjectABeautyWeb
 /Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/bin/Release/netcoreapp3.0/ProjectABeautyWeb.deps.json
 /Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/bin/Release/netcoreapp3.0/ProjectABeautyWeb.runtimeconfig.json
 /Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/bin/Release/netcoreapp3.0/ProjectABeautyWeb.runtimeconfig.dev.json

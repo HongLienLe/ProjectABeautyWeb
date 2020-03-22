@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AccessDataApi.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class WorkScheduleController : Controller
     {
         private IWorkScheduleRepo _workScheduleRepo;
@@ -50,7 +51,7 @@ namespace AccessDataApi.Controllers
             return Ok(responseOperatingTimeDetails);
         }
 
-        [HttpGet("get/employee/by/dayofweek/{dayId}")]
+        [HttpGet("get/employee/date/{dayId}")]
         public IActionResult GetEmployeeByWorkDay(int dayId)
         {
             var employees = _workScheduleRepo.GetEmployeeByWorkDay(dayId);

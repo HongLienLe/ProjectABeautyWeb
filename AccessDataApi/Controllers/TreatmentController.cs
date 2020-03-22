@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 namespace AccessDataApi.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class TreatmentController : Controller
     {
         private ITreatmentRepo _treatmentRepo;
@@ -75,6 +76,7 @@ namespace AccessDataApi.Controllers
             {
                 TreatmentType = treatmentForm.TreatmentType,
                 TreatmentName = treatmentForm.TreatmentName,
+                isAddOn = treatmentForm.isAddOn,
                 Price = treatmentForm.Price,
                 Duration = treatmentForm.Duration
             };
@@ -91,6 +93,7 @@ namespace AccessDataApi.Controllers
             {
                 TreatmentType = treatmentForm.TreatmentType,
                 TreatmentName = treatmentForm.TreatmentName,
+                isAddOn = treatmentForm.isAddOn,
                 Price = treatmentForm.Price,
                 Duration = treatmentForm.Duration
             };
@@ -126,6 +129,30 @@ namespace AccessDataApi.Controllers
             return Ok(response);
         }
 
-        //get by type
+        [HttpGet("type/{treatmentType}")]
+        public IActionResult GetByTreatmentType(TreatmentType treatmentType)
+        {
+            var response = _treatmentRepo.GetTreatmentByType(treatmentType);
+
+            if (response == null)
+                return NotFound(response);
+
+            var treatmentsByType = new List<TreatmentDetails>();
+
+            foreach (var t in response)
+            {
+                treatmentsByType.Add(new TreatmentDetails()
+                {
+                    Id = t.TreatmentId,
+                    TreatmentType = t.TreatmentType,
+                    isAddOn = t.isAddOn,
+                    TreatmentName = t.TreatmentName,
+                    Price = t.Price,
+                    Duration = t.Duration
+                });
+            }
+
+            return Ok(treatmentsByType);
+        }
     }
 }

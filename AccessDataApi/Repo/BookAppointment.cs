@@ -19,69 +19,24 @@ namespace AccessDataApi.Repo
             _context = context;
         }
 
-        public string MakeAppointment(DateTime date,BookAppointmentForm bookAppointmentForm)
+        public string MakeAppointment(BookAppointmentForm bookAppointmentForm)
         {
-            var apps = CastToAppointmentDetails(date,bookAppointmentForm);
+            var apps = CastToAppointmentDetails(bookAppointmentForm);
+            var choosenDate = DateTime.Parse(bookAppointmentForm.DateTimeFormatt);
 
             StringBuilder returnResponse = new StringBuilder();
 
             foreach (var app in apps) {
-               returnResponse.AppendLine( CreateAppointment(date, app));
+               returnResponse.AppendLine( CreateAppointment(choosenDate, app));
             };
 
             return returnResponse.ToString();
-
-        }
-
-        public string CreateAppointment(DateTime date,AppointmentDetails book)
-        {
-            //is operating?
-            if (!isOperating(date))
-                return "Business is closed on requested date";
-
-            var requestedBookingDetails = book;
-            var reservationTimePeriod = CastBookingToTimeRange(requestedBookingDetails);
-
-
-            if (requestedBookingDetails.EmployeeId == 0)
-            {
-                var employees = GetWorkingEmployeesByDateAndTreatment(date, requestedBookingDetails.TreatmentId);
-
-                foreach(var employee in employees)
-                {
-                    var employeeAvailableTime = GetAvailbilityByEmployee(date, employee);
-
-                    if (employeeAvailableTime.IntersectsWith(reservationTimePeriod) && employeeAvailableTime.Count != 0)
-                    {
-                        requestedBookingDetails.Employee = employee;
-                        break;
-                    }
-                }
-            }
-
-            if (requestedBookingDetails.Employee == null)
-                return "Time Slots for choosen treatment is not avaliable";
-
-            //If Booking is not there yet then create it
-            if (!_context.DateTimeKeys.Any(x => x.DateTimeKeyId == date.ToShortDateString()))
-            {
-                _context.DateTimeKeys.Add(new DateTimeKey() { DateTimeKeyId = date.ToShortDateString(), date = date });
-                _context.SaveChanges();
-            }
-
-            requestedBookingDetails.DateTimeKey = _context.DateTimeKeys.Single(x => x.DateTimeKeyId == date.ToShortDateString());
-
-            _context.AppointmentDetails.Add(requestedBookingDetails);
-
-            _context.SaveChanges();
-
-            return $"Booking has been successful, Order App {requestedBookingDetails.AppointmentDetailsId}";
         }
 
         public string DeleteAppointment(DateTime date, int bookAppId)
         {
             if (!_context.AppointmentDetails.Any(x => x.AppointmentDetailsId == bookAppId))
-                return "Does not exist";
+                return null;
 
             _context.Remove(_context.AppointmentDetails.Single(x => x.AppointmentDetailsId == bookAppId && x.DateTimeKeyId == date.ToShortDateString()));
 
@@ -112,6 +67,88 @@ namespace AccessDataApi.Repo
             return GetAppointment(bookAppId);
         }
 
+        public List<BookedAppointmentDetails> GetBookedAppointmentByDay(DateTime date)
+        {
+            if (_context.DateTimeKeys.Any(x => x.DateTimeKeyId == date.ToShortDateString()))
+                return null;
+
+            var appForTheDay = _context.DateTimeKeys.Single(x => x.DateTimeKeyId == date.ToShortDateString()).Appointments.ToList();
+
+            var castedApp = new List<BookedAppointmentDetails>();
+            foreach(var app in appForTheDay)
+            {
+                castedApp.Add(new BookedAppointmentDetails()
+                {
+                    Id = app.AppointmentDetailsId,
+                    StartTime = app.Reservation.StartTime,
+                    EndTime = app.Reservation.EndTime,
+                    TreatmentName = app.Treatment.TreatmentName,
+                    FirstName = app.ClientAccount.FirstName,
+                    LastName = app.ClientAccount.LastName,
+                    Email = app.ClientAccount.Email,
+                    ContactNumber = app.ClientAccount.ContactNumber
+                });
+            }
+
+            return castedApp;
+        }
+
+        public List<AppointmentDetails> GetBookAppByDateAndEmployee(DateTime date, int employeeId)
+        {
+            if (!_context.AppointmentDetails.Any(x => x.DateTimeKeyId == date.ToShortDateString() && x.EmployeeId == employeeId))
+                return null;
+
+            return _context.AppointmentDetails
+                .Where(x => x.EmployeeId == employeeId
+                && x.DateTimeKeyId == date.ToShortDateString()).ToList();
+        }
+
+
+        public string CreateAppointment(DateTime date, AppointmentDetails book)
+        {
+            //is operating?
+            if (!isOperating(date))
+                return "Business is closed on requested date";
+
+            var requestedBookingDetails = book;
+            var reservationTimePeriod = CastBookingToTimeRange(requestedBookingDetails);
+
+
+            if (requestedBookingDetails.EmployeeId == 0)
+            {
+                var employees = GetWorkingEmployeesByDateAndTreatment(date, requestedBookingDetails.TreatmentId);
+
+                foreach (var employee in employees)
+                {
+                    var employeeAvailableTime = GetAvailbilityByEmployee(date, employee);
+
+                    if (employeeAvailableTime.IntersectsWith(reservationTimePeriod) && employeeAvailableTime.Count != 0)
+                    {
+                        requestedBookingDetails.Employee = employee;
+                        break;
+                    }
+                }
+            }
+
+            if (requestedBookingDetails.Employee == null)
+                return "Time Slots for choosen treatment is not avaliable";
+
+            //If Booking is not there yet then create it
+            if (!_context.DateTimeKeys.Any(x => x.DateTimeKeyId == date.ToShortDateString()))
+            {
+                _context.DateTimeKeys.Add(new DateTimeKey() { DateTimeKeyId = date.ToShortDateString(), date = date });
+                _context.SaveChanges();
+            }
+
+            requestedBookingDetails.DateTimeKey = _context.DateTimeKeys.Single(x => x.DateTimeKeyId == date.ToShortDateString());
+
+            _context.AppointmentDetails.Add(requestedBookingDetails);
+
+            _context.SaveChanges();
+
+            return $"Booking has been successful, Order App {requestedBookingDetails.AppointmentDetailsId}";
+        }
+
         private bool bookAppValidation(AppointmentDetails bookApp)
         {
             var treatmentExist = _context.Treatments.Any(x => x.TreatmentId == bookApp.TreatmentId);
@@ -125,7 +162,7 @@ namespace AccessDataApi.Repo
             return true;
         }
 
-        private List<AppointmentDetails> CastToAppointmentDetails(DateTime date, BookAppointmentForm bkappForm)
+        private List<AppointmentDetails> CastToAppointmentDetails(BookAppointmentForm bkappForm)
         {
             var appointments = new List<AppointmentDetails>();
 
@@ -142,21 +179,16 @@ namespace AccessDataApi.Repo
                 };
             }
 
-            var toDateTimeStartTime = date.Add(TimeSpan.Parse(bkappForm.StartTime));
-
-            foreach (var treatmentId in bkappForm.TreatmentIds)
+            foreach(var treatmentId in bkappForm.TreatmentIds)
             {
-                var timeSlotReserved = CastReservation(toDateTimeStartTime, treatmentId);
                 appointments.Add(new AppointmentDetails()
                 {
                     ClientAccount = client,
-                    DateTimeKeyId = date.ToShortDateString(),
+                    DateTimeKeyId = bkappForm.DateTimeFormatt,
                     EmployeeId = 0,
                     TreatmentId = treatmentId,
-                    Reservation = timeSlotReserved,
+                    Reservation = CastReservation(bkappForm.DateTimeFormatt, bkappForm.StartTime, treatmentId),
                 });
-
-                toDateTimeStartTime = timeSlotReserved.EndTime;
             }
 
 
@@ -164,13 +196,14 @@ namespace AccessDataApi.Repo
 
         }
 
-        private Reservation CastReservation(DateTime StartTime, int treatmentId)
+        private Reservation CastReservation(string date, string StartTime, int treatmentId)
         {
             var treatmentDuration = _context.Treatments.Single(x => x.TreatmentId == treatmentId).Duration;
+            var toDateTimeStartTime = DateTime.Parse(date).Add(TimeSpan.Parse(StartTime));
             var reservation = new Reservation()
             {
-                StartTime = StartTime,
-                EndTime = StartTime.AddMinutes(treatmentDuration),
+                StartTime = toDateTimeStartTime,
+                EndTime = toDateTimeStartTime.AddMinutes(treatmentDuration),
             };
 
             return reservation;
@@ -179,10 +212,7 @@ namespace AccessDataApi.Repo
         private ClientAccount GetClient(string contactNo)
         {
             if (_context.ClientAccounts.Any(x => x.ContactNumber == contactNo))
-            {
-
                 return _context.ClientAccounts.Single(x => x.ContactNumber == contactNo);
-            }
 
             return null;
         }

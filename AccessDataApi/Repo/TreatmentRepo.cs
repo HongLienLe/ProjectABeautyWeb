@@ -52,10 +52,11 @@ namespace AccessDataApi.Repo
             if (!DoesTreatmentExist(id))
                 return null;
 
-            var oldTreatment = _context.Treatments.First(x => x.TreatmentId == id);
+            var oldTreatment = _context.Treatments.Single(x => x.TreatmentId == id);
 
             oldTreatment.TreatmentType = treatment.TreatmentType;
             oldTreatment.TreatmentName = treatment.TreatmentName;
+            oldTreatment.isAddOn = treatment.isAddOn;
             oldTreatment.Price = treatment.Price;
             oldTreatment.Duration = treatment.Duration;
 

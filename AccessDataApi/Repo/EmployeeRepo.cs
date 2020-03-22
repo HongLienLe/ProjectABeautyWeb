@@ -26,9 +26,7 @@ namespace AccessDataApi.Repo
         public Employee GetEmployee(int employeeId)
         {
             if (!doesEmployeeExist(employeeId))
-            {
                 return null;
-            }
 
             return _context.Employees.First(x => x.EmployeeId == employeeId);    
         }
@@ -45,9 +43,8 @@ namespace AccessDataApi.Repo
         public string UpdateEmployee(int employeeId, Employee employee)
         {
             if(!doesEmployeeExist(employeeId))
-            {
                 return "Does not exist, make a new one";
-            }
+
             var oldEmployee = _context.Employees.First(x => x.EmployeeId == employeeId);
 
             oldEmployee.EmployeName = employee.EmployeName;
@@ -65,7 +62,7 @@ namespace AccessDataApi.Repo
             
         }
 
-        public bool doesEmployeeExist(int employeeId)
+        private bool doesEmployeeExist(int employeeId)
         {
             return _context.Employees.Any(x => x.EmployeeId == employeeId);
         }

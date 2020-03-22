@@ -24,7 +24,6 @@ namespace AccessDataApi.Controllers
         { 
             var employeeTreatments = _employeeTreatmentRepo.GetTreatmentsByEmployee(employeeId);
 
-
             if(employeeTreatments == null)
             {
                 return NotFound();
@@ -49,6 +48,29 @@ namespace AccessDataApi.Controllers
             return Ok(responseTreatmentDetails);
         }
 
+        [HttpGet("get/employee/by/treatment/{treatmentId}")]
+        public IActionResult GetEmployeesByTreatmentId(int treatmentId)
+        {
+            var employees = _employeeTreatmentRepo.GetEmployeesByTreatment(treatmentId);
+            if (employees == null)
+                return NotFound(employees);
+
+            var responseEmployeeDetails = new List<EmployeeDetails>();
+
+            foreach (var employee in employees)
+            {
+                responseEmployeeDetails.Add(new EmployeeDetails
+                {
+                    Id = employee.EmployeeId,
+                    EmployeeName = employee.EmployeName,
+                    Email = employee.Email
+                }
+                );
+            }
+
+            return Ok(responseEmployeeDetails);
+        }
+
         [HttpPost("employee/treatments")]
         public void AddTreatments([FromBody] EmployeeTreatmentCrud employeeTreatment)
         {
@@ -67,6 +89,5 @@ namespace AccessDataApi.Controllers
             _employeeTreatmentRepo.RemoveEmployeeTreatment(employeeTreatment);
         }
 
-        //get employees by treatment id
     }
 }

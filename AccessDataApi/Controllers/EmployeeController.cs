@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AccessDataApi.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class EmployeeController : Controller
     {
         private IEmployeeRepo _employeeRepo;

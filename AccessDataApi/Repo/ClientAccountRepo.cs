@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AccessDataApi.Data;
+using AccessDataApi.HTTPModels;
 using AccessDataApi.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,18 +17,16 @@ namespace AccessDataApi.Repo
             _context = context;
         }
 
-        public string CreateClientAccount(ClientAccount clientAccount)
+        public string CreateClientAccount(ClientForm clientAccountForm)
         {
-            //check if email exist
 
-            var doesEmailExist = _context.ClientAccounts.Any(x => x.Email == clientAccount.Email);
+            var castClient = CastClientFormToClientAccount(clientAccountForm);
 
-            if (doesEmailExist)
-            {
-                return "Email already exist";
-            }
 
-            _context.ClientAccounts.Add(clientAccount);
+            if (castClient == null)
+                return "Account already exist with this Contact Number";
+
+            _context.ClientAccounts.Add(castClient);
             _context.SaveChanges();
 
             return "Client Account has been successfully been created!";
@@ -34,35 +34,29 @@ namespace AccessDataApi.Repo
 
         public ClientAccount GetClientAccount(int clientAccountId, string email)
         {
-            var doesClientAccExist = _context.ClientAccounts.Any(x => x.ClientAccountId == clientAccountId);
-
-            if (!doesClientAccExist)
-            {
+            if (!_context.ClientAccounts.Any(x => x.ClientAccountId == clientAccountId))
                 return null;
-            }
+            
 
             var clientAcc = _context.ClientAccounts.First(x => x.ClientAccountId == clientAccountId);
 
             if (clientAcc.Email != email)
-            {
                 return null;
-            }
 
             return clientAcc;
         }
 
-        public string UpdateClientAccount(int clientAccountId, ClientAccount clientAccount)
+        public string UpdateClientAccount(int clientAccountId, ClientForm clientAccountForm)
         {
-            var doesClientAccExist = _context.ClientAccounts.Any(x => x.ClientAccountId == clientAccountId);
 
-            if (!doesClientAccExist)
-            {
+            if (!_context.ClientAccounts.Any(x => x.ClientAccountId == clientAccountId))
                 return null;
-            }
 
             var clientAcc = _context.ClientAccounts.First(x => x.ClientAccountId == clientAccountId);
-
-            clientAcc = clientAccount;
+            clientAcc.FirstName = clientAccountForm.FirstName;
+            clientAcc.LastName = clientAccountForm.LastName;
+            clientAcc.ContactNumber = clientAccountForm.ContactNumber;
+            clientAcc.Email = clientAccountForm.Email;
 
             _context.SaveChanges();
 
@@ -76,6 +70,25 @@ namespace AccessDataApi.Repo
             _context.Entry(client).State = EntityState.Deleted;
 
             return "Client Acc has been successfully deleted";
+        }
+
+        public List<ClientAccount> GetAllClients()
+        {
+            return _context.ClientAccounts.ToList();
+        }
+
+        private ClientAccount CastClientFormToClientAccount(ClientForm clientForm)
+        {
+            if (_context.ClientAccounts.Any(x => x.ContactNumber == clientForm.ContactNumber))
+                return null;
+
+            return new ClientAccount()
+            {
+                FirstName = clientForm.FirstName,
+                LastName = clientForm.LastName,
+                Email = clientForm.Email,
+                ContactNumber = clientForm.ContactNumber
+            };
         }
     }
 }

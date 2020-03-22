@@ -1,57 +1,33 @@
 ﻿<Properties StartupConfiguration="{3517FF51-7355-41C9-8381-5A774FD65C35}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
   <MonoDevelop.Ide.ItemProperties.AcessDataAPITest PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.ItemProperties.ProjectABeautyWeb PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AccessDataApi/HTTPModels/TimeSlotForTreatmentForm.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AccessDataApi/Startup.cs">
     <Files>
-      <File FileName="AccessDataApi/Repo/AvailabilityRepo.cs" Line="1" Column="1" />
-      <File FileName="AcessDataAPI/RepoTest/AvalibilityTest.cs" Line="81" Column="1" />
-      <File FileName="AccessDataApi/Startup.cs" Line="37" Column="94" />
       <File FileName="AccessDataApi/Controllers/BookAppController.cs" Line="1" Column="1" />
-      <File FileName="AccessDataApi/Controllers/AvailabilityController.cs" Line="38" Column="1" />
-      <File FileName="AccessDataApi/HTTPModels/TimeSlotForTreatmentForm.cs" Line="12" Column="1" />
+      <File FileName="AccessDataApi/Models/Employee.cs" Line="14" Column="19" />
+      <File FileName="AccessDataApi/Startup.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ProjectABeautyWeb" expanded="True">
             <Node name="AccessDataApi" expanded="True">
+              <Node name="Dependencies" expanded="True" />
               <Node name="Controllers" expanded="True" />
-              <Node name="HTTPModels" expanded="True">
-                <Node name="TimeSlotForTreatmentForm.cs" selected="True" />
-              </Node>
               <Node name="Models" expanded="True" />
-              <Node name="Properties" expanded="True">
-                <Node name="PublishProfiles" expanded="True" />
-              </Node>
-              <Node name="Repo" expanded="True" />
-            </Node>
-            <Node name="AcessDataAPITest" expanded="True">
-              <Node name="RepoTest" expanded="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node name="ProjectABeautyWeb" expanded="True">
-            <Node name="AcessDataAPITest" expanded="True">
-              <Node name="AcessDataAPITest" expanded="True">
-                <Node name="RepoTest" expanded="True">
-                  <Node name="AvalibilityTest" expanded="True" />
-                  <Node name="BookAppTest" expanded="True" />
-                </Node>
-              </Node>
+              <Node name="Startup.cs" selected="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.Appointment PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/hongle/Projects/ProjectABeautyWeb/AcessDataAPI/RepoTest/BookAppTest.cs" relfile="AcessDataAPI/RepoTest/BookAppTest.cs" line="102" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.AccessDataApi PreferredExecutionTarget="/Applications/Google Chrome.app" />

@@ -27,7 +27,6 @@ namespace AccessDataApi.Repo
 
                      var notAddedTreatmentsToEmployee = et.Ids.Except(treatment);
 
-
                      foreach(var treatmentId in notAddedTreatmentsToEmployee)
                         {
 
