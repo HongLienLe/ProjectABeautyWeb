@@ -8,8 +8,6 @@ using AccessDataApi.Models;
 using AccessDataApi.Repo;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace AccessDataApi.Controllers
 {
     [Route("api/[controller]")]
@@ -22,7 +20,6 @@ namespace AccessDataApi.Controllers
             _bookAppRepo = bookAppRepo;
         }
 
-        // POST api/values
         [HttpPost("date/{year}/{month}/{day}/book")]
         public IActionResult CreateAppointment(int year, int month, int day, [FromBody]BookAppointmentForm bookApp)
         {

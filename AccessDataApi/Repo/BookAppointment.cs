@@ -82,6 +82,7 @@ namespace AccessDataApi.Repo
                     Id = app.AppointmentDetailsId,
                     StartTime = app.Reservation.StartTime,
                     EndTime = app.Reservation.EndTime,
+                    EmployeeId = app.EmployeeId,
                     TreatmentName = app.Treatment.TreatmentName,
                     FirstName = app.ClientAccount.FirstName,
                     LastName = app.ClientAccount.LastName,

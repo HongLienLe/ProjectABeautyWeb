@@ -32,16 +32,16 @@ namespace AccessDataApi
             services.AddCors();
 
             //// Use SQL Database if in Azure, otherwise, use SQLite
-            //if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
-            //    services.AddDbContext<ApplicationContext>(options =>
-            //            options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
-            //else
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+                services.AddDbContext<ApplicationContext>(options =>
+                        options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
+            else
                 services.AddDbContext<ApplicationContext>(options =>
                         options.UseSqlite("Data Source=localdatabase.db"));
 
 
           //  Automatically perform database migration
-        //    services.BuildServiceProvider().GetService<ApplicationContext>().Database.Migrate();
+            services.BuildServiceProvider().GetService<ApplicationContext>().Database.Migrate();
 
             services.AddTransient<IAvailabilityRepo, AvailabilityRepo>();
             services.AddTransient<IBookAppointment, BookAppointment>();
