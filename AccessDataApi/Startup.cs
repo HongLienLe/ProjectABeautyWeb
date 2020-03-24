@@ -23,6 +23,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using AutoMapper;
+
 
 namespace AccessDataApi
 {
@@ -39,6 +41,9 @@ namespace AccessDataApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddControllers();
+
 
             ////// Use SQL Database if in Azure, otherwise, use SQLite
             //if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
@@ -48,44 +53,83 @@ namespace AccessDataApi
             services.AddDbContext<ApplicationContext>(options =>
                     options.UseSqlite("Data Source=localdatabase.db"));
 
-            services.AddEntityFrameworkSqlite()
-              .AddDbContext<UserDbContext>(opt => opt.UseSqlite("Data Source =Userdatabase.db"));
+            //services.AddEntityFrameworkSqlite()
+            //  .AddDbContext<UserDbContext>(opt => opt.UseSqlite("Data Source =Userdatabase.db"));
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
-              .AddEntityFrameworkStores<UserDbContext>();
+            //services.AddIdentity<IdentityUser, IdentityRole>()
+            //  .AddEntityFrameworkStores<UserDbContext>();
 
             //  Automatically perform database migration
-            services.BuildServiceProvider().GetService<ApplicationContext>().Database.Migrate();
+            //services.BuildServiceProvider().GetService<ApplicationContext>().Database.Migrate();
 
-            services.Configure<TokenManagement>(Configuration.GetSection("tokenManagement"));
-            var token = Configuration.GetSection("tokenManagement").Get<TokenManagement>();
-            var secret = Encoding.ASCII.GetBytes(token.Secret);
+            //services.Configure<TokenManagement>(Configuration.GetSection("tokenManagement"));
+            //var token = Configuration.GetSection("tokenManagement").Get<TokenManagement>();
+            //var secret = Encoding.ASCII.GetBytes(token.Secret);
 
+            //services.AddAuthentication(x =>
+            //{
+            //    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(x =>
+            //{
+            //    x.RequireHttpsMetadata = false;
+            //    x.SaveToken = true;
+            //    x.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        // Validate the JWT Issuer (iss) claim
+            //        ValidateIssuerSigningKey = true,
+            //        IssuerSigningKey = new SymmetricSecurityKey(secret),
+
+            //        // Validate the JWT Audience (aud) claim
+            //        ValidateIssuer = false,
+            //        ValidIssuer = token.Issuer,
+
+            //        ValidateAudience = false,
+            //        ValidAudience = token.Audience
+
+            //    };
+            //});
+
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(x =>
+            })
+                .AddJwtBearer(x =>
             {
+                x.Events = new JwtBearerEvents
+                {
+                    OnTokenValidated = context =>
+                    {
+                        var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
+                        var userId = int.Parse(context.Principal.Identity.Name);
+                        var user = userService.GetById(userId);
+                        if (user == null)
+                        {
+                            // return unauthorized if user no longer exists
+                            context.Fail("Unauthorized");
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    // Validate the JWT Issuer (iss) claim
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(secret),
-
-                    // Validate the JWT Audience (aud) claim
-                    ValidateIssuer = true,
-                    ValidIssuer = token.Issuer,
-
-                    ValidateAudience = true,
-                    ValidAudience = token.Audience
-
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
                 };
             });
 
-            services.AddScoped<IAuthenticateService, TokenAuthenticationService>();
+
+            // services.AddScoped<IAuthenticateService, TokenAuthenticationService>();
             services.AddTransient<IAvailabilityRepo, AvailabilityRepo>();
             services.AddTransient<IBookAppointment, BookAppointment>();
             services.AddTransient<IClientAccountRepo, ClientAccountRepo>();
@@ -93,10 +137,11 @@ namespace AccessDataApi
             services.AddTransient<IEmployeeTreatmentRepo, EmployeeTreatmentRepo>();
             services.AddTransient<IWorkScheduleRepo, WorkScheduleRepo>();
             services.AddTransient<ITreatmentRepo, TreatmentRepo>();
-            services.AddScoped<IUserManagementService, UserManagementService>();
+            services.AddScoped<IUserService, UserService>();
+
+            //services.AddScoped<IUserManagementService, UserManagementService>();
 
 
-            services.AddControllers();
 
             services.AddSwaggerGen(c =>
             {
@@ -165,7 +210,7 @@ namespace AccessDataApi
 
             app.UseAuthorization();
 
-            //context.CreateSeedData();
+           // context.CreateSeedData();
 
             app.UseEndpoints(endpoints =>
             {

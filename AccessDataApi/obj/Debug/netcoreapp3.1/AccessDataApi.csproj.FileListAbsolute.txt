@@ -173,3 +173,5 @@
 /Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/bin/Debug/netcoreapp3.1/Swashbuckle.AspNetCore.Annotations.dll
 /Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/bin/Debug/netcoreapp3.1/Swashbuckle.AspNetCore.Filters.dll
 /Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/obj/Debug/netcoreapp3.1/AccessDataApi.csprojAssemblyReference.cache
+/Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/bin/Debug/netcoreapp3.1/AutoMapper.dll
+/Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/bin/Debug/netcoreapp3.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
