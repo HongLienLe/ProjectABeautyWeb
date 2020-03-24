@@ -1,13 +1,20 @@
 ﻿<Properties StartupConfiguration="{3517FF51-7355-41C9-8381-5A774FD65C35}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
   <MonoDevelop.Ide.ItemProperties.AcessDataAPITest PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.ItemProperties.ProjectABeautyWeb PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AccessDataApi/Repo/BookAppointment.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AccessDataApi/Startup.cs">
     <Files>
-      <File FileName="AccessDataApi/Controllers/BookAppController.cs" Line="22" Column="1" />
-      <File FileName="AccessDataApi/Models/Employee.cs" />
-      <File FileName="AccessDataApi/Startup.cs" Line="40" Column="76" />
-      <File FileName="AccessDataApi/HTTPModels/BookAppointmentForm.cs" Line="16" Column="36" />
-      <File FileName="AccessDataApi/Repo/BookAppointment.cs" Line="1" Column="1" />
+      <File FileName="AccessDataApi/Authentication/UserManagementService.cs" Line="12" Column="2" />
+      <File FileName="AccessDataApi/Startup.cs" Line="87" Column="1" />
+      <File FileName="AccessDataApi/Authentication/TokenRequest.cs" Line="10" Column="29" />
+      <File FileName="AccessDataApi/Controllers/AuthenticationController.cs" Line="71" Column="23" />
+      <File FileName="AccessDataApi/Authentication/IAuthenticationService.cs" Line="7" Column="6" />
+      <File FileName="AccessDataApi/Authentication/TokenAuthenticationService.cs" Line="28" Column="58" />
+      <File FileName="AccessDataApi/Authentication/IUserManagermentService.cs" Line="9" Column="1" />
+      <File FileName="AccessDataApi/Controllers/EmployeeController.cs" Line="16" Column="16" />
+      <File FileName="AccessDataApi/appsettings.Development.json" Line="16" Column="4" />
+      <File FileName="AccessDataApi/Properties/launchSettings.json" Line="33" Column="60" />
+      <File FileName="AccessDataApi/Authentication/TokenManagement.cs" Line="1" Column="1" />
+      <File FileName="AccessDataApi/Data/UserDbContext.cs" Line="17" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -15,9 +22,13 @@
           <Node name="ProjectABeautyWeb" expanded="True">
             <Node name="AccessDataApi" expanded="True">
               <Node name="Dependencies" expanded="True" />
-              <Node name="Repo" expanded="True">
-                <Node name="BookAppointment.cs" selected="True" />
-              </Node>
+              <Node name="Authentication" expanded="True" />
+              <Node name="Controllers" expanded="True" />
+              <Node name="Data" expanded="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="Properties" expanded="True" />
+              <Node name="appsettings.json" expanded="True" />
+              <Node name="Startup.cs" selected="True" />
             </Node>
           </Node>
         </State>

@@ -6,12 +6,14 @@ using AccessDataApi.Data;
 using AccessDataApi.HTTPModels;
 using AccessDataApi.Models;
 using AccessDataApi.Repo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace AccessDataApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : Controller
