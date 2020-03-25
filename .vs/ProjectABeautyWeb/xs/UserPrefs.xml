@@ -1,27 +1,21 @@
 ﻿<Properties StartupConfiguration="{3517FF51-7355-41C9-8381-5A774FD65C35}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
   <MonoDevelop.Ide.ItemProperties.AcessDataAPITest PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.ItemProperties.ProjectABeautyWeb PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AccessDataApi/Data/ApplicationContext.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AccessDataApi/Controllers/EmployeeController.cs">
     <Files>
-      <File FileName="AccessDataApi/Authentication/UserManagementService.cs" Line="41" Column="39" />
-      <File FileName="AccessDataApi/Startup.cs" Line="213" Column="14" />
-      <File FileName="AccessDataApi/Authentication/TokenRequest.cs" Line="47" Column="6" />
-      <File FileName="AccessDataApi/Authentication/TokenAuthenticationService.cs" Line="18" Column="25" />
-      <File FileName="AccessDataApi/Data/UserDbContext.cs" Line="16" Column="8" />
-      <File FileName="AccessDataApi/appsettings.json" Line="38" Column="22" />
-      <File FileName="AccessDataApi/appsettings.Development.json" Line="10" Column="1" />
-      <File FileName="AccessDataApi/Data/ApplicationContext.cs" Line="25" Column="16" />
-      <File FileName="AccessDataApi/Controllers/AuthenticationController.cs" Line="1" Column="1" />
-      <File FileName="AccessDataApi/Data/ApplicationContextExtension.cs" Line="1" Column="1" />
+      <File FileName="AccessDataApi/Controllers/EmployeeController.cs" Line="18" Column="15" />
+      <File FileName="AccessDataApi/Startup.cs" Line="78" Column="37" />
+      <File FileName="AccessDataApi/Data/ApplicationContext.cs" Line="2" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ProjectABeautyWeb" expanded="True">
             <Node name="AccessDataApi" expanded="True">
-              <Node name="Data" expanded="True">
-                <Node name="ApplicationContext.cs" selected="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="EmployeeController.cs" selected="True" />
               </Node>
+              <Node name="Data" expanded="True" />
             </Node>
           </Node>
         </State>

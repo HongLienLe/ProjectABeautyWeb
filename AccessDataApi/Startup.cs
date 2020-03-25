@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using AccessDataApi.Authentication;
 using AccessDataApi.Data;
 using AccessDataApi.Models;
 using AccessDataApi.Repo;
@@ -24,7 +23,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using AutoMapper;
-
+using System.Security.Claims;
 
 namespace AccessDataApi
 {
@@ -41,7 +40,6 @@ namespace AccessDataApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers();
 
 
@@ -50,86 +48,23 @@ namespace AccessDataApi
             //    services.AddDbContext<ApplicationContext>(options =>
             //            options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
             //else
-            services.AddDbContext<ApplicationContext>(options =>
+                services.AddDbContext<ApplicationContext>(options =>
                     options.UseSqlite("Data Source=localdatabase.db"));
 
-            //services.AddEntityFrameworkSqlite()
-            //  .AddDbContext<UserDbContext>(opt => opt.UseSqlite("Data Source =Userdatabase.db"));
-
-            //services.AddIdentity<IdentityUser, IdentityRole>()
-            //  .AddEntityFrameworkStores<UserDbContext>();
-
             //  Automatically perform database migration
-            //services.BuildServiceProvider().GetService<ApplicationContext>().Database.Migrate();
+            services.BuildServiceProvider().GetService<ApplicationContext>().Database.Migrate();
 
-            //services.Configure<TokenManagement>(Configuration.GetSection("tokenManagement"));
-            //var token = Configuration.GetSection("tokenManagement").Get<TokenManagement>();
-            //var secret = Encoding.ASCII.GetBytes(token.Secret);
-
-            //services.AddAuthentication(x =>
-            //{
-            //    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //}).AddJwtBearer(x =>
-            //{
-            //    x.RequireHttpsMetadata = false;
-            //    x.SaveToken = true;
-            //    x.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        // Validate the JWT Issuer (iss) claim
-            //        ValidateIssuerSigningKey = true,
-            //        IssuerSigningKey = new SymmetricSecurityKey(secret),
-
-            //        // Validate the JWT Audience (aud) claim
-            //        ValidateIssuer = false,
-            //        ValidIssuer = token.Issuer,
-
-            //        ValidateAudience = false,
-            //        ValidAudience = token.Audience
-
-            //    };
-            //});
-
-            var appSettingsSection = Configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingsSection);
-
-            var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-            services.AddAuthentication(x =>
+            services.AddAuthentication(options =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-                .AddJwtBearer(x =>
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
             {
-                x.Events = new JwtBearerEvents
-                {
-                    OnTokenValidated = context =>
-                    {
-                        var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
-                        var userId = int.Parse(context.Principal.Identity.Name);
-                        var user = userService.GetById(userId);
-                        if (user == null)
-                        {
-                            // return unauthorized if user no longer exists
-                            context.Fail("Unauthorized");
-                        }
-                        return Task.CompletedTask;
-                    }
-                };
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
+                options.Authority = "https://penandpaper.eu.auth0.com/";
+                options.Audience = "penandpaperdatappapi";
             });
+        
 
-
-            // services.AddScoped<IAuthenticateService, TokenAuthenticationService>();
             services.AddTransient<IAvailabilityRepo, AvailabilityRepo>();
             services.AddTransient<IBookAppointment, BookAppointment>();
             services.AddTransient<IClientAccountRepo, ClientAccountRepo>();
@@ -137,11 +72,6 @@ namespace AccessDataApi
             services.AddTransient<IEmployeeTreatmentRepo, EmployeeTreatmentRepo>();
             services.AddTransient<IWorkScheduleRepo, WorkScheduleRepo>();
             services.AddTransient<ITreatmentRepo, TreatmentRepo>();
-            services.AddScoped<IUserService, UserService>();
-
-            //services.AddScoped<IUserManagementService, UserManagementService>();
-
-
 
             services.AddSwaggerGen(c =>
             {

@@ -13,9 +13,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AccessDataApi.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EmployeeController : Controller
     {
         private IEmployeeRepo _employeeRepo;

@@ -41,7 +41,6 @@
     <Folder Include="Repo\" />
     <Folder Include="HTTPModels\" />
     <Folder Include="Service\" />
-    <Folder Include="Authentication\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Views\OperatingTime\Edit.cshtml" />
