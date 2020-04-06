@@ -74,5 +74,26 @@ namespace AccessDataApi.Repo
             var bookApp = _context.AppointmentDetails.Where(x => x.Employee == employee && x.DateTimeKeyId == date.ToShortDateString()).ToList();
             return GetGapsInBooking(date, bookApp);
         }
+
+        public ITimePeriodCollection GetFreeTimePeriodsByDateAndTreatment(DateTime date, List<int> treatmentIds)
+        {
+            TimePeriodCollection availableTimeForTreatment = new TimePeriodCollection();
+
+            var employees = new List<Employee>();
+
+            foreach (var treatmentId in treatmentIds)
+            {
+                employees.AddRange(GetWorkingEmployeesByDateAndTreatment(date, treatmentId));
+            }
+
+            foreach (var employee in employees)
+            {
+                var employeeFreeReservations = GetAvailbilityByEmployee(date, employee);
+                availableTimeForTreatment.Add(employeeFreeReservations);
+            }
+
+            TimePeriodCombiner<TimeRange> periodCombiner = new TimePeriodCombiner<TimeRange>();
+            return periodCombiner.CombinePeriods(availableTimeForTreatment);
+        }
     }
 }

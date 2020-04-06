@@ -2,39 +2,43 @@
 using System.Collections.Generic;
 using System.Linq;
 using AccessDataApi.Data;
+using AccessDataApi.Functions;
+using AccessDataApi.HTTPModels;
 using AccessDataApi.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AccessDataApi.Repo
 {
-    public class OperatingTimeRepo
+    public class OperatingTimeRepo : IOperatingTimeRepo
     {
         private ApplicationContext _context;
+        private IDoes _does;
 
-        public OperatingTimeRepo(ApplicationContext context)
+        public OperatingTimeRepo(ApplicationContext context, IDoes does)
         {
             _context = context;
+            _does = does;
         }
 
-        public List<OperatingTime> GetOperatingTimes()
+        public List<OperatingTimeDetails> GetOperatingTimes()
         {
-            return _context.OperatingTimes.ToList();
+            return _context.OperatingTimes.Select(x => CastTo.OperatingTimeDetails(x)).ToList();
         }
 
-        public OperatingTime GetOperatingTime(int id)
+        public OperatingTimeDetails GetOperatingTime(int id)
         {
-            if (!_context.OperatingTimes.Any(x => x.Id == id))
+            if (!_does.OpeningIdExist(id))
                 return null;
-            return _context.OperatingTimes.First(x => x.Id == id);
+            return CastTo.OperatingTimeDetails(_context.OperatingTimes.First(x => x.Id == id));
         }
 
         public string UpdateOperatingTime(int id, OperatingTime oper)
         {
-            if (!_context.OperatingTimes.Any(x => x.Id == id))
+            if (!_does.OpeningIdExist(id))
                 return "Day Id does not exist";
 
             if (!isEndTimeLaterThanStartTime(oper))
-                return "end time can not be later than start time";
+                return "End time can not be earlier than start time";
 
             var choosenDay = _context.OperatingTimes.First(x => x.Id == id);
             choosenDay.StartTime = oper.StartTime;

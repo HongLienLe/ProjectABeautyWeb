@@ -22,12 +22,13 @@ namespace AcessDataAPITest.RepoTest
             _context.SaveChanges();
             _context.workSchedules.AddRange(GetOperatingTimeEmployees());
             _context.SaveChanges();
-            _workScheduleRepo = new WorkScheduleRepo(_context);
         }
 
         [Test]
         public void GetEmployee1WorkDays()
         {
+            _workScheduleRepo = new WorkScheduleRepo(_context);
+
             var resultEmployeeWorkDays = _workScheduleRepo.GetEmployeeWorkSchedule(1);
             var expectedDayId = new int[] { 1,2,3,4,5,6};
 
@@ -76,6 +77,8 @@ namespace AcessDataAPITest.RepoTest
         [Test]
         public void UpdatedWorkDayAddEmployees()
         {
+            _workScheduleRepo = new WorkScheduleRepo(_context);
+
             WorkScheduleModel wsm = new WorkScheduleModel()
             {
                 Id = 1,

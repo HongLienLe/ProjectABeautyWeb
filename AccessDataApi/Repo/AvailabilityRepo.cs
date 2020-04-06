@@ -4,45 +4,27 @@ using System.Collections.Generic;
 using AccessDataApi.Data;
 using AccessDataApi.Models;
 using Itenso.TimePeriod;
+using AccessDataApi.Functions;
 
 namespace AccessDataApi.Repo
 {
     public class AvailabilityRepo : AppointmentService, IAvailabilityRepo
     {
         private readonly ApplicationContext _context;
+        private IDoes _does;
 
-        public AvailabilityRepo(ApplicationContext context) : base(context)
+        public AvailabilityRepo(ApplicationContext context, IDoes does) : base(context)
         {
             _context = context;
+            _does = does;
         }
-
-
 
         public List<DateTime> GetAvailableTimeWithTreatment(DateTime date, List<int> treatmentIds)
         {
-            TimePeriodCollection availableTimeForTreatment = new TimePeriodCollection();
-
-            var employees = new List<Employee>();
-
-            foreach(var treatmentId in treatmentIds)
-            {
-                employees.AddRange(GetWorkingEmployeesByDateAndTreatment(date, treatmentId));
-            }
-
-            foreach(var employee in employees)
-            {
-                var employeeFreeReservations = GetAvailbilityByEmployee(date, employee);
-                availableTimeForTreatment.Add(employeeFreeReservations);
-            }
-          
-
-            TimePeriodCombiner<TimeRange> periodCombiner = new TimePeriodCombiner<TimeRange>();
-            ITimePeriodCollection combinedPeriods = periodCombiner.CombinePeriods(availableTimeForTreatment);
-
+            var freeTimeperiods = GetFreeTimePeriodsByDateAndTreatment(date, treatmentIds);
             var treatmentDuration = _context.Treatments.Where(x => treatmentIds.Contains(x.TreatmentId)).Select(x => x.Duration).Sum();
 
-
-            return GetFreeSlots(combinedPeriods, treatmentDuration);
+            return GetFreeSlots(freeTimeperiods, treatmentDuration);
         }
 
         private List<DateTime> GetFreeSlots(ITimePeriodCollection timePeriods, int Duration)
@@ -72,7 +54,7 @@ namespace AccessDataApi.Repo
                 return null;
             }
 
-            if (!_context.DateTimeKeys.Any(x => x.DateTimeKeyId == date.ToShortDateString()))
+            if (!_does.DateTimeKeyExist(date))
             {
                 var timeRange = GetTimeRange(date);
 

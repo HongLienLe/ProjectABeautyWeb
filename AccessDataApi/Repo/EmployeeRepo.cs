@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AccessDataApi.Data;
+using AccessDataApi.Functions;
 using AccessDataApi.HTTPModels;
 using AccessDataApi.Models;
 using Microsoft.EntityFrameworkCore;
@@ -11,10 +12,12 @@ namespace AccessDataApi.Repo
     public class EmployeeRepo : IEmployeeRepo
     {
         private ApplicationContext _context;
+        private IDoes _does;
 
-        public EmployeeRepo(ApplicationContext context)
+        public EmployeeRepo(ApplicationContext context, IDoes does)
         {
             _context = context;
+            _does = does;
         }
 
         public List<Employee> GetEmployees()
@@ -25,7 +28,7 @@ namespace AccessDataApi.Repo
 
         public Employee GetEmployee(int employeeId)
         {
-            if (!doesEmployeeExist(employeeId))
+            if (!_does.EmployeeExist(employeeId))
                 return null;
 
             return _context.Employees.First(x => x.EmployeeId == employeeId);    
@@ -37,13 +40,13 @@ namespace AccessDataApi.Repo
 
             _context.SaveChanges();
 
-            return "Sucessfully Added new employee";
+            return "Successfully added new employee";
         }
 
         public string UpdateEmployee(int employeeId, Employee employee)
         {
-            if(!doesEmployeeExist(employeeId))
-                return "Does not exist, make a new one";
+            if(!_does.EmployeeExist(employeeId))
+                return null ;
 
             var oldEmployee = _context.Employees.First(x => x.EmployeeId == employeeId);
 
@@ -51,20 +54,20 @@ namespace AccessDataApi.Repo
 
             _context.SaveChanges();
 
-            return "Updated Employee Details"; 
+            return "Updated employee details"; 
         }
 
-        public void DeleteEmployee(int id)
+        public string DeleteEmployee(int id)
         {
+            if (!_does.EmployeeExist(id))
+                return null;
+
             _context.Remove(_context.Employees.Single(x => x.EmployeeId == id));
 
             _context.SaveChanges();
-            
-        }
 
-        private bool doesEmployeeExist(int employeeId)
-        {
-            return _context.Employees.Any(x => x.EmployeeId == employeeId);
+            return "Successfully removed employee";
+            
         }
     }
 }

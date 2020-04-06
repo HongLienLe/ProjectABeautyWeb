@@ -6,6 +6,7 @@ using AccessDataApi.Data;
 using AccessDataApi.HTTPModels;
 using AccessDataApi.Models;
 using AccessDataApi.Repo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -68,7 +69,7 @@ namespace AccessDataApi.Controllers
             });
         }
 
-        // POST api/values
+        [Authorize]
         [HttpPost("add")]
         public IActionResult AddingTreatment([FromBody]TreatmentForm treatmentForm)
         {
@@ -85,7 +86,7 @@ namespace AccessDataApi.Controllers
 
         }
 
-        // PUT api/values/5
+        [Authorize]
         [HttpPost("update/{id}")]
         public IActionResult UpdatingTreatment(int id, [FromBody]TreatmentForm treatmentForm)
         {
@@ -117,7 +118,7 @@ namespace AccessDataApi.Controllers
 
         }
 
-        // DELETE api/values/5
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult DeletingTreatment(int id)
         {

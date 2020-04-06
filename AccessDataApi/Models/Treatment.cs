@@ -32,6 +32,7 @@ namespace AccessDataApi.Models
 
         public virtual ICollection<EmployeeTreatment> EmployeeTreatments { get; set; }
         public virtual ICollection<AppointmentDetails> Appointments { get; set; }
+        
 
         public Treatment()
         {

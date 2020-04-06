@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AccessDataApi.Data;
+using AccessDataApi.Functions;
 using AccessDataApi.Models;
 using AccessDataApi.Repo;
+using Moq;
 using NUnit.Framework;
 
 namespace AcessDataAPITest.RepoTest
@@ -17,7 +20,6 @@ namespace AcessDataAPITest.RepoTest
             _context = _connectionFactory.CreateContextForSQLite();
             _context.Treatments.AddRange(SeedTreatmentData());
             _context.SaveChanges();
-            _treatmentRepo = new TreatmentRepo(_context);
         }
 
         //"Sucessfully Added Treatment" test the add 
@@ -25,6 +27,10 @@ namespace AcessDataAPITest.RepoTest
         [Test]
         public void ReturnAllTreatmentsList()
         {
+            var mockDoes = new Mock<IDoes>();
+
+            _treatmentRepo = new TreatmentRepo(_context, mockDoes.Object);
+
             var resultTreatments = _treatmentRepo.GetTreatments();
             var expectedTreatments = SeedTreatmentData();
 
@@ -39,6 +45,12 @@ namespace AcessDataAPITest.RepoTest
         [Test]
         public void ReturnCorrectTreatmentById()
         {
+            var mockDoes = new Mock<IDoes>();
+
+            mockDoes.Setup(x => x.TreatmentExist(1)).Returns(true);
+
+            _treatmentRepo = new TreatmentRepo(_context, mockDoes.Object);
+
             var resultTreatment = _treatmentRepo.GetTreatment(1);
 
             EndConnection();
@@ -51,6 +63,12 @@ namespace AcessDataAPITest.RepoTest
         [Test]
         public void ReturnUpdatedTreatmentById1()
         {
+            var mockDoes = new Mock<IDoes>();
+
+            mockDoes.Setup(x => x.TreatmentExist(1)).Returns(true);
+
+            _treatmentRepo = new TreatmentRepo(_context, mockDoes.Object);
+
             var updatedTreatment = new Treatment() { TreatmentName = "Infill", TreatmentType = TreatmentType.Acrylic, Duration = 99, Price = 99 };
 
             _treatmentRepo.UpdateTreatment(1, updatedTreatment);
@@ -69,13 +87,19 @@ namespace AcessDataAPITest.RepoTest
         [Test]
         public void ReturnTrueIfSuccessfullyDeleteTreatmentId1()
         {
+            var mockDoes = new Mock<IDoes>();
+
+            mockDoes.Setup(x => x.TreatmentExist(1)).Returns(true);
+
+            _treatmentRepo = new TreatmentRepo(_context, mockDoes.Object);
+
             _treatmentRepo.DeleteTreatment(1);
 
-            var resultTreatmentShouldBeNull = _treatmentRepo.GetTreatment(1);
+            var resultTreatmentShouldBeNull = _context.Treatments.Any( x=> x.TreatmentId == 1);
 
             EndConnection();
 
-            Assert.IsTrue(resultTreatmentShouldBeNull == null);
+            Assert.IsFalse(resultTreatmentShouldBeNull);
         }
 
         private List<Treatment> SeedTreatmentData()

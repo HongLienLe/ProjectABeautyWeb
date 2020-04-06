@@ -7,7 +7,7 @@ namespace AccessDataApi.Repo
 {
     public interface IWorkScheduleRepo
     {
-        public void addWorkSchedule(WorkScheduleModel wsm);
+        public string addWorkSchedule(WorkScheduleModel wsm);
         public List<OperatingTime> GetEmployeeWorkSchedule(int employeeId);
         public List<Employee> GetEmployeeByWorkDay(int dayId);
     }

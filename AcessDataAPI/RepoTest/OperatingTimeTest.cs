@@ -4,6 +4,8 @@ using AccessDataApi.Models;
 using AccessDataApi.Repo;
 using NUnit.Framework;
 using System;
+using AccessDataApi.Functions;
+using Moq;
 
 namespace AcessDataAPITest.RepoTest
 {
@@ -18,12 +20,14 @@ namespace AcessDataAPITest.RepoTest
             _context = _connectionFactory.CreateContextForSQLite();
             _context.OperatingTimes.AddRange(GetOpeningTimes());
             _context.SaveChanges();
-            _operatingTimeRepo = new OperatingTimeRepo(_context);
         }
 
         [Test]
         public void ReturnListOfOpeningHours()
         {
+            var mockDoes = new Mock<IDoes>();
+            _operatingTimeRepo = new OperatingTimeRepo(_context, mockDoes.Object);
+
             var resultOpeningHoursList = _operatingTimeRepo.GetOperatingTimes();
             var expectedOpeningHoursList = GetOpeningTimes();
 
@@ -38,6 +42,11 @@ namespace AcessDataAPITest.RepoTest
         [Test]
         public void ReturnOpeningDayById()
         {
+            var mockDoes = new Mock<IDoes>();
+
+            mockDoes.Setup(x => x.OpeningIdExist(1)).Returns(true);
+            _operatingTimeRepo = new OperatingTimeRepo(_context, mockDoes.Object);
+
             var resultOpeningDay = _operatingTimeRepo.GetOperatingTime(1);
             var expectedOpeningDay = GetOpeningTimes()[0];
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AccessDataApi.Data;
+using AccessDataApi.Functions;
 using AccessDataApi.HTTPModels;
 using AccessDataApi.Models;
 
@@ -10,41 +11,41 @@ namespace AccessDataApi.Repo
     public class EmployeeTreatmentRepo : IEmployeeTreatmentRepo
     {
         private ApplicationContext _context;
+        private IDoes _does;
 
-        public EmployeeTreatmentRepo(ApplicationContext context)
+        public EmployeeTreatmentRepo(ApplicationContext context, IDoes does)
         {
             _context = context;
+            _does = does;
         }
 
-        public void AddEmployeeTreatment(EmployeeTreatmentCrud et)
+        public string AddTreatmentsToEmployee(OneIdToManyIdForm et)
         {
 
-                if (et.isEmployeeId)
+            var treatment = _context.EmployeeTreatment
+            .Where(x => et.Ids.Contains(x.TreatmentId) && x.EmployeeId == et.Id)
+            .Select(x => x.TreatmentId);
+
+            var notAddedTreatmentsToEmployee = et.Ids.Except(treatment);
+
+            foreach(var treatmentId in notAddedTreatmentsToEmployee)
+            {
+                EmployeeTreatment employeeTreatment = new EmployeeTreatment()
                 {
-                     var treatment = _context.EmployeeTreatment
-                        .Where(x => et.Ids.Contains(x.TreatmentId) && x.EmployeeId == et.Id)
-                        .Select(x => x.TreatmentId);
+                    TreatmentId = treatmentId,
+                    EmployeeId = et.Id
+                };
 
-                     var notAddedTreatmentsToEmployee = et.Ids.Except(treatment);
+                _context.EmployeeTreatment.Add(employeeTreatment);
+            }
 
-                     foreach(var treatmentId in notAddedTreatmentsToEmployee)
-                        {
+            _context.SaveChanges();
+            return "Treatments have been added employee credentials";
 
-                         EmployeeTreatment employeeTreatment = new EmployeeTreatment()
-                            {
-                                TreatmentId = treatmentId,
-                                EmployeeId = et.Id
-                            };
+        }
 
-                          _context.EmployeeTreatment.Add(employeeTreatment);
-                        }
-
-
-                    _context.SaveChanges();
-                    return;
-
-                }
-
+        public string AddEmployeesToTreatment(OneIdToManyIdForm et)
+        {
             var employee = _context.EmployeeTreatment
                 .Where(x => et.Ids.Contains(x.EmployeeId) && x.TreatmentId == et.Id)
                 .Select(x => x.EmployeeId);
@@ -64,40 +65,48 @@ namespace AccessDataApi.Repo
             }
 
             _context.SaveChanges();
-            return;
+            return "Treatment has been added to the employees credentials";
         }
 
-        public List<Treatment> GetTreatmentsByEmployee(int employeeId)
+        public List<TreatmentDetails> GetTreatmentsByEmployee(int id)
         {
-            return _context.EmployeeTreatment.Where(x => x.EmployeeId == employeeId).Select(x => x.Treatment).ToList();
+            return _context.EmployeeTreatment
+                .Where(x => x.EmployeeId == id)
+                .Select(x => CastTo.TreatmentDetails(x.Treatment)).ToList();
         }
 
-        public List<Employee> GetEmployeesByTreatment(int treatmentId)
+        public List<EmployeeDetails> GetEmployeesByTreatment(int id)
         {
-            return _context.EmployeeTreatment.Where(x => x.TreatmentId == treatmentId).Select(x => x.Employee).ToList();
+            return _context.EmployeeTreatment
+                .Where(x => x.TreatmentId == id)
+                .Select(x => CastTo.EmployeeDetails(x.Employee)).ToList();
         }
 
-        public void RemoveEmployeeTreatment(EmployeeTreatmentCrud et)
+        public string RemoveEmployeeFromTreatments(OneIdToManyIdForm et)
         {
 
-            if (et.isEmployeeId)
-            {
-                var etList = _context.EmployeeTreatment
-                    .Where(x => x.EmployeeId == et.Id && et.Ids.Contains(x.TreatmentId));
+            var etList = _context.EmployeeTreatment
+                .Where(x => x.EmployeeId == et.Id && et.Ids.Contains(x.TreatmentId));
 
             _context.EmployeeTreatment.RemoveRange(etList);
 
             _context.SaveChanges();
 
-                return;
-            }
+            return $"Successfully removed treatments from Employee {et.Id} credentials";
+            
+        }
 
+        public string RemoveTreatmentFromEmployees(OneIdToManyIdForm et)
+        {
             var teList = _context.EmployeeTreatment
                 .Where(x => x.TreatmentId == et.Id && et.Ids.Contains(x.TreatmentId));
 
             _context.EmployeeTreatment.RemoveRange(teList);
 
             _context.SaveChanges();
+
+            return $"Successfully removed treatment {et.Id} from Employees credentials";
         }
+
     }
 }

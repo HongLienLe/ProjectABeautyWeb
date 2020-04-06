@@ -9,6 +9,5 @@ namespace AccessDataApi.Models
         public int TreatmentId { get; set; }
         public virtual Treatment Treatment { get; set; }
 
-
     }
 }

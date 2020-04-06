@@ -8,6 +8,7 @@ using Itenso.TimePeriod;
 using NUnit.Framework;
 using System.Linq;
 using AccessDataApi.HTTPModels;
+using AccessDataApi.Functions;
 
 namespace AcessDataAPITest.RepoTest
 {
@@ -24,11 +25,11 @@ namespace AcessDataAPITest.RepoTest
             _context.Treatments.AddRange(GetTreatments());
             _context.SaveChanges();
             _context.EmployeeTreatment.AddRange(GetEmployeeTreatments());
+            _context.SaveChanges();
             _context.OperatingTimes.AddRange(GetOpeningTimes());
             _context.SaveChanges();
             _context.workSchedules.AddRange(GetOperatingTimeEmployees());
             _context.SaveChanges();
-            _bookAppRepo = new BookAppointment(_context);
         }
 
         // test with multiple bookings 
@@ -36,13 +37,21 @@ namespace AcessDataAPITest.RepoTest
         [Test]
         public void BookTheFirstAppointmentWithValidModel()
         {
+            var mockDoes = new Mock<IDoes>();
+            mockDoes.Setup(x => x.DateTimeKeyExist(new DateTime(2020, 12, 9))).Returns(false);
+            _bookAppRepo = new BookAppointment(_context, mockDoes.Object);
+
+
             var requestedBookApp = new BookAppointmentForm()
             {
-                FirstName = "Hong",
-                LastName = "Le",
-                ContactNumber = "123",
-                Email = "Hong@mail.com",
-                DateTimeFormatt = "2020-3-9",
+                Client = new ClientForm()
+                {
+                    FirstName = "Hong",
+                    LastName = "Le",
+                    ContactNumber = "123",
+                    Email = "Hong@mail.com"
+                },
+                DateTimeFormatt = "2020-12-9",
                 StartTime = "10:00:00",
                 TreatmentIds = new List<int>() { 1 }  
             };
@@ -64,13 +73,21 @@ namespace AcessDataAPITest.RepoTest
         [Test]
         public void ReturnCorrectResponseWhenDateIsInvalidOperatingTime()
         {
+            var mockDoes = new Mock<IDoes>();
+
+            mockDoes.Setup(x => x.DateTimeKeyExist(new DateTime(2020, 12, 20))).Returns(false);
+
+            _bookAppRepo = new BookAppointment(_context, mockDoes.Object);
             var invalidDateApp = new BookAppointmentForm()
             {
-                FirstName = "Hong",
-                LastName = "Le",
-                ContactNumber = "123",
-                Email = "Hong@mail.com",
-                DateTimeFormatt = "2020-3-8",
+                Client = new ClientForm()
+                {
+                    FirstName = "Hong",
+                    LastName = "Le",
+                    ContactNumber = "123",
+                    Email = "Hong@mail.com"
+                },
+                DateTimeFormatt = "2020-12-20",
                 StartTime = "10:00:00",
                 TreatmentIds = new List<int>() { 1 }
             };
@@ -83,19 +100,29 @@ namespace AcessDataAPITest.RepoTest
 
             Console.WriteLine(response);
             Assert.IsFalse(shouldBeFalseNotAddedToDB);
-            Assert.IsTrue(response.Contains("Business is closed on requested date"));
+            Assert.IsTrue(response.Contains("closed"));
         }
 
         [Test]
         public void CanAllocateCorrectEmployeeIfChoosenEmployeeIs0IsAny()
         {
+            var mockDoes = new Mock<IDoes>();
+
+            mockDoes.Setup(x => x.DateTimeKeyExist(new DateTime(2020, 12, 20))).Returns(false);
+
+            mockDoes.Setup(x => x.DateTimeKeyExist(new DateTime(2020, 12, 9))).Returns(false);
+
+            _bookAppRepo = new BookAppointment(_context, mockDoes.Object);
             var requestedBooking = new BookAppointmentForm()
             {
-                FirstName = "Hong",
-                LastName = "Le",
-                ContactNumber = "123",
-                Email = "Hong@mail.com",
-                DateTimeFormatt = "2020-3-9",
+                Client = new ClientForm()
+                {
+                    FirstName = "Hong",
+                    LastName = "Le",
+                    ContactNumber = "123",
+                    Email = "Hong@mail.com"
+                },
+                DateTimeFormatt = "2020-12-9",
                 StartTime = "10:00:00",
                 TreatmentIds = new List<int>() { 1 }
             };
@@ -108,20 +135,29 @@ namespace AcessDataAPITest.RepoTest
 
             Assert.IsTrue(response.Contains("Booking has been successful, Order App 1"));
             Assert.IsTrue(employeeBookings.Count() == 1);
-            Assert.IsTrue(employeeBookings[0].DateTimeKey.date == new DateTime(2020,3,9));
+            Assert.IsTrue(employeeBookings[0].DateTimeKey.date == new DateTime(2020,12,9));
             Assert.IsTrue(employeeBookings[0].TreatmentId == 1);
         }
 
         [Test]
         public void CanReturnInvalidResponseIfEmployeeNotAvaliableAndNotSaveAnyData()
         {
+            var mockDoes = new Mock<IDoes>();
+
+            mockDoes.Setup(x => x.DateTimeKeyExist(new DateTime(2020, 12, 9))).Returns(false);
+
+            _bookAppRepo = new BookAppointment(_context, mockDoes.Object);
+
             var requestedBooking = new BookAppointmentForm()
             {
-                FirstName = "Hong",
-                LastName = "Le",
-                ContactNumber = "123",
-                Email = "Hong@mail.com",
-                DateTimeFormatt = "2020-3-9",
+                Client = new ClientForm()
+                {
+                    FirstName = "Hong",
+                    LastName = "Le",
+                    ContactNumber = "123",
+                    Email = "Hong@mail.com"
+                },
+                DateTimeFormatt = "2020-12-9",
                 StartTime = "11:00:00",
                 TreatmentIds = new List<int>() { 1 }
             };
@@ -143,13 +179,22 @@ namespace AcessDataAPITest.RepoTest
         [Test]
         public void CanBookAppointmentWithExistingDateTimeKey()
         {
+            var mockDoes = new Mock<IDoes>();
+
+            mockDoes.Setup(x => x.DateTimeKeyExist(new DateTime(2020, 12, 9))).Returns(true);
+
+            _bookAppRepo = new BookAppointment(_context, mockDoes.Object);
+
             var requestedBooking = new BookAppointmentForm()
             {
-                FirstName = "Hong",
-                LastName = "Le",
-                ContactNumber = "123",
-                Email = "Hong@mail.com",
-                DateTimeFormatt = "2020-3-9",
+                Client = new ClientForm()
+                {
+                    FirstName = "Hong",
+                    LastName = "Le",
+                    ContactNumber = "123",
+                    Email = "Hong@mail.com"
+                },
+                DateTimeFormatt = "2020-12-9",
                 StartTime = "11:00:00",
                 TreatmentIds = new List<int>() { 1 }
             };
@@ -167,14 +212,14 @@ namespace AcessDataAPITest.RepoTest
             Assert.IsTrue(response.Contains("Booking has been successful, Order App 2"));
             Assert.IsNotNull(bookings);
             Assert.IsTrue(employeeBookings.Count() == 1);
-            Assert.IsTrue(employeeBookings[0].DateTimeKey.date == new DateTime(2020, 3, 9));
-            Assert.IsTrue(employeeBookings[0].Reservation.StartTime == new DateTime(2020,3,9,11,0,0));
-            Assert.IsTrue(employeeBookings[0].Reservation.EndTime == new DateTime(2020,3,9,11,45,0));
+            Assert.IsTrue(employeeBookings[0].DateTimeKey.date == new DateTime(2020, 12, 9));
+            Assert.IsTrue(employeeBookings[0].Reservation.StartTime == new DateTime(2020,12,9,11,0,0));
+            Assert.IsTrue(employeeBookings[0].Reservation.EndTime == new DateTime(2020,3,12,11,45,0));
         }
 
         private void FullyBookedAllDay(int count)
         {
-            var date = new DateTime(2020, 3, 9);
+            var date = new DateTime(2020, 12, 9);
 
             for (int i = 1; i <= count; i++)
             {

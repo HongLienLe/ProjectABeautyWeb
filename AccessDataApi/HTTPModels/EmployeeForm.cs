@@ -10,6 +10,7 @@ namespace AccessDataApi.HTTPModels
 
         [Required]
         public string Email { get; set; }
+
     }
 
     public class EmployeeDetails : EmployeeForm

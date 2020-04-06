@@ -13,6 +13,7 @@ namespace AccessDataApi.Repo
         public ITimePeriodCollection GetGapsInBooking(DateTime date, ICollection<AppointmentDetails> bookings);
         public List<Employee> GetWorkingEmployeesByDateAndTreatment(DateTime date, int treatmentIds);
         public ITimePeriodCollection GetAvailbilityByEmployee(DateTime date, Employee employee);
+        public ITimePeriodCollection GetFreeTimePeriodsByDateAndTreatment(DateTime date, List<int> treatmentIds);
 
 
 

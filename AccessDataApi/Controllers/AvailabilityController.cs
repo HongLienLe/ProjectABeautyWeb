@@ -22,12 +22,17 @@ namespace AccessDataApi.Controllers
         [HttpGet("{year}/{month}/{day}")]
         public IActionResult GetAvailableTime(int year, int month, int day)
         {
-            DateTime choosenDate = new DateTime(year, month, day);
 
-            var response = _availbiliyRepo.GetAvailableTime(choosenDate);
+            DateTime dateTime = new DateTime(year, month, day);
 
+            if (dateTime < DateTime.Today)
+                return BadRequest("Past date not available. Must choose today or future dates");
+
+            var response = _availbiliyRepo.GetAvailableTime(dateTime);
+             
             if (response == null)
-                return BadRequest("No avaliable time");
+                return BadRequest("No available time slots for given day");
+
             return Ok(response);
         }
 
@@ -35,10 +40,13 @@ namespace AccessDataApi.Controllers
         [HttpPost("date/treatments")]
         public IActionResult GetWorkingEmployeesByDateAndTreatment([FromBody]TimeSlotForTreatmentForm timeSlotForTreatmentForm)
         {
+            if (timeSlotForTreatmentForm.Date < DateTime.Today)
+                return BadRequest("Must choose today or future dates");
+
             var response = _availbiliyRepo.GetAvailableTimeWithTreatment(timeSlotForTreatmentForm.Date, timeSlotForTreatmentForm.Treatments);
 
             if (response == null)
-                return BadRequest(response);
+                return BadRequest("No available time slots for given day");
 
             return Ok(response);
         }

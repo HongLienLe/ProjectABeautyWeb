@@ -7,9 +7,11 @@ namespace AccessDataApi.Repo
 {
     public interface IEmployeeTreatmentRepo
     {
-        public void AddEmployeeTreatment(EmployeeTreatmentCrud et);
-        public List<Treatment> GetTreatmentsByEmployee(int employeeId);
-        public List<Employee> GetEmployeesByTreatment(int treatmentId);
-        public void RemoveEmployeeTreatment(EmployeeTreatmentCrud et);
+        public string AddTreatmentsToEmployee(OneIdToManyIdForm et);
+        public string AddEmployeesToTreatment(OneIdToManyIdForm et);
+        public List<TreatmentDetails> GetTreatmentsByEmployee(int id);
+        public List<EmployeeDetails> GetEmployeesByTreatment(int id);
+        public string RemoveEmployeeFromTreatments(OneIdToManyIdForm et);
+        public string RemoveTreatmentFromEmployees(OneIdToManyIdForm et);
     }
 }

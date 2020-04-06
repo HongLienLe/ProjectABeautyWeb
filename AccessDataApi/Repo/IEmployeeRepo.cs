@@ -11,7 +11,7 @@ namespace AccessDataApi.Repo
         public Employee GetEmployee(int employeeId);
         public string AddEmployee(Employee employee);
         public string UpdateEmployee(int employeeId, Employee employee);
-        public void DeleteEmployee(int employeeId);
+        public string DeleteEmployee(int employeeId);
 
     }
 }

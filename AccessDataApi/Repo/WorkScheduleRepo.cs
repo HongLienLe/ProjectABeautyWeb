@@ -15,10 +15,14 @@ namespace AccessDataApi.Repo
             _context = context;
         }
 
-        public void addWorkSchedule(WorkScheduleModel wsm)
+        public string addWorkSchedule(WorkScheduleModel wsm)
         {
             if (wsm.isEmployee)
             {
+                if (!_context.OperatingTimes.Any(x => wsm.Ids.Contains(x.Id)) || !_context.Employees.Any(x => x.EmployeeId == wsm.Id))
+                    return "Day Id or Employee Id does not exist";
+
+
                 var workSch = _context.workSchedules.Where(x => x.EmployeeId == wsm.Id).Select(x => x.OperatingTimeId);
 
                 var addWorkDays = wsm.Ids.Except(workSch);
@@ -35,8 +39,11 @@ namespace AccessDataApi.Repo
                 }
                 _context.SaveChanges();
 
-                return;
+                return "Successfully added work days to Employee";
             }
+
+            if (!_context.Employees.Any(x => wsm.Ids.Contains(x.EmployeeId)) || !_context.OperatingTimes.Any(x => x.Id == wsm.Id))
+                return "Day Id or Employee Id does not exist";
 
             var employees = _context.workSchedules.Where(x => x.OperatingTimeId == wsm.Id).Select(x => x.EmployeeId);
 
@@ -53,6 +60,8 @@ namespace AccessDataApi.Repo
                 _context.workSchedules.Add(ot);
             }
             _context.SaveChanges();
+
+            return "Successfully added employees to choosen work day";
 
         }
 

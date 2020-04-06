@@ -3,23 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AccessDataApi.Data;
+using AccessDataApi.Functions;
+using AccessDataApi.HTTPModels;
 using AccessDataApi.Models;
 using AccessDataApi.Repo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccessDataApi.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
     public class OperatingTimeController : ControllerBase
     {
-        private OperatingTimeRepo _operatingTimeRepo;
+        private IOperatingTimeRepo _operatingTimeRepo;
 
-        public OperatingTimeController(ApplicationContext context)
+        public OperatingTimeController(IOperatingTimeRepo operatingTimeRepo)
         {
-            _operatingTimeRepo = new OperatingTimeRepo(context);
+            _operatingTimeRepo = operatingTimeRepo;
         }
 
         [HttpGet]
@@ -27,21 +29,7 @@ namespace AccessDataApi.Controllers
         {
             var openingHours = _operatingTimeRepo.GetOperatingTimes().ToList();
 
-            var openingTimesDetails = new List<OpeningTimeDetail>();
-
-            foreach(var day in openingHours)
-            {
-                openingTimesDetails.Add(
-                    new OpeningTimeDetail()
-                    {
-                        Id = day.Id,
-                        Day = day.Day,
-                        StartTime = day.StartTime.ToString(),
-                        EndTime = day.EndTime.ToString(),
-                        isOpen = day.isOpen
-                    });
-            }
-            return Ok(openingTimesDetails);
+            return Ok(openingHours);
         }
 
         // GET: api/OperatingTimeRepo/5
@@ -51,55 +39,31 @@ namespace AccessDataApi.Controllers
             var day = _operatingTimeRepo.GetOperatingTime(id);
 
             if (day == null)
-                return NotFound(day);
+                return NotFound("Out of range, ust be between 1-7");            
 
-            var choosenDay = new OpeningTimeDetail()
-            {
-                Id = day.Id,
-                Day = day.Day,
-                StartTime = day.StartTime.ToString(),
-                EndTime = day.EndTime.ToString(),
-                isOpen = day.isOpen
-            };
-
-            return Ok(choosenDay);
+            return Ok(day);
         }
 
-        // POST: api/OperatingTimeRepo
+        [Authorize]
         [HttpPost("{id}")]
-        public IActionResult Post(int id, [FromBody] OpeningTimeForm operatingTimeForm)
+        public IActionResult Post(int id, [FromBody] OperatingTimeForm operatingTimeForm)
         {
-            var operatingTime = new OperatingTime()
-            {
-                StartTime = TimeSpan.Parse(operatingTimeForm.StartTime),
-                EndTime = TimeSpan.Parse(operatingTimeForm.EndTime),
-                isOpen = operatingTimeForm.isOpen
+            var operatingTime = CastTo.OperatingTime(operatingTimeForm);
 
-            };
+            if (operatingTime == null)
+                return BadRequest("StartTime or EndTime not in the correct formatt HH:MM:SS");
 
             var response =_operatingTimeRepo.UpdateOperatingTime(id, operatingTime);
 
             if (response.StartsWith("D"))
                 return NotFound(response);
 
-            if (response.StartsWith("e"))
+            if (response.StartsWith("E"))
                 return BadRequest(response);
 
             return Ok(response);
         }
     }
 
-    public class OpeningTimeDetail : OpeningTimeForm
-    {
-        public int Id { get; set; }
-        public string Day { get; set; }
-
-    }
-    
-    public class OpeningTimeForm
-    {
-        public string StartTime { get; set; }
-        public string EndTime { get; set; }
-        public bool isOpen { get; set; }
-    }
+   
 }

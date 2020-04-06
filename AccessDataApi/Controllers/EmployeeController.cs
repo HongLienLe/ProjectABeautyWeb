@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AccessDataApi.Data;
+using AccessDataApi.Functions;
 using AccessDataApi.HTTPModels;
 using AccessDataApi.Models;
 using AccessDataApi.Repo;
@@ -60,44 +61,48 @@ namespace AccessDataApi.Controllers
                 return NotFound(employee);
             }
 
-                return Ok(new EmployeeDetails() {
-                    Id = employee.EmployeeId,
-                    EmployeeName = employee.EmployeName,
-                    Email = employee.Email });
+                return Ok(employee);
         }
 
         // POST api/values
         [HttpPost("add")]
-        public void Post([FromBody]EmployeeForm newEmployee)
+        public IActionResult Post([FromBody]EmployeeForm newEmployee)
         {
-            var employee = new Employee()
-            {
-                EmployeName = newEmployee.EmployeeName,
-                Email = newEmployee.Email
-            };
+            if (!ModelState.IsValid)
+                return BadRequest(newEmployee);
 
-            _employeeRepo.AddEmployee(employee);
+            var employee = CastTo.Employee(newEmployee);
+
+            return Ok( _employeeRepo.AddEmployee(employee));
 
         }
 
         // PUT api/values/5
         [HttpPost("{id}")]
-        public void Post(int id, [FromBody]EmployeeForm UpdatedEmployee)
+        public IActionResult Post(int id, [FromBody]EmployeeForm UpdatedEmployee)
         {
-            var employee = new Employee()
-            {
-                EmployeName = UpdatedEmployee.EmployeeName,
-                Email = UpdatedEmployee.Email
-            };
+            if (ModelState.IsValid)
+                return BadRequest(UpdatedEmployee);
 
-            _employeeRepo.UpdateEmployee(id, employee);
+            var employee = CastTo.Employee(UpdatedEmployee);
+
+            if (employee == null)
+                return BadRequest($"Employee Id: {id} does not exist, make a new one");
+
+            return Ok(_employeeRepo.UpdateEmployee(id, employee));
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            _employeeRepo.DeleteEmployee(id);
+
+            var response = _employeeRepo.DeleteEmployee(id);
+
+            if (response == null)
+                return BadRequest($"Employee Id: {id} does not exist");
+
+            return Ok(response);
         }
 
     }

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AccessDataApi.Data;
+using AccessDataApi.Functions;
 using AccessDataApi.HTTPModels;
 using AccessDataApi.Models;
 using AccessDataApi.Repo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccessDataApi.Controllers
@@ -25,7 +27,7 @@ namespace AccessDataApi.Controllers
         {
             DateTime dateTime = new DateTime(year, month, day);
 
-            if (dateTime > DateTime.Today)
+            if (dateTime < DateTime.Today)
                 return BadRequest("Past date not available");
 
             var response = _bookAppRepo.MakeAppointment(bookApp);
@@ -39,25 +41,19 @@ namespace AccessDataApi.Controllers
             return Ok(response);
         }
 
+        [Authorize]
         [HttpGet("AppointmentId/{Id}")]
         public IActionResult GetAppointmentById(int Id)
         {
-
             var response = _bookAppRepo.GetAppointment(Id);
 
             if (response == null)
                 return NotFound(response);
 
-            return Ok(new
-            {
-                id = response.AppointmentDetailsId,
-                Name = $"{response.ClientAccount.FirstName} {response.ClientAccount.LastName}",
-                Treatmemt = $"{response.Treatment.TreatmentName}",
-                StartTime = response.Reservation.StartTime.ToString(),
-                EndTime = response.Reservation.EndTime.ToString()
-            });
+            return Ok(CastTo.BookAppDetails(response));
         }
 
+        [Authorize]
         [HttpGet("Admin/BookApp/date/{year}/{month}/{day}")]
         public IActionResult GetBookedAppByDate(int year, int month, int day)
         {
@@ -71,6 +67,22 @@ namespace AccessDataApi.Controllers
             return Ok(response);
         }
 
+        [Authorize]
+        [HttpPost("Update/{id}")]
+        public IActionResult UpdateBookingApp(int id, [FromBody] BookAppointmentForm bookapp)
+        {
+            var response = _bookAppRepo.UpdateApppointment(id, bookapp);
+
+            if (response.StartsWith("B"))
+                return NotFound(response);
+
+            if (response.StartsWith("R"))
+                return BadRequest(response);
+
+            return Ok(response);
+        }
+
+        [Authorize]
         [HttpDelete("Date/{year}/{month}/{day}/Id/{id}")]
         public IActionResult DeleteBookedAppointment(int year, int month, int day, int id)
         {
@@ -82,16 +94,17 @@ namespace AccessDataApi.Controllers
             return Ok(response);
         }
 
-        //[HttpGet("Admin/BookApp/Date/{year}/{month}/{day}/Employee/{employeeId}")]
-        //public IActionResult GetBookAppByEmployee(int year, int month, int day, int employeeId)
-        //{
-        //    var date = new DateTime(year, month, day);
-        //    var response = _bookAppRepo;
+        [Authorize]
+        [HttpGet("Admin/BookApp/Date/{year}/{month}/{day}/Employee/{employeeId}")]
+        public IActionResult GetBookAppByEmployee(int year, int month, int day, int employeeId)
+        {
+            var date = new DateTime(year, month, day);
+            var response = _bookAppRepo.GetBookAppByDateAndEmployee(date, employeeId);
 
-        //    if (response == null)
-        //        return NoContent();
+            if (response == null)
+                return NoContent();
 
-        //    return Ok(response);
-        //}
+            return Ok(response);
+        }
     }
 }

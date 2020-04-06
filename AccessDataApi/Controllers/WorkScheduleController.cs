@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AccessDataApi.Functions;
 using AccessDataApi.HTTPModels;
 using AccessDataApi.Repo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace AccessDataApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class WorkScheduleController : Controller
@@ -22,9 +25,14 @@ namespace AccessDataApi.Controllers
         }
 
         [HttpPost("add/work/schedule")]
-        public void AddWorkSchedule([FromBody] WorkScheduleModel wsh)
+        public IActionResult AddWorkSchedule([FromBody] WorkScheduleModel wsh)
         {
-            _workScheduleRepo.addWorkSchedule(wsh);
+            var response = _workScheduleRepo.addWorkSchedule(wsh);
+
+            if (response.StartsWith("D"))
+                return BadRequest(response);
+
+            return Ok(response);
         }
 
         [HttpGet("get/work/schedule/employee/{employeeId}")]
@@ -35,18 +43,11 @@ namespace AccessDataApi.Controllers
             if (workDays == null)
                 return NotFound(workDays);
 
-            List<OpeningTimeDetail> responseOperatingTimeDetails = new List<OpeningTimeDetail>();
+            List<OperatingTimeDetails> responseOperatingTimeDetails = new List<OperatingTimeDetails>();
 
             foreach (var day in workDays)
             {
-                responseOperatingTimeDetails.Add(new OpeningTimeDetail()
-                {
-                    Id = day.Id,
-                    Day = day.Day,
-                    StartTime = day.StartTime.ToString(),
-                    EndTime = day.EndTime.ToString(),
-                    isOpen = day.isOpen
-                });
+                responseOperatingTimeDetails.Add(CastTo.OperatingTimeDetails(day));
             }
             return Ok(responseOperatingTimeDetails);
         }
@@ -63,13 +64,7 @@ namespace AccessDataApi.Controllers
 
             foreach (var employee in employees)
             {
-                responseEmployeeDetails.Add(new EmployeeDetails
-                {
-                    Id = employee.EmployeeId,
-                    EmployeeName = employee.EmployeName,
-                    Email = employee.Email
-                }
-                );
+                responseEmployeeDetails.Add(CastTo.EmployeeDetails(employee));
             }
             return Ok(responseEmployeeDetails);
         }

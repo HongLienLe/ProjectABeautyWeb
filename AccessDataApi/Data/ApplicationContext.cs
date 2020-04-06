@@ -15,11 +15,12 @@ namespace AccessDataApi.Data
         public DbSet<AppointmentDetails> AppointmentDetails { get; set; }
         public DbSet<OperatingTime> OperatingTimes { get; set; }
         public DbSet<OperatingTimeEmployee> workSchedules { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
                Database.EnsureCreated();
-             //  Database.EnsureDeleted();
+              // Database.EnsureDeleted();
           
         }
 
@@ -28,7 +29,7 @@ namespace AccessDataApi.Data
 
             modelBuilder.Entity<EmployeeTreatment>(e =>
             {
-                e.HasKey(et => new { et.TreatmentId, et.EmployeeId });
+                e.HasKey(et => new { et.TreatmentId, et.EmployeeId});
 
                 e.HasOne<Employee>(e => e.Employee)
                     .WithMany(t => t.EmployeeTreatments)
@@ -51,42 +52,10 @@ namespace AccessDataApi.Data
                 e.HasOne(o => o.OperatingTime)
                 .WithMany(e => e.Employees)
                 .HasForeignKey(efk => efk.OperatingTimeId);
+
             });
 
-            //modelBuilder.Entity<Employee>(entity =>
-            //{
-            //    entity.HasKey(x => x.EmployeeId);
-            //    entity.Property(x => x.EmployeName)
-            //    .HasMaxLength(30)
-            //    .IsUnicode(false);
-
-            //});
-
-            //modelBuilder.Entity<ClientAccount>(entity =>
-            //{
-            //    entity.HasKey(x => x.ClientAccountId);
-
-            //    entity.HasMany(x => x.Appointments)
-            //    .WithOne(x => x.Client);
-            //});
-
-            //modelBuilder.Entity<Reservation>(entity =>
-            //{
-            //    entity.HasKey(x => x.ReservationId);
-
-            //    entity.HasOne(x => x.BookApp)
-            //    .WithOne(x => x.Reservation)
-            //    .HasForeignKey<BookApp>(x => x.ReservationId);
-
-            //});
-
-            //modelBuilder.Entity<Treatment>(entity =>
-            //{
-            //    entity.HasKey(x => x.TreatmentId);
-            //    entity.HasMany(x => x.bookApps)
-            //    .WithOne(x => x.Treatment);
-            //});
-
+           
             modelBuilder.Entity<AppointmentDetails>(entity =>
             {
                 entity.HasKey(x => x.AppointmentDetailsId);

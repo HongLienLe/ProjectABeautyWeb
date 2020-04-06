@@ -8,5 +8,6 @@ namespace AccessDataApi.Models
 
         public int OperatingTimeId { get; set; }
         public virtual OperatingTime OperatingTime { get; set; }
+
     }
 }

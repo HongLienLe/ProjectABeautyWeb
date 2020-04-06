@@ -24,6 +24,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using AutoMapper;
 using System.Security.Claims;
+using AccessDataApi.Functions;
 
 namespace AccessDataApi
 {
@@ -72,6 +73,11 @@ namespace AccessDataApi
             services.AddTransient<IEmployeeTreatmentRepo, EmployeeTreatmentRepo>();
             services.AddTransient<IWorkScheduleRepo, WorkScheduleRepo>();
             services.AddTransient<ITreatmentRepo, TreatmentRepo>();
+            services.AddTransient<IDoes, Does>();
+            services.AddTransient<IOperatingTimeRepo, OperatingTimeRepo>();
+            services.AddTransient<IValidationErrorMessage, ValidationErrorMessage>();
+            services.AddTransient<IProcessPayment, ProcessPayment>();
+            services.AddTransient<IDateTimeKeyRepo, DateTimeKeyRepo>();
 
             services.AddSwaggerGen(c =>
             {
@@ -140,7 +146,7 @@ namespace AccessDataApi
 
             app.UseAuthorization();
 
-           // context.CreateSeedData();
+            context.CreateSeedData();
 
             app.UseEndpoints(endpoints =>
             {

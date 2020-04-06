@@ -12,9 +12,11 @@ namespace AccessDataApi.Models
         public int EmployeeId { get; set; }
 
         [Required]
+        [StringLength(100, ErrorMessage = "Max Length is 100")]
         public string EmployeName { get; set; }
 
         [Required]
+        [StringLength(100, ErrorMessage = "Max Length is 100")]
         [EmailAddress]
         public string Email { get; set; }
 

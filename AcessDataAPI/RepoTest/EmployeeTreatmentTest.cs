@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AccessDataApi.Data;
+using AccessDataApi.Functions;
 using AccessDataApi.HTTPModels;
 using AccessDataApi.Models;
 using AccessDataApi.Repo;
+using Moq;
 using NUnit.Framework;
 
 namespace AcessDataAPITest.RepoTest
@@ -22,13 +24,17 @@ namespace AcessDataAPITest.RepoTest
             _context.SaveChanges();
             _context.EmployeeTreatment.AddRange(GetEmployeeTreatments());
             _context.SaveChanges();
-            _employeeTreatmentRepo = new EmployeeTreatmentRepo(_context);
         }
 
         [Test]
         public void ReturnEmployeesByTreatmentId()
         {
-            var resultGetEmployeeByTreatment = _employeeTreatmentRepo.GetEmployeesByTreatment(1).Select(x => x.EmployeeId);
+            var mockDoes = new Mock<IDoes>();
+
+            mockDoes.Setup(x => x.TreatmentExist(1)).Returns(true);
+
+            _employeeTreatmentRepo = new EmployeeTreatmentRepo(_context, mockDoes.Object);
+            var resultGetEmployeeByTreatment = _employeeTreatmentRepo.GetEmployeesByTreatment(1).Select(x => x.Id);
             var expectedEmployeeId = new List<int>() { 1, 2,3};
             EndConnection();
 
@@ -39,7 +45,12 @@ namespace AcessDataAPITest.RepoTest
         [Test]
         public void ReturnTreatmentsByEmployeeId()
         {
-            var resultGetTreatmentByEmployee = _employeeTreatmentRepo.GetTreatmentsByEmployee(1).Select(x => x.TreatmentId);
+            var mockDoes = new Mock<IDoes>();
+            mockDoes.Setup(x => x.EmployeeExist(1)).Returns(true);
+
+            _employeeTreatmentRepo = new EmployeeTreatmentRepo(_context, mockDoes.Object);
+                
+            var resultGetTreatmentByEmployee = _employeeTreatmentRepo.GetTreatmentsByEmployee(1).Select(x => x.Id);
             var exceptedTreatmentId = new List<int>() { 1, 2, 3, 4,5};
 
             EndConnection();
@@ -51,12 +62,18 @@ namespace AcessDataAPITest.RepoTest
         [Test]
         public void AddByTreatmentIdToEmployeeIds()
         {
-            EmployeeTreatmentCrud et = new EmployeeTreatmentCrud() {
+            var mockDoes = new Mock<IDoes>();
+            mockDoes.Setup(x => x.TreatmentExist(6)).Returns(true);
+
+            _employeeTreatmentRepo = new EmployeeTreatmentRepo(_context, mockDoes.Object);
+
+            OneIdToManyIdForm et = new OneIdToManyIdForm()
+            {
                 Id = 6,
                 Ids = new List<int>() { 3 },
-                isEmployeeId = false };
+            };
 
-            _employeeTreatmentRepo.AddEmployeeTreatment(et);
+            _employeeTreatmentRepo.AddEmployeesToTreatment(et);
 
             var resultTreatment6Employee = _employeeTreatmentRepo.GetEmployeesByTreatment(6);
 
@@ -64,21 +81,26 @@ namespace AcessDataAPITest.RepoTest
 
             EndConnection();
 
-            Assert.IsTrue(resultTreatment6Employee.All(x => x.EmployeeId == expectedEmployeeId));
+            Assert.IsTrue(resultTreatment6Employee.All(x => x.Id == expectedEmployeeId));
             Assert.IsTrue(resultTreatment6Employee.Count() == 1);
         }
 
         [Test]
         public void AddEmployeeIdToTreatmentIds()
         {
-            EmployeeTreatmentCrud et = new EmployeeTreatmentCrud()
+            var mockDoes = new Mock<IDoes>();
+            mockDoes.Setup(x => x.EmployeeExist(3)).Returns(true);
+            mockDoes.Setup(x => x.TreatmentExist(6)).Returns(true);
+
+            _employeeTreatmentRepo = new EmployeeTreatmentRepo(_context, mockDoes.Object);
+
+            OneIdToManyIdForm et = new OneIdToManyIdForm()
             {
                 Id = 3,
                 Ids = new List<int>(){6},
-                isEmployeeId = true
             };
 
-            _employeeTreatmentRepo.AddEmployeeTreatment(et);
+            _employeeTreatmentRepo.AddTreatmentsToEmployee(et);
 
             var resultTreatment6Employee = _employeeTreatmentRepo.GetEmployeesByTreatment(6);
 
@@ -86,19 +108,18 @@ namespace AcessDataAPITest.RepoTest
 
             EndConnection();
 
-            Assert.IsTrue(resultTreatment6Employee.All(x => x.EmployeeId == expectedEmployeeId));
+            Assert.IsTrue(resultTreatment6Employee.All(x => x.Id == expectedEmployeeId));
         }
 
         [Test]
         public void ReturnTrueIfRemoved()
         {
-            EmployeeTreatmentCrud et = new EmployeeTreatmentCrud()
+            OneIdToManyIdForm et = new OneIdToManyIdForm()
             {
                 Id = 1,
                 Ids = new List<int>() { 5 },
-                isEmployeeId = true
             };
-            _employeeTreatmentRepo.RemoveEmployeeTreatment(et);
+            _employeeTreatmentRepo.RemoveEmployeeFromTreatments(et);
 
             EndConnection();
         }

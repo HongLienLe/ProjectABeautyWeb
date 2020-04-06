@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using AccessDataApi.Data;
+using AccessDataApi.Functions;
 using AccessDataApi.HTTPModels;
 using AccessDataApi.Models;
 using AccessDataApi.Repo;
+using Moq;
 using NUnit.Framework;
 
 namespace AcessDataAPITest.RepoTest
@@ -19,7 +21,6 @@ namespace AcessDataAPITest.RepoTest
             _context = _connectionFactory.CreateContextForSQLite();
             _context.Employees.AddRange(GetEmployees());
             _context.SaveChanges();
-            _employeeRepo = new EmployeeRepo(_context);
         }
 
         // Add employeefromtheform return success
@@ -27,24 +28,21 @@ namespace AcessDataAPITest.RepoTest
         [Test]
         public void CanAddNewEmployeeWithForm()
         {
+            var mockDoes = new Mock<IDoes>();
+            _employeeRepo = new EmployeeRepo(_context, mockDoes.Object);
+
             EmployeeDetails employeeForm = new EmployeeDetails()
             {
                 EmployeeName = "UnitTest",
                 Email ="UTest@gmail.com"
             };
 
-            var employee = new Employee()
-            {
-                EmployeName = employeeForm.EmployeeName,
-                Email = employeeForm.Email
-            };
-
-            var result = _employeeRepo.AddEmployee(employee);
+            var result = _employeeRepo.AddEmployee(CastTo.Employee(employeeForm));
             var doesNewEmployeeExist = _context.Employees.First(x => x.EmployeName == "UnitTest");
 
             EndConnection();
 
-            Assert.IsTrue(result == "Sucessfully Added new employee");
+            Assert.IsTrue(result.Contains("Success"));
             Assert.IsNotNull(doesNewEmployeeExist);
 
         }
@@ -52,8 +50,10 @@ namespace AcessDataAPITest.RepoTest
         [Test]
         public void ReturnOkayIfEmployeeListIsPresent()
         {
-            var resultEmployees = _employeeRepo.GetEmployees();
+            var mockDoes = new Mock<IDoes>();
+            _employeeRepo = new EmployeeRepo(_context, mockDoes.Object);
 
+            var resultEmployees = _employeeRepo.GetEmployees();
             var expectedEmployees = GetEmployees();
 
             EndConnection();
@@ -67,6 +67,9 @@ namespace AcessDataAPITest.RepoTest
         [Test]
         public void ReturnTrueIfChoosenEmployeeById()
         {
+            var mockDoes = new Mock<IDoes>();
+            mockDoes.Setup(x => x.EmployeeExist(1)).Returns(true);
+            _employeeRepo = new EmployeeRepo(_context, mockDoes.Object);
             var resultEmployee = _employeeRepo.GetEmployee(1);
 
             var expectedName = "Employee1";
@@ -79,29 +82,36 @@ namespace AcessDataAPITest.RepoTest
         [Test]
         public void ReturnTrueIfUpdateEmployeeById()
         {
+            var mockDoes = new Mock<IDoes>();
+            mockDoes.Setup(x => x.EmployeeExist(1)).Returns(true);
+            _employeeRepo = new EmployeeRepo(_context, mockDoes.Object);
+
             var newUpdatedInfo = new Employee() { EmployeName = "Updated" };
             var resultReturn = _employeeRepo.UpdateEmployee(1, newUpdatedInfo);
             var resultUpdatedEmployeeName = _employeeRepo.GetEmployee(1).EmployeName;
 
-            var expectedReturn = "Updated Employee Details";
             var expectedName = "Updated";
 
             EndConnection();
 
-            Assert.IsTrue(resultReturn == expectedReturn);
+            Assert.IsTrue(resultReturn.Contains("Updated"));
             Assert.IsTrue(resultUpdatedEmployeeName == expectedName);
         }
 
         [Test]
         public void ReturnTrueIfEmployee1HasBeenDeleted()
         {
+            var mockDoes = new Mock<IDoes>();
+            mockDoes.Setup(x => x.EmployeeExist(1)).Returns(true);
+            _employeeRepo = new EmployeeRepo(_context, mockDoes.Object);
+
             _employeeRepo.DeleteEmployee(1);
 
-            var resultIfEmployeeExist = _employeeRepo.GetEmployee(1);
+            var resultIfEmployeeExist = _context.Employees.Any(x => x.EmployeeId == 1);
 
             EndConnection();
 
-            Assert.IsTrue(resultIfEmployeeExist == null);
+            Assert.IsFalse(resultIfEmployeeExist);
 
         }
 

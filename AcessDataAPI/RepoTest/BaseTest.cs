@@ -171,5 +171,25 @@ namespace AcessDataAPITest.RepoTest
             return operatingTimeEmployees;
         }
 
+        public List<ClientAccount> GetClientAccount()
+        {
+            return new List<ClientAccount>()
+            {
+                new ClientAccount()
+                {
+                    FirstName = "F1",
+                    LastName = "L1",
+                    Email = "FL1@mail.com",
+                    ContactNumber = "1234"
+                },
+                new ClientAccount()
+                {
+                    FirstName = "F2",
+                    LastName = "L2",
+                    Email = "FL2@mail.com",
+                    ContactNumber = "4321"
+                }
+            };
+        }
     }
 }

@@ -179,7 +179,8 @@ namespace AccessDataApi.Data
 
             datetimekey.Appointments.Add(requestedBookApp);
 
-           // context.AppointmentDetails.Add(requestedBookApp);
+            context.AppointmentDetails.Add(requestedBookApp);
+
             context.SaveChanges();
 
 

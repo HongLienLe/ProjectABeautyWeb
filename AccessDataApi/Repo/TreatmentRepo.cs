@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AccessDataApi.Data;
+using AccessDataApi.Functions;
 using AccessDataApi.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,10 +11,11 @@ namespace AccessDataApi.Repo
     public class TreatmentRepo : ITreatmentRepo
     {
         private ApplicationContext _context;
-
-        public TreatmentRepo(ApplicationContext context)
+        private IDoes _does;
+        public TreatmentRepo(ApplicationContext context, IDoes does)
         {
             _context = context;
+            _does = does;
         }
 
         public List<Treatment> GetTreatments()
@@ -31,8 +33,9 @@ namespace AccessDataApi.Repo
         }
 
         public Treatment GetTreatment(int id)
+
         {
-            if (!DoesTreatmentExist(id))
+            if (!_does.TreatmentExist(id))
                 return null;
 
             var treatment = _context.Treatments.First(x => x.TreatmentId == id);
@@ -49,7 +52,7 @@ namespace AccessDataApi.Repo
 
         public Treatment UpdateTreatment(int id, Treatment treatment)
         {
-            if (!DoesTreatmentExist(id))
+            if (!_does.TreatmentExist(id))
                 return null;
 
             var oldTreatment = _context.Treatments.Single(x => x.TreatmentId == id);
@@ -68,7 +71,7 @@ namespace AccessDataApi.Repo
 
         public string DeleteTreatment(int id)
         {
-            if (!DoesTreatmentExist(id))
+            if (!_does.TreatmentExist(id))
                 return null;
 
             _context.Remove(_context.Treatments.Single(x => x.TreatmentId == id));
@@ -76,11 +79,6 @@ namespace AccessDataApi.Repo
             _context.SaveChanges();
 
             return "Successfully deleted treatment";
-        }
-
-        private bool DoesTreatmentExist(int id)
-        {
-            return _context.Treatments.Any(x => x.TreatmentId == id);
         }
     }
 }

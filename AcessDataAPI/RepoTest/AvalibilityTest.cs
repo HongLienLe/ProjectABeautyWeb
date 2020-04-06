@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using AccessDataApi.Data;
+using AccessDataApi.Functions;
 using AccessDataApi.Models;
 using AccessDataApi.Repo;
 using Itenso.TimePeriod;
+using Moq;
 using NUnit.Framework;
 
 namespace AcessDataAPITest.RepoTest
@@ -11,6 +13,7 @@ namespace AcessDataAPITest.RepoTest
     public class AvalibilityTest : BaseTest
     {
         private AvailabilityRepo _availbilityRepo;
+
 
         [SetUp]
         public void SetUp()
@@ -25,13 +28,19 @@ namespace AcessDataAPITest.RepoTest
             _context.SaveChanges();
             _context.workSchedules.AddRange(GetOperatingTimeEmployees());
             _context.SaveChanges();
-            _availbilityRepo = new AvailabilityRepo(_context);
         }
 
         [Test]
         public void GetAvaliableTimesViaTreatmentDateShouldBeTrue()
         {
-            var date = new DateTime(2020, 3, 9);
+            var date = new DateTime(2020, 12, 9);
+
+            var mockDoes = new Mock<IDoes>();
+            mockDoes.Setup(x => x.DateTimeKeyExist(date)).Returns(false);
+
+            _availbilityRepo = new AvailabilityRepo(_context, mockDoes.Object);
+
+
             var expectedDate = GetFreeSlots();
             var freeTimePeriodsForInFillAcrylic = _availbilityRepo.GetAvailableTimeWithTreatment(date, new List<int>() { 1 });
 
@@ -48,7 +57,13 @@ namespace AcessDataAPITest.RepoTest
         [Test]
         public void GetAvaliableTimesViaTreatmentDateShouldBeNull()
         {
-            var date = new DateTime(2020, 3, 9);
+            var date = new DateTime(2020, 12, 9);
+
+            var mockDoes = new Mock<IDoes>();
+            mockDoes.Setup(x => x.DateTimeKeyExist(date)).Returns(false);
+
+            _availbilityRepo = new AvailabilityRepo(_context, mockDoes.Object);
+
             var freeTimePeriodsForPedicure = _availbilityRepo.GetAvailableTimeWithTreatment(date, new List<int>() { 6 });
 
             EndConnection();
@@ -71,7 +86,7 @@ namespace AcessDataAPITest.RepoTest
 
             TimePeriodCollection timePeriods = new TimePeriodCollection()
             {
-                new TimeRange(new DateTime(2020,3,9,10,00,00), new DateTime(2020,3,9,19,00,00))
+                new TimeRange(new DateTime(2020,12,9,10,00,00), new DateTime(2020,12,9,19,00,00))
             };
 
             foreach (var period in timePeriods)

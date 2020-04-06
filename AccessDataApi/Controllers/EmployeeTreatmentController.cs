@@ -1,93 +1,112 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using AccessDataApi.Data;
+using AccessDataApi.Functions;
 using AccessDataApi.HTTPModels;
 using AccessDataApi.Repo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccessDataApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeTreatmentController : ControllerBase
     {
-        private EmployeeTreatmentRepo _employeeTreatmentRepo;
+        private IEmployeeTreatmentRepo _employeeTreatmentRepo;
+        private IDoes _does;
+        private IValidationErrorMessage _ErrorMessage;
 
-        public EmployeeTreatmentController(ApplicationContext context)
+        public EmployeeTreatmentController(IEmployeeTreatmentRepo employeeTreatmentRepo, IDoes does, IValidationErrorMessage validationErrorMessage)
         {
-            _employeeTreatmentRepo = new EmployeeTreatmentRepo(context);
+            _employeeTreatmentRepo = employeeTreatmentRepo;
+            _does = does;
+            _ErrorMessage = validationErrorMessage;
+
         }
 
-        [HttpGet("{employeeId}")]
-        public IActionResult Get(int employeeId)
-        { 
-            var employeeTreatments = _employeeTreatmentRepo.GetTreatmentsByEmployee(employeeId);
+        [HttpGet("get/treatments/by/employee/{id}")]
+        public IActionResult GetTreatmentsByEmployee(int id)
+        {
+            if (!_does.EmployeeExist(id))
+                return NotFound(_ErrorMessage.EmployeeNotFoundMessage(id));
 
-            if(employeeTreatments == null)
-            {
-                return NotFound();
-            }
+            var treatments = _employeeTreatmentRepo.GetTreatmentsByEmployee(id);
 
-            List<TreatmentDetails> responseTreatmentDetails = new List<TreatmentDetails>();
-
-            foreach (var treatment in employeeTreatments)
-            {
-                responseTreatmentDetails.Add(new TreatmentDetails()
-                {
-                    Id = treatment.TreatmentId,
-                    TreatmentType = treatment.TreatmentType,
-                    TreatmentName = treatment.TreatmentName,
-                    Price = treatment.Price,
-                    Duration = treatment.Duration
-                });
-            }
-
-
-
-            return Ok(responseTreatmentDetails);
+            return Ok(treatments);
         }
 
-        [HttpGet("get/employee/by/treatment/{treatmentId}")]
-        public IActionResult GetEmployeesByTreatmentId(int treatmentId)
+        [HttpGet("get/employees/by/treatment/{id}")]
+        public IActionResult GetEmployeesByTreatment(int id)
         {
-            var employees = _employeeTreatmentRepo.GetEmployeesByTreatment(treatmentId);
-            if (employees == null)
-                return NotFound(employees);
+            if (!_does.TreatmentExist(id))
+                return NotFound(_ErrorMessage.TreatmentNotFoundMessage(id));
 
-            var responseEmployeeDetails = new List<EmployeeDetails>();
+            var employees = _employeeTreatmentRepo.GetEmployeesByTreatment(id);
 
-            foreach (var employee in employees)
-            {
-                responseEmployeeDetails.Add(new EmployeeDetails
-                {
-                    Id = employee.EmployeeId,
-                    EmployeeName = employee.EmployeName,
-                    Email = employee.Email
-                }
-                );
-            }
-
-            return Ok(responseEmployeeDetails);
+            return Ok(employees);
         }
 
-        [HttpPost("employee/treatments")]
-        public void AddTreatments([FromBody] EmployeeTreatmentCrud employeeTreatment)
+
+        [HttpPost("employee/add/treatments")]
+        public IActionResult AddTreatmentsToEmployeeId([FromBody] OneIdToManyIdForm et)
         {
-            _employeeTreatmentRepo.AddEmployeeTreatment(employeeTreatment);
+            if (!_does.EmployeeExist(et.Id))
+                return NotFound(_ErrorMessage.EmployeeNotFoundMessage(et.Id));
+
+            if (!et.Ids.Any(x => _does.TreatmentExist(x)))
+                return BadRequest("Contains a Treatment Id that does not exist");
+
+            var response = _employeeTreatmentRepo.AddTreatmentsToEmployee(et);
+
+            return Ok(response);
         }
 
         [HttpPost("treatment/add/employees")]
-        public void AddEmployees([FromBody] EmployeeTreatmentCrud employeeTreatment)
+        public IActionResult AddTreatmentIdToEmployees([FromBody] OneIdToManyIdForm et)
         {
-            _employeeTreatmentRepo.AddEmployeeTreatment(employeeTreatment);
+            if (!_does.TreatmentExist(et.Id))
+                return NotFound(_ErrorMessage.TreatmentNotFoundMessage(et.Id));
+
+            if (!et.Ids.Any(x => _does.EmployeeExist(x)))
+                return BadRequest("Contains a Employee Id that does not exist");
+
+            var response = _employeeTreatmentRepo.AddEmployeesToTreatment(et);
+
+            return Ok(response);
         }
 
-        [HttpDelete]
-        public void Delete([FromBody]EmployeeTreatmentCrud employeeTreatment )
+        [HttpDelete("remove/treatment/from/employees")]
+        public IActionResult RemoveTreatmentIdFromEmployees([FromBody]OneIdToManyIdForm et )
         {
-            _employeeTreatmentRepo.RemoveEmployeeTreatment(employeeTreatment);
+            if (!_does.TreatmentExist(et.Id))
+                return NotFound(_ErrorMessage.TreatmentNotFoundMessage(et.Id));
+
+            if (!et.Ids.Any(x => _does.EmployeeExist(x)))
+                return BadRequest("Contains a Employee Id that does not exist");
+
+            var response = _employeeTreatmentRepo.RemoveTreatmentFromEmployees(et);
+
+            return Ok(response);
         }
+
+        [HttpDelete("remove/employee/from/treatments")]
+        public IActionResult RemoveEmployeeIdFromTreatments([FromBody]OneIdToManyIdForm et)
+        {
+            if (!_does.EmployeeExist(et.Id))
+                return NotFound(_ErrorMessage.EmployeeNotFoundMessage(et.Id));
+
+            if (!et.Ids.Any(x => _does.TreatmentExist(x)))
+                return BadRequest("Contains a Treatment Id that does not exist");
+
+            var response = _employeeTreatmentRepo.RemoveEmployeeFromTreatments(et);
+
+            return Ok(response);
+        }
+
 
     }
 }
