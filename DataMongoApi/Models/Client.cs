@@ -1,12 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Entities.Core;
+
 namespace DataMongoApi.Models
 {
-    public class Client
+    public class ClientDetails 
     {
-        public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public string ContactNumber { get; set; }
+    }
+
+    public class Client : Entity
+    {
+        public ClientDetails About { get; set; }
+
+        [BsonRepresentation(BsonType.ObjectId)]
+        public List<string> Appointments { get; set; } = new List<string>();
     }
 }

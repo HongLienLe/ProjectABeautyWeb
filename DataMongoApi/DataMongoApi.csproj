@@ -6,13 +6,26 @@
 
 
   <ItemGroup>
-    <PackageReference Include="MongoDB.Driver" Version="2.10.2" />
-    <PackageReference Include="MongoDB.Bson" Version="2.10.2" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.2.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="5.0.2" />
+    <PackageReference Include="MongoDB.Driver" Version="2.10.3" />
+    <PackageReference Include="MongoDB.Bson" Version="2.10.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="5.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ApiExplorer" Version="2.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.3.1" />
+    <PackageReference Include="MongoDB.Entities" Version="12.1.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="9.0.0-preview3" />
+    <PackageReference Include="TimePeriodLibrary.NET" Version="2.1.1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Service\" />
+    <Folder Include="Middleware\" />
+    <Folder Include="Controllers\AdminController\" />
+    <Folder Include="Validation\" />
+    <Folder Include="Controllers\ClientController\" />
+    <Folder Include="Service\InterfaceService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Service\InterfaceService\IMerchantService" />
   </ItemGroup>
 </Project>

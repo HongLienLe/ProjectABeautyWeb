@@ -15,7 +15,7 @@ namespace AccessDataApi.Data
         public DbSet<AppointmentDetails> AppointmentDetails { get; set; }
         public DbSet<OperatingTime> OperatingTimes { get; set; }
         public DbSet<OperatingTimeEmployee> workSchedules { get; set; }
-        public DbSet<Payment> Payments { get; set; }
+      //  public DbSet<Payment> Payments { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {

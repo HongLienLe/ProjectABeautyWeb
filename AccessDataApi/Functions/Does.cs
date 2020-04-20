@@ -50,9 +50,9 @@ namespace AccessDataApi.Functions
             return _context.OperatingTimes.Any(x => x.Id == id);
         }
 
-        public bool PaymentIdExist(int id)
-        {
-            return _context.Payments.Any(x => x.Id == id);
-        }
+        //public bool PaymentIdExist(int id)
+        //{
+        //    return _context.Payments.Any(x => x.Id == id);
+        //}
     }
 }

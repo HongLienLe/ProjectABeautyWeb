@@ -13,12 +13,12 @@ namespace AccessDataApi.Models
         public DateTime date { get; set; }
 
         public virtual ICollection<AppointmentDetails> Appointments { get; set; }
-        public virtual ICollection<Payment> PaymentsForTheDay { get; set; }
+     //   public virtual ICollection<Payment> PaymentsForTheDay { get; set; }
 
         public DateTimeKey()
         {
             Appointments = new List<AppointmentDetails>();
-            PaymentsForTheDay = new List<Payment>();
+     //       PaymentsForTheDay = new List<Payment>();
         }
     }
 }

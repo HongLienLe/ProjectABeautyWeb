@@ -1,3 +1,8 @@
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/DataMongoApi.csproj.CoreCompileInputs.cache
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/DataMongoApi.MvcApplicationPartsAssemblyInfo.cs
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/DataMongoApi.MvcApplicationPartsAssemblyInfo.cache
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/DataMongoApi.AssemblyInfoInputs.cache
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/DataMongoApi.AssemblyInfo.cs
 /Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/appsettings.Development.json
 /Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/appsettings.json
 /Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
@@ -25,12 +30,6 @@
 /Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/Swashbuckle.AspNetCore.Swagger.dll
 /Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/Swashbuckle.AspNetCore.SwaggerGen.dll
 /Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/Swashbuckle.AspNetCore.SwaggerUI.dll
-/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/DataMongoApi.csprojAssemblyReference.cache
-/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/DataMongoApi.csproj.CoreCompileInputs.cache
-/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/DataMongoApi.MvcApplicationPartsAssemblyInfo.cs
-/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/DataMongoApi.MvcApplicationPartsAssemblyInfo.cache
-/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/DataMongoApi.AssemblyInfoInputs.cache
-/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/DataMongoApi.AssemblyInfo.cs
 /Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/DataMongoApi.RazorTargetAssemblyInfo.cache
 /Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/DataMongoApi.csproj.CopyComplete
 /Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/staticwebassets/DataMongoApi.StaticWebAssets.Manifest.cache
@@ -38,3 +37,12 @@
 /Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/DataMongoApi.dll
 /Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/DataMongoApi.pdb
 /Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/DataMongoApi.genruntimeconfig.cache
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/DataMongoApi.csprojAssemblyReference.cache
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/MongoDB.Entities.dll
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/MongoDB.Entities.Core.dll
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/FluentValidation.dll
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/FluentValidation.AspNetCore.dll
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/FluentValidation.DependencyInjectionExtensions.dll
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/Itenso.TimePeriod.dll
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/mono_crash.42f6ec1fa.0.json
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/mono_crash.115869eaf6.0.json

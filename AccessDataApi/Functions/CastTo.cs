@@ -118,16 +118,16 @@ namespace AccessDataApi.Functions
             };
         }
 
-        public static PaymentDetails PaymentDetails(Payment payment)
-        {
-            return new PaymentDetails()
-            {
-                Id = payment.Id,
-                PaymentTime = payment.PaymentTime,
-                ClientId = payment.Id,
-                HadMISC = payment.TotalMISCAmount == 0 ? false : true,
-                Total = payment.TotalAmount
-            };
-        }
+        //public static PaymentDetails PaymentDetails(Payment payment)
+        //{
+        //    return new PaymentDetails()
+        //    {
+        //        Id = payment.Id,
+        //        PaymentTime = payment.PaymentTime,
+        //        ClientId = payment.Id,
+        //        HadMISC = payment.TotalMISCAmount == 0 ? false : true,
+        //        Total = payment.TotalAmount
+        //    };
+        //}
     }
 }

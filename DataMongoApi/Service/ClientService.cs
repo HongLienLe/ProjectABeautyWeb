@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using DataMongoApi.Middleware;
 using DataMongoApi.Models;
+using DataMongoApi.Service.InterfaceService;
 using MongoDB.Driver;
 
 namespace DataMongoApi.Service
 {
-    public class ClientService
+    public class ClientService : IClientService
     {
         private readonly IMongoCollection<Client> _client;
 
-        public ClientService(ISalonDatabaseSettings settings)
+        public ClientService(ISalonDatabaseSettings settings, IClientConfiguration clientConfiguration)
         {
             var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.DatabaseName);
+            var database = client.GetDatabase(clientConfiguration.MerchantId);
 
-            _client = database.GetCollection<Client>(settings.SalonCollectionName);
+            _client = database.GetCollection<Client>("Clients");
 
         }
 
@@ -22,21 +24,47 @@ namespace DataMongoApi.Service
             _client.Find(Client => true).ToList();
 
         public Client Get(string id) =>
-            _client.Find<Client>(c => c.Id == id).FirstOrDefault();
+            _client.Find<Client>(c => c.ID == id).FirstOrDefault();
 
-        public Client Create(Client client)
+        public Client GetByContactNo(string contactNo)
         {
-            _client.InsertOne(client);
-            return client;
+            return _client.Find<Client>(c => c.About.ContactNumber == contactNo).FirstOrDefault();
         }
 
-        public void Update(string id, Client clientIn) =>
-            _client.ReplaceOne(c => c.Id == id, clientIn);
+        public Client Create(ClientDetails client)
+        {
+            var newClient = new Client()
+            {
+                About = client,
+                ModifiedOn = DateTime.UtcNow
+            };
+
+            _client.InsertOne(newClient);
+            return newClient;
+        }
+
+        public void Update(string id, ClientDetails clientIn)
+        {
+            var filter = Builders<Client>.Filter.Eq(x => x.ID, id);
+            var update = Builders<Client>.Update
+                .Set(x => x.About, clientIn)
+                .CurrentDate(x => x.ModifiedOn);
+            _client.UpdateOne(filter, update);
+        }
 
         public void Remove(Client clientIn) =>
-            _client.DeleteOne(c => c.Id == clientIn.Id);
+            _client.DeleteOne(c => c.ID == clientIn.ID);
 
         public void Remove(string id) =>
-            _client.DeleteOne(e => e.Id == id);
+            _client.DeleteOne(e => e.ID == id);
+
+        public void AddAppointment(string clientid, Appointment appointment)
+        {
+            var client = Builders<Client>.Filter.Eq(x => x.ID, clientid);
+            var update = Builders<Client>.Update
+                .AddToSet("Appointments", appointment.ID);
+
+            _client.UpdateOne(client, update);
+        }
     }
 }

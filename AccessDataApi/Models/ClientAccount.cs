@@ -29,13 +29,13 @@ namespace AccessDataApi.Models
         public string ContactNumber { get; set; }
 
         public virtual ICollection<AppointmentDetails> Appointments { get; set; }
-        public virtual ICollection<Payment> PaymentHistory { get; set; }
+      //  public virtual ICollection<Payment> PaymentHistory { get; set; }
         
 
         public ClientAccount()
         {
             Appointments = new List<AppointmentDetails>();
-            PaymentHistory = new List<Payment>();
+      //      PaymentHistory = new List<Payment>();
         }
     }
 }

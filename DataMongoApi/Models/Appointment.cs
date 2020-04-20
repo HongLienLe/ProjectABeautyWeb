@@ -1,15 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Entities.Core;
 
 namespace DataMongoApi.Models
 {
-    public class Appointment
+    public class AppointmentDetails
     {
-        public Client Client { get; set; }
+        public ClientDetails Client { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string TreatmentId { get; set; }
+        public string Notes { get; set; }
+        public string Date { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public Treatment Treatment { get; set; }
-        public Employee Employee { get; set; }
+    }
+
+    public class Appointment : Entity
+    {
+        public AppointmentDetails Info { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string EmployeeId { get; set; }
+        public bool HasBeenProcess { get; set; } = false;
+
 
     }
 }
