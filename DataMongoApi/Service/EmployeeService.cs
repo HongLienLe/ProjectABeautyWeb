@@ -48,7 +48,7 @@ namespace DataMongoApi.Service
         {
             var filter = Builders<Employee>.Filter.Eq(e => e.ID, id);
             var update = Builders<Employee>.Update
-                .Set(e => e.About, employeeIn)
+                .Set(e => e.Details, employeeIn)
                 .CurrentDate(e => e.ModifiedOn);
 
             _employee.UpdateOne(filter, update);

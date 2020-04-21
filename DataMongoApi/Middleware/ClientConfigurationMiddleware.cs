@@ -30,7 +30,6 @@ namespace DataMongoApi.Middleware
             {
                 if (DatabaseNames.Contains(merchantId))
                     clientConfiguration.MerchantId = merchantId.SingleOrDefault();
-                clientConfiguration.MerchantId = DefaultDB;
             }
             else
             {

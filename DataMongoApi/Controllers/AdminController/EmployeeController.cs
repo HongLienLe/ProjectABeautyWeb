@@ -51,7 +51,7 @@ namespace DataMongoApi.Controllers.AdminController
 
             Employee employee1 = new Employee()
                 {
-                    About = employee,
+                    Details = employee,
                 };
 
             _employeeService.Create(employee1);

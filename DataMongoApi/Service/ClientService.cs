@@ -26,9 +26,9 @@ namespace DataMongoApi.Service
         public Client Get(string id) =>
             _client.Find<Client>(c => c.ID == id).FirstOrDefault();
 
-        public Client GetByContactNo(string contactNo)
+        public Client GetByContactNo(string phone)
         {
-            return _client.Find<Client>(c => c.About.ContactNumber == contactNo).FirstOrDefault();
+            return _client.Find<Client>(c => c.About.Phone == phone).FirstOrDefault();
         }
 
         public Client Create(ClientDetails client)

@@ -38,8 +38,8 @@ namespace DataMongoApi.Service
             if (!day.About.isOpen)
                 return null;
 
-            var treatment = _treatmentService.Get(app.TreatmentId);
-            if (treatment == null)
+            var treatmentTime = app.TreatmentId.Select(x => _treatmentService.Get(x).About.Duration).Sum(x => x);
+            if (treatmentTime == 0)
                 return null;
 
             var appointment = new Appointment()
@@ -48,9 +48,9 @@ namespace DataMongoApi.Service
                 ModifiedOn = DateTime.UtcNow
             };
 
-            app.EndTime = app.StartTime.AddMinutes(treatment.About.Duration);
+            app.EndTime = app.StartTime.AddMinutes(treatmentTime);
 
-            var client = _clientService.GetByContactNo(app.Client.ContactNumber) == null ? _clientService.Create(app.Client) : _clientService.GetByContactNo(app.Client.ContactNumber);
+            var client = _clientService.GetByContactNo(app.Client.Phone) == null ? _clientService.Create(app.Client) : _clientService.GetByContactNo(app.Client.Phone);
 
             var employees = EmployeeWorkingIds(app.TreatmentId, app.Date);
 
@@ -108,11 +108,11 @@ namespace DataMongoApi.Service
             _appointments.DeleteOne(x => x.ID == appointmentId);
         }
 
-        private List<string> EmployeeWorkingIds(string treatmentId, string date)
+        private List<string> EmployeeWorkingIds(List<string> treatmentId, string date)
         {
             var dayId = _operatingHoursService.Get(date).ID;
             return _employees.AsQueryable<Employee>()
-                .Where(x => x.WorkDays.Contains(dayId) && x.Treatments.Contains(treatmentId))
+                .Where(x => x.WorkDays.Contains(dayId) && x.Treatments.All(t => treatmentId.Contains(t)))
                 .Select(x => x.ID)
                 .ToList();
         }

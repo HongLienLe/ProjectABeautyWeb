@@ -46,3 +46,11 @@
 /Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/Itenso.TimePeriod.dll
 /Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/mono_crash.42f6ec1fa.0.json
 /Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/mono_crash.115869eaf6.0.json
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/JWT.dll
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Logging.dll
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.dll
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/Microsoft.IdentityModel.Tokens.dll
+/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/System.IdentityModel.Tokens.Jwt.dll

@@ -15,7 +15,7 @@ namespace DataMongoApi.Models
 
     public class Employee : Entity
     {
-        public EmployeeDetails About { get; set; }
+        public EmployeeDetails Details { get; set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
         public List<string> Treatments { get; set; } = new List<string>();

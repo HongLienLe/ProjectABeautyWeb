@@ -20,6 +20,7 @@ using Microsoft.OpenApi.Models;
 using FluentValidation.AspNetCore;
 using DataMongoApi.Validation;
 using DataMongoApi.Service.InterfaceService;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace DataMongoApi
 {
@@ -64,13 +65,49 @@ namespace DataMongoApi
                         .RegisterValidatorsFromAssemblyContaining<OperatingHoursDetailsValidatior>()
                         .RegisterValidatorsFromAssemblyContaining<ClientDetailsValidator>());
 
-            ;
-
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "https://penandpaper.eu.auth0.com/";
+                options.Audience = "Appointment";
+            });
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
                 c.OperationFilter<AddRequiredHeaderParameter>();
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description =
+                            "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header,
+
+                        },
+                        new List<string>()
+                    }
+                });
 
             });
         }
@@ -84,7 +121,16 @@ namespace DataMongoApi
                 app.UseDeveloperExceptionPage();
             }
 
-         //   app.UseLogger();
+            app.UseCors(options =>
+            {
+                options.AllowAnyOrigin();
+                options.AllowAnyHeader();
+                options.AllowAnyMethod();
+            });
+
+            //   app.UseLogger();
+
+            app.UseAuthentication();
 
             app.UseClientConfiguration();
 

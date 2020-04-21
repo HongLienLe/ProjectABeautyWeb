@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Entities.Core;
@@ -9,7 +10,7 @@ namespace DataMongoApi.Models
     {
         public ClientDetails Client { get; set; }
         [BsonRepresentation(BsonType.ObjectId)]
-        public string TreatmentId { get; set; }
+        public List<string> TreatmentId { get; set; }
         public string Notes { get; set; }
         public string Date { get; set; }
         public DateTime StartTime { get; set; }

@@ -1,42 +1,31 @@
 ﻿<Properties StartupConfiguration="{7C3EE540-AE97-49DF-B915-81E4FBCA9F2F}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
   <MonoDevelop.Ide.ItemProperties.AcessDataAPITest PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.ItemProperties.ProjectABeautyWeb PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="DataMongoApi/Middleware/ClientConfigurationMiddleware.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AccessDataApi/Startup.cs">
     <Files>
-      <File FileName="DataMongoApi/Service/OperatingHoursService.cs" Line="31" Column="1" />
-      <File FileName="DataMongoApi/Models/OperatingHours.cs" Line="22" Column="1" />
-      <File FileName="DataMongoApi/Startup.cs" Line="60" Column="46" />
-      <File FileName="DataMongoApi/Program.cs" />
-      <File FileName="DataMongoApi/Service/ProcessAppointmentService.cs" Line="104" Column="1" />
-      <File FileName="DataMongoApi/Service/ClientService.cs" />
-      <File FileName="DataMongoApi/Service/InterfaceService/IClientService.cs" />
-      <File FileName="DataMongoApi/Models/Client.cs" />
-      <File FileName="DataMongoApi/Models/Employee.cs" />
-      <File FileName="DataMongoApi/Service/TreatmentService.cs" Line="34" Column="1" />
-      <File FileName="DataMongoApi/Models/Treatment.cs" Line="23" Column="1" />
-      <File FileName="DataMongoApi/Controllers/ClientController/DateController.cs" Line="27" Column="1" NotebookId="1" IsPinned="True" />
-      <File FileName="DataMongoApi/Models/Appointment.cs" Line="24" Column="1" NotebookId="1" />
-      <File FileName="DataMongoApi/Controllers/ClientController/BookController.cs" Line="35" Column="1" NotebookId="1" />
-      <File FileName="DataMongoApi/Middleware/ClientConfigurationMiddleware.cs" Line="43" Column="1" NotebookId="1" />
-      <File FileName="DataMongoApi/Controllers/AdminController/MerchantController.cs" NotebookId="1" />
-      <File FileName="DataMongoApi/Service/EmployeeService.cs" NotebookId="1" />
-      <File FileName="DataMongoApi/Service/AvaliableAppointmentService.cs" Line="13" Column="45" NotebookId="1" />
-      <File FileName="DataMongoApi/Middleware/ClientConfiguration.cs" Line="1" Column="1" NotebookId="1" />
-      <File FileName="DataMongoApi/Middleware/AddRequiredHeaderParameter.cs" Line="1" Column="1" NotebookId="1" />
+      <File FileName="DataMongoApi/Startup.cs" Line="22" Column="1" />
+      <File FileName="DataMongoApi/Models/Appointment.cs" Line="24" Column="27" NotebookId="1" />
+      <File FileName="AccessDataApi/Startup.cs" Line="87" Column="17" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ProjectABeautyWeb" expanded="True">
-            <Node name="AccessDataApi" expanded="True" />
+            <Node name="AccessDataApi" expanded="True">
+              <Node name="Dependencies" expanded="True">
+                <Node name="PackageDependencies" expanded="True" />
+              </Node>
+              <Node name="Startup.cs" selected="True" />
+            </Node>
             <Node name="DataMongoApi" expanded="True">
+              <Node name="Dependencies" expanded="True">
+                <Node name="PackageDependencies" expanded="True" />
+              </Node>
               <Node name="Controllers" expanded="True">
                 <Node name="AdminController" expanded="True" />
                 <Node name="ClientController" expanded="True" />
               </Node>
-              <Node name="Middleware" expanded="True">
-                <Node name="ClientConfigurationMiddleware.cs" selected="True" />
-              </Node>
+              <Node name="Middleware" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Service" expanded="True">
                 <Node name="InterfaceService" expanded="True" />
@@ -53,10 +42,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.DataMongoApiTest FirstBuild="True" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/Controllers/ClientController/BookController.cs" relfile="DataMongoApi/Controllers/ClientController/BookController.cs" line="23" column="1" />
-      <Breakpoint file="/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/Controllers/ClientController/BookController.cs" relfile="DataMongoApi/Controllers/ClientController/BookController.cs" line="35" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.AccessDataApi PreferredExecutionTarget="/Applications/Google Chrome.app" />
