@@ -20,5 +20,6 @@ namespace DataMongoApi.Models
 
         [BsonRepresentation(BsonType.ObjectId)]
         public List<string> Appointments { get; set; } = new List<string>();
+        public List<string> Orders { get; set; } = new List<string>();
     }
 }

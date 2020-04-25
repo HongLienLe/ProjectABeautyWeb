@@ -1,35 +1,33 @@
 ﻿<Properties StartupConfiguration="{7C3EE540-AE97-49DF-B915-81E4FBCA9F2F}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
   <MonoDevelop.Ide.ItemProperties.AcessDataAPITest PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.ItemProperties.ProjectABeautyWeb PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AccessDataApi/Startup.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="DataMongoApi/Controllers/AdminController/PaymentController.cs">
     <Files>
-      <File FileName="DataMongoApi/Startup.cs" Line="22" Column="1" />
-      <File FileName="DataMongoApi/Models/Appointment.cs" Line="24" Column="27" NotebookId="1" />
-      <File FileName="AccessDataApi/Startup.cs" Line="87" Column="17" NotebookId="1" />
+      <File FileName="DataMongoApi/Service/PaymentService.cs" Line="87" Column="1" />
+      <File FileName="DataMongoApi/Controllers/AdminController/PaymentController.cs" Line="27" Column="19" />
+      <File FileName="DataMongoApi/Controllers/AdminController/TreatmentController.cs" Line="6" Column="21" />
+      <File FileName="DataMongoApi/Controllers/ClientController/BookController.cs" Line="31" Column="28" />
+      <File FileName="DataMongoApi/Service/AppointmentService.cs" Line="89" Column="3" />
+      <File FileName="DataMongoApi/Controllers/ClientController/DateController.cs" Line="25" Column="1" />
+      <File FileName="DataMongoApi/Service/TreatmentService.cs" Line="79" Column="51" />
+      <File FileName="DataMongoApi/Validation/AppointmentValidator.cs" Line="9" Column="38" />
+      <File FileName="DataMongoApi/Controllers/AdminController/EmployeeController.cs" Line="48" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ProjectABeautyWeb" expanded="True">
-            <Node name="AccessDataApi" expanded="True">
-              <Node name="Dependencies" expanded="True">
-                <Node name="PackageDependencies" expanded="True" />
-              </Node>
-              <Node name="Startup.cs" selected="True" />
-            </Node>
             <Node name="DataMongoApi" expanded="True">
-              <Node name="Dependencies" expanded="True">
-                <Node name="PackageDependencies" expanded="True" />
-              </Node>
               <Node name="Controllers" expanded="True">
-                <Node name="AdminController" expanded="True" />
+                <Node name="AdminController" expanded="True">
+                  <Node name="PaymentController.cs" selected="True" />
+                </Node>
                 <Node name="ClientController" expanded="True" />
               </Node>
-              <Node name="Middleware" expanded="True" />
+              <Node name="Service" expanded="True" />
+              <Node name="Validation" expanded="True" />
+            </Node>
+            <Node name="PaymentAPI" expanded="True">
               <Node name="Models" expanded="True" />
-              <Node name="Service" expanded="True">
-                <Node name="InterfaceService" expanded="True" />
-              </Node>
             </Node>
           </Node>
         </State>
@@ -37,12 +35,13 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.DataMongoApi PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.ItemProperties.AppointmentApi FirstBuild="True" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.DataMongoApiTest FirstBuild="True" />
+  <MonoDevelop.Ide.ItemProperties.DataMongoApiTest PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApiTest/UnitTest1.cs" relfile="DataMongoApiTest/UnitTest1.cs" line="22" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.AccessDataApi PreferredExecutionTarget="/Applications/Google Chrome.app" />

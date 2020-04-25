@@ -18,7 +18,6 @@ namespace DataMongoApi.Controllers.AdminController
     {
         private readonly ITreatmentService _treatmentService;
 
-
         public TreatmentController(ITreatmentService treatmentService)
         {
             _treatmentService = treatmentService;

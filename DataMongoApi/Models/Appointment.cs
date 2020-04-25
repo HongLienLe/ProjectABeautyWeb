@@ -23,7 +23,5 @@ namespace DataMongoApi.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string EmployeeId { get; set; }
         public bool HasBeenProcess { get; set; } = false;
-
-
     }
 }

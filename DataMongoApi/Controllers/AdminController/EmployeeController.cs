@@ -47,8 +47,6 @@ namespace DataMongoApi.Controllers.AdminController
         [HttpPost]
         public IActionResult Create([FromBody]EmployeeDetails employee)
         {
-
-
             Employee employee1 = new Employee()
                 {
                     Details = employee,

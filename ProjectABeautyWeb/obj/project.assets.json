@@ -379,15 +379,6 @@
           "lib/netstandard1.0/_._": {}
         }
       },
-      "Microsoft.VisualStudio.Web.CodeGeneration.Design/3.1.0": {
-        "type": "package",
-        "compile": {
-          "lib/net461/dotnet-aspnet-codegenerator-design.exe": {}
-        },
-        "runtime": {
-          "lib/net461/dotnet-aspnet-codegenerator-design.exe": {}
-        }
-      },
       "Microsoft.Win32.Registry/4.5.0": {
         "type": "package",
         "dependencies": {
@@ -2139,29 +2130,6 @@
         "microsoft.netcore.targets.1.1.0.nupkg.sha512",
         "microsoft.netcore.targets.nuspec",
         "runtime.json"
-      ]
-    },
-    "Microsoft.VisualStudio.Web.CodeGeneration.Design/3.1.0": {
-      "sha512": "ZHXVe8nDkHXmPlBNGOl3SIxoUKfah2OJOKKmq769gBMqHJMaOrFKhPYsHdTORjKUtwc3AlO1CMLgnljFyyxA/Q==",
-      "type": "package",
-      "path": "microsoft.visualstudio.web.codegeneration.design/3.1.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net461/dotnet-aspnet-codegenerator-design.exe",
-        "lib/net461/dotnet-aspnet-codegenerator-design.xml",
-        "lib/netcoreapp3.1/dotnet-aspnet-codegenerator-design.dll",
-        "lib/netcoreapp3.1/dotnet-aspnet-codegenerator-design.xml",
-        "microsoft.visualstudio.web.codegeneration.design.3.1.0.nupkg.sha512",
-        "microsoft.visualstudio.web.codegeneration.design.nuspec",
-        "runtimes/win-arm/lib/net461/dotnet-aspnet-codegenerator-design.exe",
-        "runtimes/win-arm/lib/net461/dotnet-aspnet-codegenerator-design.xml",
-        "runtimes/win-arm64/lib/net461/dotnet-aspnet-codegenerator-design.exe",
-        "runtimes/win-arm64/lib/net461/dotnet-aspnet-codegenerator-design.xml",
-        "runtimes/win7-x64/lib/net461/dotnet-aspnet-codegenerator-design.exe",
-        "runtimes/win7-x64/lib/net461/dotnet-aspnet-codegenerator-design.xml",
-        "runtimes/win7-x86/lib/net461/dotnet-aspnet-codegenerator-design.exe",
-        "runtimes/win7-x86/lib/net461/dotnet-aspnet-codegenerator-design.xml"
       ]
     },
     "Microsoft.Win32.Registry/4.5.0": {
@@ -5442,7 +5410,6 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.0",
       "Microsoft.EntityFrameworkCore.Sqlite >= 3.1.0",
       "Microsoft.Extensions.DependencyInjection >= 3.1.0",
-      "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.0",
       "jQuery.UI.Combined >= 1.12.1"
     ]
   },
@@ -5515,10 +5482,6 @@
             "target": "Package",
             "version": "[3.1.0, )"
           },
-          "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
-            "target": "Package",
-            "version": "[3.1.0, )"
-          },
           "jQuery.UI.Combined": {
             "target": "Package",
             "version": "[1.12.1, )"
@@ -5545,17 +5508,5 @@
         "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.200/RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Microsoft.VisualStudio.Web.CodeGeneration.Design 3.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.0'. This package may not be fully compatible with your project.",
-      "libraryId": "Microsoft.VisualStudio.Web.CodeGeneration.Design",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.0"
-      ]
-    }
-  ]
+  }
 }

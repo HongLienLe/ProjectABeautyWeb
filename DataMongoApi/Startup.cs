@@ -54,8 +54,9 @@ namespace DataMongoApi
             services.AddTransient<IClientService, ClientService>();
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient<IOperatingHoursService, OperatingHoursService>();
-            services.AddTransient<AppointmentService>();
+            services.AddTransient<IAppointmentService, AppointmentService>();
             services.AddTransient<AvailableAppointmentService>();
+            services.AddTransient<PaymentService>();
 
             services.AddControllers()
                         .AddNewtonsoftJson(options => options.UseMemberCasing())

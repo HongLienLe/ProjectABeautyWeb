@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DataMongoApi.Controllers.ClientController
 {
-    [Route("[controller]")]
+    [Route("client/[controller]")]
     public class DateController : Controller
     {
         private AvailableAppointmentService _availableAppointmentService;
@@ -20,7 +20,7 @@ namespace DataMongoApi.Controllers.ClientController
         [HttpGet("{date}/treatment/{id}")]
         public IActionResult Get(DateTime date, string id)
         {
-            return Ok(_availableAppointmentService.GetAvailableTimeSlot(new DateTime(2020,4,13), id));
+            return Ok(_availableAppointmentService.GetAvailableTimeSlot(date, id));
         }
     }
 }

@@ -11,7 +11,7 @@ using MongoDB.Driver.Linq;
 
 namespace DataMongoApi.Service
 {
-    public class AppointmentService
+    public class AppointmentService : IAppointmentService
     {
         private IMongoCollection<Appointment> _appointments { get; set; }
         private IMongoCollection<Employee> _employees { get; set; }
@@ -19,14 +19,16 @@ namespace DataMongoApi.Service
         private ITreatmentService _treatmentService;
         private IClientService _clientService;
 
-        public AppointmentService(ISalonDatabaseSettings settings,IClientService clientService, IOperatingHoursService operatingHoursService, ITreatmentService treatmentService,  IClientConfiguration clientConfiguration )
+        public AppointmentService(ISalonDatabaseSettings settings,
+            IClientService clientService,
+            IOperatingHoursService operatingHoursService,
+            ITreatmentService treatmentService,
+            IClientConfiguration clientConfiguration)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(clientConfiguration.MerchantId);
             _appointments = database.GetCollection<Appointment>("Appointments");
             _employees = database.GetCollection<Employee>("Employees");
-
-
             _operatingHoursService = operatingHoursService;
             _treatmentService = treatmentService;
             _clientService = clientService;
@@ -49,18 +51,14 @@ namespace DataMongoApi.Service
             };
 
             app.EndTime = app.StartTime.AddMinutes(treatmentTime);
-
             var client = _clientService.GetByContactNo(app.Client.Phone) == null ? _clientService.Create(app.Client) : _clientService.GetByContactNo(app.Client.Phone);
-
             var employees = EmployeeWorkingIds(app.TreatmentId, app.Date);
-
             appointment.EmployeeId = FreeEmployee(employees, app);
 
             if (appointment.EmployeeId == null)
                 return null;
 
             var bookedApp = Create(appointment);
-
             _clientService.AddAppointment(client.ID, bookedApp);
 
             return bookedApp;
@@ -85,10 +83,8 @@ namespace DataMongoApi.Service
                 if (!appointmentsTimePeriods.IntersectsWith(requestedAppTimeSlot))
                     return employee;
             }
-
             return null;
         }
-
 
         private Appointment Create(Appointment app)
         {
@@ -112,11 +108,11 @@ namespace DataMongoApi.Service
         {
             var dayId = _operatingHoursService.Get(date).ID;
             return _employees.AsQueryable<Employee>()
-                .Where(x => x.WorkDays.Contains(dayId) && x.Treatments.All(t => treatmentId.Contains(t)))
+                .Where(x => x.WorkDays.Contains(dayId)
+                    && x.Treatments.Any(e => treatmentId.Contains(e)))
                 .Select(x => x.ID)
                 .ToList();
         }
 
-       
     }
 }

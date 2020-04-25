@@ -22,19 +22,16 @@ namespace DataMongoApi.Controllers.ClientController
         public IActionResult Post([FromBody]AppointmentDetails app)
         {
             var response = _appointmentService.ProcessAppointment(app);
-
             if (response == null)
                 return BadRequest();
 
-            return Ok(response);
-            
+            return Ok(response);    
         }
 
         [HttpGet("{date}")]
         public IActionResult Get(DateTime date)
         {
             var response = _appointmentService.GetAppointments(date);
-
             if (response == null)
                 return NoContent();
 
