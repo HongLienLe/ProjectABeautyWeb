@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DataMongoApi.DbContext;
 using DataMongoApi.Middleware;
 using DataMongoApi.Models;
 using DataMongoApi.Service.InterfaceService;
@@ -10,20 +11,18 @@ namespace DataMongoApi.Service
     public class MerchantService : IMerchantService
     {
         private readonly IMongoCollection<Merchant> _merchant;
+        private readonly IMongoDbContext _context;
 
-        public MerchantService(ISalonDatabaseSettings settings, IClientConfiguration clientConfiguration)
+
+        public MerchantService(IMongoDbContext context)
         {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(clientConfiguration.MerchantId); ;
+            _context = context;
 
-            _merchant = database.GetCollection<Merchant>("Merchant");
+            _merchant = _context.GetCollection<Merchant>("Merchant");
         }
 
-        public List<Merchant> Get() =>
-            _merchant.Find(Merchant => true).ToList();
-
         public Merchant Get(string id) =>
-            _merchant.Find<Merchant>(t => t.Id == id).FirstOrDefault();
+            _merchant.Find<Merchant>(t => t.ID == id).FirstOrDefault();
 
         public Merchant Create(Merchant merchant)
         {
@@ -33,12 +32,12 @@ namespace DataMongoApi.Service
         }
 
         public void Update(string id, Merchant merchantIn) =>
-            _merchant.ReplaceOne(t => t.Id == id, merchantIn);
+            _merchant.ReplaceOne(t => t.ID == id, merchantIn);
 
         public void Remove(Merchant merchantIn) =>
-            _merchant.DeleteOne(t => t.Id == merchantIn.Id);
+            _merchant.DeleteOne(t => t.ID == merchantIn.ID);
 
         public void Remove(string id) =>
-            _merchant.DeleteOne(t => t.Id == id);
+            _merchant.DeleteOne(t => t.ID == id);
     }
 }

@@ -8,7 +8,7 @@ namespace DataMongoApi.Service.InterfaceService
     {
         public List<Employee> Get();
         public Employee Get(string id);
-        public Employee Create(Employee employee);
+        public Employee Create(EmployeeDetails employee);
         public void Update(string id, EmployeeDetails employeeIn);
         public void Remove(Employee employeeIn);
         public void Remove(string id);

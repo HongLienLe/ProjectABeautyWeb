@@ -21,7 +21,7 @@ namespace DataMongoApi.Controllers.AdminController
         }
 
         [HttpGet("{id:length(24)}", Name = "GetMerchant")]
-        public ActionResult<Merchant> Get(string id)
+        public IActionResult Get(string id)
         {
             var merchant = _merchantService.Get(id);
 
@@ -30,15 +30,15 @@ namespace DataMongoApi.Controllers.AdminController
                 return NotFound();
             }
 
-            return merchant;
+            return Ok(merchant);
         }
 
         [HttpPost]
-        public ActionResult<Merchant> Create([FromBody]Merchant merchant)
+        public IActionResult Create([FromBody]Merchant merchant)
         {
-            _merchantService.Create(merchant);
+            var response = _merchantService.Create(merchant);
 
-            return CreatedAtRoute("GetMerchant", new { id = merchant.Id.ToString() }, merchant);
+            return Ok(response);
         }
 
         [HttpPut("{id:length(24)}")]

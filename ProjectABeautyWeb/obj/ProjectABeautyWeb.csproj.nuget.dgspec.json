@@ -1,21 +1,18 @@
 {
   "format": 1,
   "restore": {
-    "/Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/ProjectABeautyWeb.csproj": {}
+    "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/ProjectABeautyWeb/ProjectABeautyWeb.csproj": {}
   },
   "projects": {
-    "/Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/ProjectABeautyWeb.csproj": {
+    "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/ProjectABeautyWeb/ProjectABeautyWeb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/ProjectABeautyWeb.csproj",
+        "projectUniqueName": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/ProjectABeautyWeb/ProjectABeautyWeb.csproj",
         "projectName": "ProjectABeautyWeb",
-        "projectPath": "/Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/ProjectABeautyWeb.csproj",
+        "projectPath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/ProjectABeautyWeb/ProjectABeautyWeb.csproj",
         "packagesPath": "/Users/hongle/.nuget/packages/",
-        "outputPath": "/Users/hongle/Projects/ProjectABeautyWeb/ProjectABeautyWeb/obj/",
+        "outputPath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/ProjectABeautyWeb/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
-        ],
         "configFilePaths": [
           "/Users/hongle/.config/NuGet/NuGet.Config"
         ],
@@ -84,6 +81,16 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.0.1, 3.0.1]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[3.0.0, 3.0.0]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"

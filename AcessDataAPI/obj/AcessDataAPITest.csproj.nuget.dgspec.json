@@ -1,21 +1,18 @@
 {
   "format": 1,
   "restore": {
-    "/Users/hongle/Projects/ProjectABeautyWeb/AcessDataAPI/AcessDataAPITest.csproj": {}
+    "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/AcessDataAPI/AcessDataAPITest.csproj": {}
   },
   "projects": {
-    "/Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj": {
+    "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj",
+        "projectUniqueName": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj",
         "projectName": "AccessDataApi",
-        "projectPath": "/Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj",
+        "projectPath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj",
         "packagesPath": "/Users/hongle/.nuget/packages/",
-        "outputPath": "/Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/obj/",
+        "outputPath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/AccessDataApi/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
-        ],
         "configFilePaths": [
           "/Users/hongle/.config/NuGet/NuGet.Config"
         ],
@@ -154,18 +151,15 @@
         }
       }
     },
-    "/Users/hongle/Projects/ProjectABeautyWeb/AcessDataAPI/AcessDataAPITest.csproj": {
+    "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/AcessDataAPI/AcessDataAPITest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/hongle/Projects/ProjectABeautyWeb/AcessDataAPI/AcessDataAPITest.csproj",
+        "projectUniqueName": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/AcessDataAPI/AcessDataAPITest.csproj",
         "projectName": "AcessDataAPITest",
-        "projectPath": "/Users/hongle/Projects/ProjectABeautyWeb/AcessDataAPI/AcessDataAPITest.csproj",
+        "projectPath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/AcessDataAPI/AcessDataAPITest.csproj",
         "packagesPath": "/Users/hongle/.nuget/packages/",
-        "outputPath": "/Users/hongle/Projects/ProjectABeautyWeb/AcessDataAPI/obj/",
+        "outputPath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/AcessDataAPI/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
-        ],
         "configFilePaths": [
           "/Users/hongle/.config/NuGet/NuGet.Config"
         ],
@@ -178,8 +172,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "/Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj": {
-                "projectPath": "/Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj"
+              "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj": {
+                "projectPath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj"
               }
             }
           }
@@ -195,11 +189,11 @@
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.2, )"
+              "version": "[5.0.0-preview.3.20181.2, )"
             },
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
-              "version": "[3.1.2, )"
+              "version": "[5.0.0-preview.3.20181.2, )"
             },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",

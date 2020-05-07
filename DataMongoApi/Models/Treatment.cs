@@ -21,5 +21,6 @@ namespace DataMongoApi.Models
 
         [BsonRepresentation(BsonType.ObjectId)]
         public List<string> Employees { get; set; } = new List<string>();
+        public double Name { get; set; }
     }
 }

@@ -1,21 +1,18 @@
 {
   "format": 1,
   "restore": {
-    "/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/PaymentAPI.csproj": {}
+    "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/PaymentAPI/PaymentAPI.csproj": {}
   },
   "projects": {
-    "/Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj": {
+    "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj",
+        "projectUniqueName": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj",
         "projectName": "AccessDataApi",
-        "projectPath": "/Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj",
+        "projectPath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj",
         "packagesPath": "/Users/hongle/.nuget/packages/",
-        "outputPath": "/Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/obj/",
+        "outputPath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/AccessDataApi/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
-        ],
         "configFilePaths": [
           "/Users/hongle/.config/NuGet/NuGet.Config"
         ],
@@ -154,18 +151,15 @@
         }
       }
     },
-    "/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/PaymentAPI.csproj": {
+    "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/PaymentAPI/PaymentAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/PaymentAPI.csproj",
+        "projectUniqueName": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/PaymentAPI/PaymentAPI.csproj",
         "projectName": "PaymentAPI",
-        "projectPath": "/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/PaymentAPI.csproj",
+        "projectPath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/PaymentAPI/PaymentAPI.csproj",
         "packagesPath": "/Users/hongle/.nuget/packages/",
-        "outputPath": "/Users/hongle/Projects/ProjectABeautyWeb/PaymentAPI/obj/",
+        "outputPath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/PaymentAPI/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
-        ],
         "configFilePaths": [
           "/Users/hongle/.config/NuGet/NuGet.Config"
         ],
@@ -178,8 +172,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "/Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj": {
-                "projectPath": "/Users/hongle/Projects/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj"
+              "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj": {
+                "projectPath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/AccessDataApi/AccessDataApi.csproj"
               }
             }
           }
@@ -193,10 +187,6 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
-            "Microsoft.AspNet.WebApi": {
-              "target": "Package",
-              "version": "[5.2.7, )"
-            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.0-preview.2.20120.8, )"

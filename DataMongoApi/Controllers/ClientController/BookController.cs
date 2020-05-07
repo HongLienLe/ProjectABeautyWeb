@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DataMongoApi.Controllers.ClientController
 {
-    [Route("[controller]")]
+    [Route("book")]
     public class BookController : Controller
     {
         private AppointmentService _appointmentService;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DataMongoApi.DbContext;
 using DataMongoApi.Middleware;
 using DataMongoApi.Models;
 using DataMongoApi.Service.InterfaceService;
@@ -11,18 +12,18 @@ namespace DataMongoApi.Service
 {
     public class EmployeeService : IEmployeeService
     {
+        private readonly IMongoDbContext _context;
         private readonly IMongoCollection<Employee> _employee;
         private readonly IMongoCollection<OperatingHours> _operatingHours;
         private readonly IMongoCollection<Treatment> _treatment;
 
-        public EmployeeService(ISalonDatabaseSettings settings, IClientConfiguration clientConfiguration)
+        public EmployeeService(IMongoDbContext context)
         {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(clientConfiguration.MerchantId);
+            _context = context;
 
-            _employee = database.GetCollection<Employee>("Employees");
-            _treatment = database.GetCollection<Treatment>("Treatments");
-            _operatingHours = database.GetCollection<OperatingHours>("OperatingHours");
+            _employee = _context.GetCollection<Employee>("Employees");
+            _treatment = _context.GetCollection<Treatment>("Treatments");
+            _operatingHours = _context.GetCollection<OperatingHours>("OperatingHours");
 
         }
 
@@ -36,12 +37,16 @@ namespace DataMongoApi.Service
             return _employee.Find<Employee>(e => e.ID == id).FirstOrDefault();
         }
 
-        public Employee Create(Employee employee)
+        public Employee Create(EmployeeDetails employee)
         {
+            Employee employee1 = new Employee()
+            {
+                Details = employee,
+            };
 
-            employee.ModifiedOn = DateTime.UtcNow;
-            _employee.InsertOne(employee);
-            return employee;
+            employee1.ModifiedOn = DateTime.UtcNow;
+            _employee.InsertOne(employee1);
+            return employee1;
         }
 
         public void Update(string id, EmployeeDetails employeeIn)

@@ -21,6 +21,8 @@ using FluentValidation.AspNetCore;
 using DataMongoApi.Validation;
 using DataMongoApi.Service.InterfaceService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using DataMongoApi.Exceptions;
+using DataMongoApi.DbContext;
 
 namespace DataMongoApi
 {
@@ -37,6 +39,7 @@ namespace DataMongoApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IClientConfiguration, ClientConfiguration>();
+            services.AddScoped<IMongoDbContext, MongoDbContext>();
 
             services.Configure<SalonDatabaseSettings>(
         Configuration.GetSection(nameof(SalonDatabaseSettings)));
@@ -56,15 +59,17 @@ namespace DataMongoApi
             services.AddTransient<IOperatingHoursService, OperatingHoursService>();
             services.AddTransient<IAppointmentService, AppointmentService>();
             services.AddTransient<AvailableAppointmentService>();
-            services.AddTransient<PaymentService>();
+            services.AddTransient<IPaymentService,PaymentService>();
 
-            services.AddControllers()
+            services.AddControllers(options =>
+                         options.Filters.Add(new HttpResponseExceptionFilter()))
                         .AddNewtonsoftJson(options => options.UseMemberCasing())
                         .AddFluentValidation(fv =>
                         fv.RegisterValidatorsFromAssemblyContaining<EmployeeDetailsValidator>()
                         .RegisterValidatorsFromAssemblyContaining<TreatmentDetailsValidator>()
                         .RegisterValidatorsFromAssemblyContaining<OperatingHoursDetailsValidatior>()
                         .RegisterValidatorsFromAssemblyContaining<ClientDetailsValidator>());
+                        
 
             services.AddAuthentication(options =>
             {
@@ -120,6 +125,9 @@ namespace DataMongoApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            } else
+            {
+                app.UseExceptionHandler("/error");
             }
 
             app.UseCors(options =>

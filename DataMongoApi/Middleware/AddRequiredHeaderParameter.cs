@@ -14,9 +14,9 @@ namespace DataMongoApi.Middleware
 
             operation.Parameters.Add(new OpenApiParameter
             {
-                Name = "MERCHANTID",
+                Name = "merchant-id",
                 In = ParameterLocation.Header,
-                Description = "merchant Id 6Numbers",
+                Description = "merchant Id",
                 Required = false,
                 Schema = new OpenApiSchema
                 {

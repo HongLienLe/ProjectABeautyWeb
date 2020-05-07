@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DataMongoApi.DbContext;
 using DataMongoApi.Middleware;
 using DataMongoApi.Models;
 using DataMongoApi.Service.InterfaceService;
@@ -12,15 +13,14 @@ namespace DataMongoApi.Service
     public class OperatingHoursService : IOperatingHoursService
     {
         private readonly IMongoCollection<OperatingHours> _operatinghrs;
-        private readonly IMongoCollection<Employee> _employees;
+        private readonly IMongoDbContext _context;
 
-        public OperatingHoursService(ISalonDatabaseSettings settings, IClientConfiguration clientConfiguration)
+
+        public OperatingHoursService(IMongoDbContext context)
         {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(clientConfiguration.MerchantId);
+            _context = context;
 
-            _operatinghrs = database.GetCollection<OperatingHours>("OperatingHours");
-            _employees = database.GetCollection<Employee>("Employees");
+            _operatinghrs = _context.GetCollection<OperatingHours>("OperatingHours");
 
         }
 

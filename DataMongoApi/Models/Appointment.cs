@@ -22,6 +22,7 @@ namespace DataMongoApi.Models
         public AppointmentDetails Info { get; set; }
         [BsonRepresentation(BsonType.ObjectId)]
         public string EmployeeId { get; set; }
+        public int MiscPrice { get; set; }
         public bool HasBeenProcess { get; set; } = false;
     }
 }

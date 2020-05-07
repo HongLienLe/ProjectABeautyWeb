@@ -27,6 +27,9 @@
     <Folder Include="Validation\" />
     <Folder Include="Controllers\ClientController\" />
     <Folder Include="Service\InterfaceService\" />
+    <Folder Include="Service\Header\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="DbContext\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Service\InterfaceService\IMerchantService" />

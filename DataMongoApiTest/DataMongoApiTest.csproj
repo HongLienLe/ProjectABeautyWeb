@@ -8,14 +8,21 @@
 
   <ItemGroup>
     <PackageReference Include="nunit" Version="3.12.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
-    <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0-beta.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.0-preview-20200428-01" />
+    <PackageReference Include="Moq" Version="4.14.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.11.0-beta1" />
-    <PackageReference Include="MongoDB.Driver.Core" Version="2.11.0-beta1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DataMongoApi\DataMongoApi.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ServiceTest\" />
+    <Folder Include="ControllerTest\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="AppointmentServiceTest.cs" />
+    <Compile Remove="AppointmentServiceTest.cs" />
   </ItemGroup>
 </Project>

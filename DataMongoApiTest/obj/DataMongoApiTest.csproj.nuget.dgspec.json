@@ -1,21 +1,18 @@
 {
   "format": 1,
   "restore": {
-    "/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApiTest/DataMongoApiTest.csproj": {}
+    "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApiTest/DataMongoApiTest.csproj": {}
   },
   "projects": {
-    "/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/DataMongoApi.csproj": {
+    "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/DataMongoApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/DataMongoApi.csproj",
+        "projectUniqueName": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/DataMongoApi.csproj",
         "projectName": "DataMongoApi",
-        "projectPath": "/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/DataMongoApi.csproj",
+        "projectPath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/DataMongoApi.csproj",
         "packagesPath": "/Users/hongle/.nuget/packages/",
-        "outputPath": "/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/",
+        "outputPath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
-        ],
         "configFilePaths": [
           "/Users/hongle/.config/NuGet/NuGet.Config"
         ],
@@ -110,18 +107,15 @@
         }
       }
     },
-    "/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApiTest/DataMongoApiTest.csproj": {
+    "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApiTest/DataMongoApiTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApiTest/DataMongoApiTest.csproj",
+        "projectUniqueName": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApiTest/DataMongoApiTest.csproj",
         "projectName": "DataMongoApiTest",
-        "projectPath": "/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApiTest/DataMongoApiTest.csproj",
+        "projectPath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApiTest/DataMongoApiTest.csproj",
         "packagesPath": "/Users/hongle/.nuget/packages/",
-        "outputPath": "/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApiTest/obj/",
+        "outputPath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApiTest/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
-        ],
         "configFilePaths": [
           "/Users/hongle/.config/NuGet/NuGet.Config"
         ],
@@ -134,8 +128,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/DataMongoApi.csproj": {
-                "projectPath": "/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/DataMongoApi.csproj"
+              "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/DataMongoApi.csproj": {
+                "projectPath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/DataMongoApi.csproj"
               }
             }
           }
@@ -151,23 +145,19 @@
           "dependencies": {
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
-              "version": "[16.4.0, )"
+              "version": "[16.7.0-preview-20200428-01, )"
             },
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[2.11.0-beta1, )"
             },
-            "MongoDB.Driver.Core": {
-              "target": "Package",
-              "version": "[2.11.0-beta1, )"
-            },
             "Moq": {
               "target": "Package",
-              "version": "[4.13.1, )"
+              "version": "[4.14.1, )"
             },
             "NUnit3TestAdapter": {
               "target": "Package",
-              "version": "[3.15.1, )"
+              "version": "[3.17.0-beta.1, )"
             },
             "nunit": {
               "target": "Package",

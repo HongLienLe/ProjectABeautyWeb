@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using DataMongoApi.Middleware;
 using DataMongoApi.Models;
 using DataMongoApi.Service;
 using DataMongoApi.Service.InterfaceService;
@@ -26,9 +27,14 @@ namespace DataMongoApi.Controllers.AdminController
         }
 
         [HttpGet]
-        public ActionResult<List<Employee>> Get()
+        public IActionResult Get()
         {
-            return _employeeService.Get();
+            var employees = _employeeService.Get();
+
+            if (employees.Count == 0)
+                return NotFound("Currently has no employee entries");
+
+            return Ok(_employeeService.Get());
         }
 
         [HttpGet("{id:length(24)}", Name = "GetEmployee")]
@@ -47,14 +53,11 @@ namespace DataMongoApi.Controllers.AdminController
         [HttpPost]
         public IActionResult Create([FromBody]EmployeeDetails employee)
         {
-            Employee employee1 = new Employee()
-                {
-                    Details = employee,
-                };
+           
 
-            _employeeService.Create(employee1);
+            var response = _employeeService.Create(employee);
 
-            return CreatedAtRoute("GetEmployee", new { id = employee1.ID.ToString() }, employee1);
+            return Ok(response);
         }
 
         [HttpPut("{id:length(24)}")]
@@ -84,7 +87,7 @@ namespace DataMongoApi.Controllers.AdminController
 
             _employeeService.Remove(employee.ID);
 
-            return NoContent();
+            return Ok($"Employee has been removed");
         }
 
         [HttpPost("{id:length(24)}/manage/treatment")]

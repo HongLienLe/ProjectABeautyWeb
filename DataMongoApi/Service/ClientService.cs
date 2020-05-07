@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DataMongoApi.DbContext;
 using DataMongoApi.Middleware;
 using DataMongoApi.Models;
 using DataMongoApi.Service.InterfaceService;
@@ -10,13 +11,13 @@ namespace DataMongoApi.Service
     public class ClientService : IClientService
     {
         private readonly IMongoCollection<Client> _client;
+        private readonly IMongoDbContext _context;
 
-        public ClientService(ISalonDatabaseSettings settings, IClientConfiguration clientConfiguration)
+        public ClientService(IMongoDbContext context)
         {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(clientConfiguration.MerchantId);
+            _context = context;
 
-            _client = database.GetCollection<Client>("Clients");
+            _client = _context.GetCollection<Client>("Clients");
 
         }
 
@@ -24,11 +25,11 @@ namespace DataMongoApi.Service
             _client.Find(Client => true).ToList();
 
         public Client Get(string id) =>
-            _client.Find<Client>(c => c.ID == id).FirstOrDefault();
+            _client.Find(c => c.ID == id).FirstOrDefault();
 
         public Client GetByContactNo(string phone)
         {
-            return _client.Find<Client>(c => c.About.Phone == phone).FirstOrDefault();
+            return _client.Find(c => c.About.Phone == phone).FirstOrDefault();
         }
 
         public Client Create(ClientDetails client)

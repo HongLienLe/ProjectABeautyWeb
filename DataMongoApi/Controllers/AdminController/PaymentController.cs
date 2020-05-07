@@ -17,15 +17,15 @@ namespace DataMongoApi.Controllers.AdminController
         {
             _paymentService = paymentService;
         }
-       
+
         [HttpGet("{id}")]
         public IActionResult Get(string id)
-        {   
+        {
             return Ok(_paymentService.Get(id));
         }
 
-        [HttpPost]
-        public IActionResult Post([FromBody]Appointment booking)
+        [HttpPost()]
+        public IActionResult Post([FromBody] Appointment booking)
         {
             var response = _paymentService.ProcessAppointment(booking);
             return Ok(response);

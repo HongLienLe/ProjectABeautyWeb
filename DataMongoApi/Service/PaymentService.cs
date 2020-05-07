@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DataMongoApi.DbContext;
 using DataMongoApi.Middleware;
 using DataMongoApi.Models;
 using DataMongoApi.Service.InterfaceService;
@@ -8,18 +9,18 @@ using MongoDB.Driver;
 
 namespace DataMongoApi.Service
 {
-    public class PaymentService
+    public class PaymentService : IPaymentService
     {
         private IMongoCollection<OrderDetails> _orders { get; set; }
         private IMongoCollection<Client> _client { get; set; }
         private ITreatmentService _treatmentService { get; set; }
+        private readonly IMongoDbContext _context;
 
-        public PaymentService(ISalonDatabaseSettings settings, IClientConfiguration clientConfiguration, ITreatmentService treatmentService)
+        public PaymentService(IMongoDbContext context, ITreatmentService treatmentService)
         {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(clientConfiguration.MerchantId);
-            _orders = database.GetCollection<OrderDetails>("Orders");
-            _client = database.GetCollection<Client>("Clients");
+            _context = context;
+            _orders = _context.GetCollection<OrderDetails>("Orders");
+            _client = _context.GetCollection<Client>("Clients");
             _treatmentService = treatmentService;
         }
 
@@ -39,7 +40,8 @@ namespace DataMongoApi.Service
             var order = new OrderDetails()
             {
                 ClientPhone = bookings.Info.Client.Phone,
-                Treatments = treatments   
+                Treatments = treatments,
+                MiscPrice = bookings.MiscPrice
             };
 
             var processOrder = Create(order);

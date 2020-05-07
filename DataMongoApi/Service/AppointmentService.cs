@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DataMongoApi.DbContext;
 using DataMongoApi.Middleware;
 using DataMongoApi.Models;
 using DataMongoApi.Service.InterfaceService;
@@ -13,22 +14,21 @@ namespace DataMongoApi.Service
 {
     public class AppointmentService : IAppointmentService
     {
+        private readonly IMongoDbContext _context;
         private IMongoCollection<Appointment> _appointments { get; set; }
         private IMongoCollection<Employee> _employees { get; set; }
         private IOperatingHoursService _operatingHoursService;
         private ITreatmentService _treatmentService;
         private IClientService _clientService;
 
-        public AppointmentService(ISalonDatabaseSettings settings,
+        public AppointmentService(IMongoDbContext context,
             IClientService clientService,
             IOperatingHoursService operatingHoursService,
-            ITreatmentService treatmentService,
-            IClientConfiguration clientConfiguration)
+            ITreatmentService treatmentService)
         {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(clientConfiguration.MerchantId);
-            _appointments = database.GetCollection<Appointment>("Appointments");
-            _employees = database.GetCollection<Employee>("Employees");
+            _context = context;
+            _appointments = _context.GetCollection<Appointment>("Appointments");
+            _employees = _context.GetCollection<Employee>("Employees");
             _operatingHoursService = operatingHoursService;
             _treatmentService = treatmentService;
             _clientService = clientService;

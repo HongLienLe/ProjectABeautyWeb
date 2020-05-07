@@ -66,7 +66,7 @@ namespace DataMongoApi.Controllers.AdminController
 
             _treatmentService.Update(id, treatmentForm);
 
-            return NoContent();
+            return Ok("Treatment has been updated");
         }
 
         [HttpDelete("{id:length(24)}")]

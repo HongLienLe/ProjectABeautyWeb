@@ -1,21 +1,18 @@
 {
   "format": 1,
   "restore": {
-    "/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/DataMongoApi.csproj": {}
+    "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/DataMongoApi.csproj": {}
   },
   "projects": {
-    "/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/DataMongoApi.csproj": {
+    "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/DataMongoApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/DataMongoApi.csproj",
+        "projectUniqueName": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/DataMongoApi.csproj",
         "projectName": "DataMongoApi",
-        "projectPath": "/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/DataMongoApi.csproj",
+        "projectPath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/DataMongoApi.csproj",
         "packagesPath": "/Users/hongle/.nuget/packages/",
-        "outputPath": "/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApi/obj/",
+        "outputPath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
-        ],
         "configFilePaths": [
           "/Users/hongle/.config/NuGet/NuGet.Config"
         ],

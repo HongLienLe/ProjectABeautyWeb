@@ -37,18 +37,18 @@ namespace DataMongoApi.Controllers.AdminController
             return Ok(day);
         }
 
-        [HttpPost]
-        public IActionResult Create(OperatingHoursDetails opHrs)
-        {
-            var ophr = new OperatingHours()
-            {
-                About = opHrs
-            };
+        //[HttpPost]
+        //public IActionResult Create(OperatingHoursDetails opHrs)
+        //{
+        //    var ophr = new OperatingHours()
+        //    {
+        //        About = opHrs
+        //    };
 
-            _operatingHoursService.Create(ophr);
+        //    _operatingHoursService.Create(ophr);
 
-            return Ok(ophr);
-        }
+        //    return Ok(ophr);
+        //}
 
         [HttpPut("{id:length(24)}")]
         public IActionResult Update(string Id, OperatingHoursDetails opHrsIn)
@@ -62,22 +62,22 @@ namespace DataMongoApi.Controllers.AdminController
 
             _operatingHoursService.Update(Id, opHrsIn);
 
-            return NoContent();
+            return Ok("Update Successful");
         }
 
-        [HttpDelete("{id:length(24)}")]
-        public IActionResult Delete(string dayId)
-        {
-            var opHrs = _operatingHoursService.Get(dayId);
+        //[HttpDelete("{id:length(24)}")]
+        //public IActionResult Delete(string dayId)
+        //{
+        //    var opHrs = _operatingHoursService.Get(dayId);
 
-            if (opHrs == null)
-            {
-                return NotFound();
-            }
+        //    if (opHrs == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _operatingHoursService.Remove(opHrs.ID);
+        //    _operatingHoursService.Remove(opHrs.ID);
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
     }
 }

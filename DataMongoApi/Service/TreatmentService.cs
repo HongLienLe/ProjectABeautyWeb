@@ -6,23 +6,20 @@ using MongoDB.Driver;
 using System.Linq;
 using MongoDB.Bson;
 using DataMongoApi.Service.InterfaceService;
+using DataMongoApi.DbContext;
 
 namespace DataMongoApi.Service
 {
     public class TreatmentService : ITreatmentService
     {
         private readonly IMongoCollection<Treatment> _treatment;
-        //private readonly IMongoCollection<Employee> _employee;
+        private readonly IMongoDbContext _context;
 
 
-        public TreatmentService(ISalonDatabaseSettings settings, IClientConfiguration clientConfiguration)
+        public TreatmentService(IMongoDbContext context)
         {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(clientConfiguration.MerchantId);
-
-            _treatment = database.GetCollection<Treatment>("Treatments");
-            //_employee = database.GetCollection<Employee>("Employee");
-
+            _context = context;
+            _treatment = _context.GetCollection<Treatment>("Treatments");
         }
 
         public List<Treatment> Get()
@@ -30,8 +27,15 @@ namespace DataMongoApi.Service
            return _treatment.Find(Treatment => true).ToList();
         }
 
-        public Treatment Get(string id) =>
-            _treatment.Find<Treatment>(t => t.ID == id).FirstOrDefault();
+
+        public Treatment Get(string id)
+        {
+            return _treatment.Find<Treatment>(t => t.ID == id).FirstOrDefault();
+
+          //  var filter = Builders<Treatment>.Filter.Exists(x => x.ID == id);
+
+
+        }
 
         public Treatment Create(Treatment treatment)
         {

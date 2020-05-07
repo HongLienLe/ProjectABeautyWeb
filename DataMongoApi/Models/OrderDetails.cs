@@ -10,6 +10,7 @@ namespace DataMongoApi.Models
     {
         public string ClientPhone { get; set; }
         public List<TreatmentOrder> Treatments { get; set; }
+        public int MiscPrice { get; set; }
         public int Total { get; set; }
     }
 

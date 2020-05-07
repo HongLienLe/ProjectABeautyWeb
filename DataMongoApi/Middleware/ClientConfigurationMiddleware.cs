@@ -26,19 +26,22 @@ namespace DataMongoApi.Middleware
 
         public async Task InvokeAsync(HttpContext httpContext, IClientConfiguration clientConfiguration)
         {
-            if (httpContext.Request.Headers.TryGetValue("MERCHANTID", out StringValues merchantId))
-            {
+
+                httpContext.Request.Headers.TryGetValue("merchant-id", out StringValues merchantId);
+
                 if (DatabaseNames.Contains(merchantId))
+                {
                     clientConfiguration.MerchantId = merchantId.SingleOrDefault();
-            }
-            else
-            {
-                //Here you can throw exception to force client to send the header
-                clientConfiguration.MerchantId = DefaultDB;
+                }
 
-            }
+                else
+                {
+                    
+                    clientConfiguration.MerchantId = DefaultDB;
 
-            await _next.Invoke(httpContext);
+                }
+
+                await _next.Invoke(httpContext);
         }
     }
 

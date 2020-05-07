@@ -1,16 +1,18 @@
 ﻿<Properties StartupConfiguration="{7C3EE540-AE97-49DF-B915-81E4FBCA9F2F}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
-  <MonoDevelop.Ide.ItemProperties.AcessDataAPITest PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="DataMongoApi/Controllers/AdminController/PaymentController.cs">
+  <MonoDevelop.Ide.ItemProperties.ProjectABeautyWeb PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="DataMongoApiTest/ServiceTest/PaymentServiceTest.cs">
     <Files>
-      <File FileName="DataMongoApi/Service/PaymentService.cs" Line="87" Column="1" />
-      <File FileName="DataMongoApi/Controllers/AdminController/PaymentController.cs" Line="27" Column="19" />
-      <File FileName="DataMongoApi/Controllers/AdminController/TreatmentController.cs" Line="6" Column="21" />
-      <File FileName="DataMongoApi/Controllers/ClientController/BookController.cs" Line="31" Column="28" />
-      <File FileName="DataMongoApi/Service/AppointmentService.cs" Line="89" Column="3" />
-      <File FileName="DataMongoApi/Controllers/ClientController/DateController.cs" Line="25" Column="1" />
-      <File FileName="DataMongoApi/Service/TreatmentService.cs" Line="79" Column="51" />
-      <File FileName="DataMongoApi/Validation/AppointmentValidator.cs" Line="9" Column="38" />
-      <File FileName="DataMongoApi/Controllers/AdminController/EmployeeController.cs" Line="48" Column="1" />
+      <File FileName="DataMongoApi/Exceptions/HttpResponseException.cs" Line="1" Column="1" />
+      <File FileName="DataMongoApiTest/ServiceTest/PaymentServiceTest.cs" Line="76" Column="15" />
+      <File FileName="DataMongoApi/Controllers/AdminController/PaymentController.cs" Line="21" Column="26" />
+      <File FileName="DataMongoApi/Models/OrderDetails.cs" Line="18" Column="6" />
+      <File FileName="DataMongoApiTest/MongoDbContextTest.cs" Line="41" Column="29" />
+      <File FileName="DataMongoApiTest/ControllerTest/EmployeeControllerTest.cs" Line="23" Column="1" NotebookId="1" />
+      <File FileName="DataMongoApiTest/ControllerTest/ClientControllerTest.cs" Line="1" Column="1" NotebookId="1" />
+      <File FileName="DataMongoApi/Service/PaymentService.cs" Line="22" Column="67" NotebookId="1" />
+      <File FileName="DataMongoApi/Models/Appointment.cs" Line="25" Column="40" NotebookId="1" />
+      <File FileName="DataMongoApiTest/ServiceTest/ClientServiceTest.cs" Line="39" Column="24" NotebookId="1" />
+      <File FileName="DataMongoApiTest/ServiceTest/TreatmentTest.cs" Line="36" Column="15" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -18,16 +20,32 @@
           <Node name="ProjectABeautyWeb" expanded="True">
             <Node name="DataMongoApi" expanded="True">
               <Node name="Controllers" expanded="True">
-                <Node name="AdminController" expanded="True">
-                  <Node name="PaymentController.cs" selected="True" />
-                </Node>
-                <Node name="ClientController" expanded="True" />
+                <Node name="AdminController" expanded="True" />
               </Node>
-              <Node name="Service" expanded="True" />
-              <Node name="Validation" expanded="True" />
-            </Node>
-            <Node name="PaymentAPI" expanded="True">
+              <Node name="Exceptions" expanded="True" />
               <Node name="Models" expanded="True" />
+              <Node name="Service" expanded="True">
+                <Node name="InterfaceService" expanded="True" />
+              </Node>
+            </Node>
+            <Node name="DataMongoApiTest" expanded="True">
+              <Node name="ControllerTest" expanded="True" />
+              <Node name="ServiceTest" expanded="True">
+                <Node name="PaymentServiceTest.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="ProjectABeautyWeb" expanded="True">
+            <Node name="DataMongoApiTest" expanded="True" selected="True">
+              <Node name="DataMongoApiTest" expanded="True">
+                <Node name="MongoDbContextTest" expanded="True" />
+              </Node>
+              <Node name="DataMongoApiTest.ControllerTest" expanded="True" />
+              <Node name="DataMongoApiTest.ServiceTest" expanded="True" />
             </Node>
           </Node>
         </State>
@@ -40,10 +58,10 @@
   <MonoDevelop.Ide.ItemProperties.DataMongoApiTest PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/hongle/Projects/ProjectABeautyWeb/DataMongoApiTest/UnitTest1.cs" relfile="DataMongoApiTest/UnitTest1.cs" line="22" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApiTest/ControllerTest/EmployeeControllerTest.cs" relfile="DataMongoApiTest/ControllerTest/EmployeeControllerTest.cs" line="45" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/Controllers/AdminController/EmployeeController.cs" relfile="DataMongoApi/Controllers/AdminController/EmployeeController.cs" line="30" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.AccessDataApi PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.ItemProperties.PaymentAPI PreferredExecutionTarget="/Applications/Google Chrome.app" />
 </Properties>
