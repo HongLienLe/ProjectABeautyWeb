@@ -11,7 +11,7 @@ using MongoDB.Driver.Linq;
 
 namespace DataMongoApi.Service
 {
-    public class AvailableAppointmentService
+    public class AvailableAppointmentService : IAvailableAppointmentService
     {
         private IMongoCollection<Appointment> _appointments { get; set; }
         private IMongoCollection<Employee> _employees { get; set; }
@@ -29,13 +29,20 @@ namespace DataMongoApi.Service
             _treatmentService = treatmentService;
         }
 
-        public List<DateTime> GetAvailableTimeSlot(DateTime date, string treatmentId)
+        public List<DateTime> GetAvailableTimeSlot(DateTime date, List<string> treatmentIds)
         {
-            var employees = EmployeeWorkingIds(treatmentId, date);
-            var treatment = _treatmentService.Get(treatmentId);
+            var employees = new  List<string>();
+            int duration = 0;
+
+            foreach (var id in treatmentIds)
+            {
+                employees.AddRange(EmployeeWorkingIds(id, date));
+                duration = duration + _treatmentService.Get(id).About.Duration;
+            }
+
             var freeslots = GetEmployeesFreeTimeSlot(employees, date);
 
-            return AppFunction.GetFreeSlots(freeslots, treatment.About.Duration);
+            return AppFunction.GetFreeSlots(freeslots, duration);
         }
 
         private ITimePeriodCollection GetEmployeesFreeTimeSlot(List<string> employees, DateTime date)

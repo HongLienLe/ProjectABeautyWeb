@@ -58,7 +58,7 @@ namespace DataMongoApi
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient<IOperatingHoursService, OperatingHoursService>();
             services.AddTransient<IAppointmentService, AppointmentService>();
-            services.AddTransient<AvailableAppointmentService>();
+            services.AddTransient<IAvailableAppointmentService, AvailableAppointmentService>();
             services.AddTransient<IPaymentService,PaymentService>();
 
             services.AddControllers(options =>

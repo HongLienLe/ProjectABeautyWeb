@@ -76,7 +76,7 @@ namespace DataMongoApi.Service
 
             var treatment = Builders<Treatment>.Filter.In("ID",treatmentIds);
             var updateTreatment = Builders<Treatment>.Update
-                .AddToSetEach("Employees", id)
+                .AddToSet("Employees", id)
                 .CurrentDate(t => t.ModifiedOn);
 
             _treatment.UpdateMany(treatment, updateTreatment);
@@ -97,6 +97,12 @@ namespace DataMongoApi.Service
                 .CurrentDate(t => t.ModifiedOn);
 
             _operatingHours.UpdateMany(operatingDays, updateOperatingHours);
+
+        }
+
+        public void AddWorkDaysToEmployee()
+        {
+
 
         }
 

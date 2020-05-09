@@ -36,7 +36,7 @@ namespace DataMongoApi.Service
 
         public Appointment ProcessAppointment(AppointmentDetails app)
         {
-            var day = _operatingHoursService.Get(app.Date);
+            var day = _operatingHoursService.Get(DateTime.Parse(app.Date).DayOfWeek.ToString());
             if (!day.About.isOpen)
                 return null;
 
@@ -52,7 +52,7 @@ namespace DataMongoApi.Service
 
             app.EndTime = app.StartTime.AddMinutes(treatmentTime);
             var client = _clientService.GetByContactNo(app.Client.Phone) == null ? _clientService.Create(app.Client) : _clientService.GetByContactNo(app.Client.Phone);
-            var employees = EmployeeWorkingIds(app.TreatmentId, app.Date);
+            var employees = EmployeeWorkingIds(app.TreatmentId, DateTime.Parse(app.Date).DayOfWeek.ToString());
             appointment.EmployeeId = FreeEmployee(employees, app);
 
             if (appointment.EmployeeId == null)
@@ -93,10 +93,11 @@ namespace DataMongoApi.Service
             return app;
         }
 
-        public List<Appointment> GetAppointments(DateTime date)
+        public List<Appointment> GetAppointments(string date)
         {
-            var dateT = date.ToShortDateString();
-            return _appointments.Find(x => x.Info.Date == dateT).ToList();
+            var app = _appointments.AsQueryable<Appointment>().Where(x => x.Info.Date.Contains(date)).ToList();
+
+            return app;
         }
 
         public void Remove(string appointmentId)

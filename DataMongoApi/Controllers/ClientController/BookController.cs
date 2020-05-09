@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DataMongoApi.Models;
 using DataMongoApi.Service;
+using DataMongoApi.Service.InterfaceService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DataMongoApi.Controllers.ClientController
@@ -11,9 +12,9 @@ namespace DataMongoApi.Controllers.ClientController
     [Route("book")]
     public class BookController : Controller
     {
-        private AppointmentService _appointmentService;
+        private IAppointmentService _appointmentService;
 
-        public BookController(AppointmentService appointmentService)
+        public BookController(IAppointmentService appointmentService)
         {
             _appointmentService = appointmentService;
         }
@@ -29,7 +30,7 @@ namespace DataMongoApi.Controllers.ClientController
         }
 
         [HttpGet("{date}")]
-        public IActionResult Get(DateTime date)
+        public IActionResult Get(string date)
         {
             var response = _appointmentService.GetAppointments(date);
             if (response == null)

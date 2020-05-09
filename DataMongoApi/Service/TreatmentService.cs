@@ -68,6 +68,7 @@ namespace DataMongoApi.Service
             _treatment.ReplaceOne(t => t.ID == id, treatment);
         }
 
+
         //public void UpdateEmployees(string id, List<string> employeeIds)
         //{
         //    var treatment = Builders<Treatment>.Filter.Eq(t => t.ID, id);

@@ -7,7 +7,7 @@ namespace DataMongoApi.Service.InterfaceService
     public interface IAppointmentService
     {
         public Appointment ProcessAppointment(AppointmentDetails app);
-        public List<Appointment> GetAppointments(DateTime date);
+        public List<Appointment> GetAppointments(string date);
         public void Remove(string appointmentId);
     }
 }
