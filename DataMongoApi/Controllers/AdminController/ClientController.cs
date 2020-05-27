@@ -38,9 +38,9 @@ namespace DataMongoApi.Controllers.AdminController
         }
 
         [HttpPost]
-        public IActionResult Create(ClientDetails client)
+        public IActionResult Create(ClientDetails clientDetails)
         {
-            _clientService.Create(client);
+            var client = _clientService.Create(clientDetails);
 
             return Ok(client);
         }
@@ -57,7 +57,7 @@ namespace DataMongoApi.Controllers.AdminController
 
             _clientService.Update(id, clientIn);
 
-            return NoContent();
+            return Ok();
         }
 
         [HttpDelete("{id:length(24)}")]

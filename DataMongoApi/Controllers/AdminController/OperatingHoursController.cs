@@ -24,7 +24,7 @@ namespace DataMongoApi.Controllers.AdminController
         public IActionResult Get() =>
             Ok(_operatingHoursService.Get());
 
-        [HttpGet("{id:length(24)}", Name = "GetOperatingDay")]
+        [HttpGet("{id}")]
         public IActionResult Get(string Id)
         {
             var day = _operatingHoursService.Get(Id);
@@ -37,18 +37,18 @@ namespace DataMongoApi.Controllers.AdminController
             return Ok(day);
         }
 
-        //[HttpPost]
-        //public IActionResult Create(OperatingHoursDetails opHrs)
-        //{
-        //    var ophr = new OperatingHours()
-        //    {
-        //        About = opHrs
-        //    };
+        [HttpPost]
+        public IActionResult Create(OperatingHoursDetails opHrs)
+        {
+            var ophr = new OperatingHours()
+            {
+                About = opHrs
+            };
 
-        //    _operatingHoursService.Create(ophr);
+            _operatingHoursService.Create(ophr);
 
-        //    return Ok(ophr);
-        //}
+            return Ok(ophr);
+        }
 
         [HttpPut("{id:length(24)}")]
         public IActionResult Update(string Id, OperatingHoursDetails opHrsIn)

@@ -14,6 +14,7 @@ namespace DataMongoApi.Service.InterfaceService
         public void Remove(string id);
         public Client GetByContactNo(string contactNo);
         public void AddAppointment(string clientid, Appointment appointment);
+        public void RemoveAppointment(string clientNo, string appointmentid);
 
     }
 }

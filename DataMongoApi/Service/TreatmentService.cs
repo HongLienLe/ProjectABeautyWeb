@@ -13,6 +13,8 @@ namespace DataMongoApi.Service
     public class TreatmentService : ITreatmentService
     {
         private readonly IMongoCollection<Treatment> _treatment;
+        private readonly IMongoCollection<Employee> _employee;
+
         private readonly IMongoDbContext _context;
 
 
@@ -20,6 +22,7 @@ namespace DataMongoApi.Service
         {
             _context = context;
             _treatment = _context.GetCollection<Treatment>("Treatments");
+            _employee = _context.GetCollection<Employee>("Employees");
         }
 
         public List<Treatment> Get()
@@ -54,11 +57,15 @@ namespace DataMongoApi.Service
             _treatment.UpdateOne(filter, update);
         }
 
-        public void Remove(Treatment treatmentIn) =>
-            _treatment.DeleteOne(t => t.ID == treatmentIn.ID);
+        public void Remove(string id)
+        {
+            var treatment = Get(id);
 
-        public void Remove(string id) =>
+            if (treatment.Employees.Count > 0)
+                RemoveTreatmentFromEmployee(id);
+
             _treatment.DeleteOne(t => t.ID == id);
+        }
 
         public void UpdateEmployee(string id, List<string> employeeids)
         {
@@ -66,6 +73,16 @@ namespace DataMongoApi.Service
             treatment.Employees.AddRange(employeeids);
 
             _treatment.ReplaceOne(t => t.ID == id, treatment);
+        }
+
+        public void RemoveTreatmentFromEmployee(string id)
+        {
+            var employeeFilter = Builders<Employee>.Filter.AnyEq("Treatments", id);
+
+            var employeeUpdate = Builders<Employee>.Update
+                .Pull("Treatments", id);
+
+            _employee.UpdateMany(employeeFilter, employeeUpdate);
         }
 
 

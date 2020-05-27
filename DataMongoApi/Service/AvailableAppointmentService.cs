@@ -31,7 +31,7 @@ namespace DataMongoApi.Service
 
         public List<DateTime> GetAvailableTimeSlot(DateTime date, List<string> treatmentIds)
         {
-            var employees = new  List<string>();
+            var employees = new List<string>();
             int duration = 0;
 
             foreach (var id in treatmentIds)
@@ -56,14 +56,19 @@ namespace DataMongoApi.Service
             foreach (var employee in employees)
             {
                 var bookedAppTimePeriods = new TimePeriodCollection();
-                var appointments = _appointments.Find(x => x.EmployeeId == employee && x.Info.Date == date.ToShortDateString()).ToList();
+                var dateId = date.ToString("u").Substring(0, 10);
+                var appointments = _appointments.AsQueryable<Appointment>().Where(x => x.EmployeeId == employee && x.Info.Date.Contains(dateId)).ToList();
 
-                bookedAppTimePeriods.AddAll(appointments.Select(x => AppFunction.CastBookingToTimeRange(x)));
+                var bookingPeriods = appointments.Select(x => AppFunction.CastBookingToTimeRange(x));
+
+                bookedAppTimePeriods.AddAll(bookingPeriods);
 
                 if (bookedAppTimePeriods == null)
                     bookedAppTimePeriods.AddAll(TimeGapWithNoAppointments(date));
 
-                allFreeTimeSlotForTreatment.Add(timegapcalculator.GetGaps(bookedAppTimePeriods, openingHours));
+                var freeperiods = timegapcalculator.GetGaps(bookedAppTimePeriods, openingHours);
+
+                allFreeTimeSlotForTreatment.AddAll(freeperiods);
             }
 
             return periodCombiner.CombinePeriods(allFreeTimeSlotForTreatment);
@@ -97,7 +102,7 @@ namespace DataMongoApi.Service
             return timegapcalculator.GetGaps(new TimePeriodCollection(), range);
         }
 
-    } 
+    }
 }
 
 public static class AppFunction
@@ -124,7 +129,7 @@ public static class AppFunction
 
     public static TimeRange CastBookingToTimeRange(Appointment booking)
     {
-        return new TimeRange(booking.Info.StartTime, booking.Info.EndTime);
+        return new TimeRange(DateTime.Parse(booking.Info.Date).Add(TimeSpan.Parse(booking.Info.StartTime)), DateTime.Parse(booking.Info.Date).Add(TimeSpan.Parse(booking.Info.EndTime)));
     }
 
 

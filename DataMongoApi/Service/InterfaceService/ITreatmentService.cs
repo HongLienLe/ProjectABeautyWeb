@@ -10,7 +10,6 @@ namespace DataMongoApi.Service.InterfaceService
         public Treatment Create(Treatment treatment);
         public Treatment Get(string id);
         public void Update(string id, TreatmentDetails treatmentIn);
-        public void Remove(Treatment treatmentIn);
         public void Remove(string id);
         public void UpdateEmployee(string id, List<string> employeeids);
     }

@@ -21,6 +21,12 @@ namespace DataMongoApi.Validation
 
             RuleFor(e => e.Email).EmailAddress().WithMessage("{Email} is invalid")
                 .Length(2, 30).WithMessage("{Email} length must be between 2 - 30 characters");
+
+            RuleFor(p => p.Phone)
+                .Length(11)
+                .WithMessage("{Phone} length must be 11 Length")
+                .BeAllNumber();
+                
         }
 
         

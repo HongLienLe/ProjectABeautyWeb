@@ -11,6 +11,7 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.AspNetCore.Mvc.Testing.WebApplicationFactoryContentRootAttribute("DataMongoApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi", "DataMongoApi.csproj", "0")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("DataMongoApiTest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]

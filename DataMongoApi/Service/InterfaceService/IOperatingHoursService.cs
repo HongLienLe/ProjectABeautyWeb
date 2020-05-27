@@ -12,5 +12,7 @@ namespace DataMongoApi.Service.InterfaceService
         public void Remove(OperatingHours ophrsIn);
         public void Remove(string id);
         public OperatingHours Get(string day);
+        public OperatingHours GetById(string dayId);
+
     }
 }

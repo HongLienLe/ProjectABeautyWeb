@@ -23,6 +23,17 @@ namespace DataMongoApi.Validation
 
             RuleFor(a => a.Notes)
                 .Length(2, 150).WithMessage("Character Length is 2 - 150");
+
+            RuleFor(x => x.StartTime)
+                .MinimumLength(10)
+                .MaximumLength(10)
+                .WithMessage("{StartTime} should be in the formatt HH:MM:SS");
+
+            RuleFor(X => X.EndTime)
+                .Empty()
+                .WithMessage("{EndTime} should be empty");
+
+
         }
     }
 }

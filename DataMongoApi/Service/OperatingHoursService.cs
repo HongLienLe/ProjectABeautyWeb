@@ -28,7 +28,10 @@ namespace DataMongoApi.Service
             _operatinghrs.Find(operatingHours => true).ToList();
 
         public OperatingHours Get(string day) =>
-                    _operatinghrs.Find<OperatingHours>(op => op.About.Day == day).FirstOrDefault();
+            _operatinghrs.Find<OperatingHours>(op => op.About.Day == day.ToLower()).FirstOrDefault();
+
+        public OperatingHours GetById(string dayId) =>
+            _operatinghrs.Find<OperatingHours>(op => op.ID == dayId).FirstOrDefault();
 
         public OperatingHours Create(OperatingHours ophrs)
         {

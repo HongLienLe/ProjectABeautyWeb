@@ -26,7 +26,7 @@ namespace DataMongoApi.Controllers.ClientController
 
             if( times.Count == 0)
             {
-                return NotFound("No time available");
+                return Ok(new List<Appointment>());
             }
 
             return Ok(times);

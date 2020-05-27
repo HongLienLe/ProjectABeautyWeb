@@ -25,11 +25,11 @@ namespace DataMongoApiTest.ServiceTest
 
             _employee = new Employee()
             {
-              Details = new EmployeeDetails()
-              {
-                  Name = "Hong",
-                  Email = "H@gmail.com"
-              }
+                Details = new EmployeeDetails()
+                {
+                    Name = "Hong",
+                    Email = "H@gmail.com"
+                }
             };
 
             _mockCollection = new Mock<IMongoCollection<Employee>>();
@@ -62,7 +62,7 @@ namespace DataMongoApiTest.ServiceTest
         {
             var result = _employeeService.Get();
 
-            foreach(var employee in result)
+            foreach (var employee in result)
             {
                 Assert.NotNull(employee);
                 Assert.AreEqual(employee.Details.Name, _employee.Details.Name);
@@ -74,16 +74,17 @@ namespace DataMongoApiTest.ServiceTest
         }
 
         [Test]
-        public void Get_Employee_Success()
+        public void Get_By_Id_Employee_Success()
         {
             var result = _employeeService.Get(_employee.ID);
 
             Assert.IsNotNull(result);
+            Assert.AreEqual(result, _employee);
 
         }
 
         [Test]
-        public void Create_Valid_Success()
+        public void Create_Employee_Entry_Valid_Success()
         {
             var details = new EmployeeDetails()
             {
@@ -92,23 +93,15 @@ namespace DataMongoApiTest.ServiceTest
             };
 
             var result = _employeeService.Create(details);
+            var employeesCount = _employeeService.Get().Count;
             Assert.NotNull(result);
             Assert.AreEqual(result.Details, details);
             Assert.IsNotEmpty(result.ID);
+            Assert.AreEqual(employeesCount, 2);
         }
 
         [Test]
-        public void Read_Employee_Valid_Success()
-        {
-            var result = _employeeService.Get(_employee.ID);
-
-            Assert.NotNull(result);
-            Assert.AreEqual(result.Details, _employee.Details);
-            Assert.IsNotEmpty(result.ID);
-        }
-
-        [Test]
-        public void Remove_Employee_Valid_Success()
+        public void Remove_Employee_ByID_Valid_Success()
         {
             var details = new EmployeeDetails()
             {
@@ -124,16 +117,9 @@ namespace DataMongoApiTest.ServiceTest
         }
 
         [Test]
-        public void Invalid_Id_Return_Null()
-        {
-            var result = _employeeService.Get("Invalid");
-            Console.WriteLine(result.Details.Name);
-            Assert.IsNull(result);
-        }
-
-        [Test]
         public void Update_Id_Return_Sucess()
         {
+
             var details = new EmployeeDetails()
             {
                 Name = "Test",
@@ -141,6 +127,7 @@ namespace DataMongoApiTest.ServiceTest
             };
 
             var result = _employeeService.Create(details);
+            result.ID = "UID";
 
             var updated = new EmployeeDetails()
             {
@@ -151,7 +138,9 @@ namespace DataMongoApiTest.ServiceTest
             _employeeService.Update(result.ID, updated);
             var updatedResult = _employeeService.Get(result.ID);
 
+            Console.WriteLine(updatedResult.Details.Email);
             Assert.AreEqual(updated.Email, updatedResult.Details.Email);
+            Assert.IsNotNull(updatedResult);
 
         }
 

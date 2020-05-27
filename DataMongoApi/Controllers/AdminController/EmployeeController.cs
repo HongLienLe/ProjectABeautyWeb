@@ -32,12 +32,12 @@ namespace DataMongoApi.Controllers.AdminController
             var employees = _employeeService.Get();
 
             if (employees.Count == 0)
-                return NotFound("Currently has no employee entries");
+                return Ok(new List<Employee>());
 
             return Ok(_employeeService.Get());
         }
 
-        [HttpGet("{id:length(24)}", Name = "GetEmployee")]
+        [HttpGet("{id:length(24)}")]
         public IActionResult Get(string id)
         {
             var employee = _employeeService.Get(id);
@@ -54,7 +54,6 @@ namespace DataMongoApi.Controllers.AdminController
         public IActionResult Create([FromBody]EmployeeDetails employee)
         {
            
-
             var response = _employeeService.Create(employee);
 
             return Ok(response);
@@ -72,6 +71,8 @@ namespace DataMongoApi.Controllers.AdminController
 
             _employeeService.Update(id, employeeIn);
 
+            employee = _employeeService.Get(id);
+
             return Ok(employee);
         }
 
@@ -87,7 +88,7 @@ namespace DataMongoApi.Controllers.AdminController
 
             _employeeService.Remove(employee.ID);
 
-            return Ok($"Employee has been removed");
+            return Ok();
         }
 
         [HttpPost("{id:length(24)}/manage/treatment")]

@@ -25,5 +25,10 @@ namespace DataMongoApi.Validation
         {
             return ruleBuilder.Length(0,24).WithMessage("{PropertyName} Contains Invalid Characters");
         }
+
+        public static IRuleBuilderOptions<T, string> BeAllNumber<T>(this IRuleBuilder<T, string> ruleBuilder)
+        {
+            return ruleBuilder.Must(m => m.Replace(" ", "").Replace("-", "").All(char.IsDigit)).WithMessage("{Phone} must be all digits");
+        }
     }
 }

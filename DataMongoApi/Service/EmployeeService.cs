@@ -59,11 +59,18 @@ namespace DataMongoApi.Service
             _employee.UpdateOne(filter, update);
         }
 
-        public void Remove(Employee employeeIn) =>
-            _employee.DeleteOne(e => e.ID == employeeIn.ID);
+        public void Remove(string id)
+        {
+            var employee = Get(id);
 
-        public void Remove(string id) =>
+            if(employee.Treatments.Count() > 0)
+                RemoveEmployeeFromTreatment(id);
+
+            if(employee.WorkDays.Count() > 0)
+                RemoveEmployeeFromWorkDays(id);
+
             _employee.DeleteOne(e => e.ID == id);
+        }
 
         public void AddTreatmentsSkills(string id, List<string> treatmentIds)
         {
@@ -100,10 +107,25 @@ namespace DataMongoApi.Service
 
         }
 
-        public void AddWorkDaysToEmployee()
+        public void RemoveEmployeeFromTreatment(string id)
         {
+            var treatmentfilter = Builders<Treatment>.Filter.AnyEq("Employees", id);
 
+            var treatmentupdate = Builders<Treatment>.Update
+                .Pull("Employees", id);
 
+            _treatment.UpdateMany(treatmentfilter, treatmentupdate);
+
+        }
+
+        public void RemoveEmployeeFromWorkDays(string id)
+        {
+            var dayFilter = Builders<OperatingHours>.Filter.AnyEq("Employees", id);
+
+            var dayUpdate = Builders<OperatingHours>.Update
+                .Pull("Employees", id);
+
+            _operatingHours.UpdateMany(dayFilter, dayUpdate);
         }
 
     }

@@ -29,7 +29,7 @@ namespace DataMongoApi.Controllers.AdminController
             return Ok(_treatmentService.Get());
         }
 
-        [HttpGet("{id:length(24)}", Name = "GetTreatment")]
+        [HttpGet("{id:length(24)}")]
         public IActionResult Get(string id)
         {
             var treatment = _treatmentService.Get(id);
@@ -69,7 +69,7 @@ namespace DataMongoApi.Controllers.AdminController
             return Ok("Treatment has been updated");
         }
 
-        [HttpDelete("{id:length(24)}")]
+        [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {
             var treatment = _treatmentService.Get(id);
@@ -78,7 +78,7 @@ namespace DataMongoApi.Controllers.AdminController
 
             _treatmentService.Remove(treatment.ID);
 
-            return NoContent();
+            return Ok();
         }
     
     }

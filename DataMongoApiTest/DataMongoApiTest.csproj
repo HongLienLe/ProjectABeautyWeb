@@ -12,6 +12,10 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.0-preview-20200428-01" />
     <PackageReference Include="Moq" Version="4.14.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.11.0-beta1" />
+    <PackageReference Include="Mongo2Go" Version="2.2.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.4" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +24,7 @@
   <ItemGroup>
     <Folder Include="ServiceTest\" />
     <Folder Include="ControllerTest\" />
+    <Folder Include="IntergrationTest\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="AppointmentServiceTest.cs" />

@@ -5,6 +5,7 @@ using DataMongoApi.Middleware;
 using DataMongoApi.Models;
 using DataMongoApi.Service.InterfaceService;
 using MongoDB.Driver;
+using MongoDB.Entities;
 
 namespace DataMongoApi.Service
 {
@@ -66,6 +67,16 @@ namespace DataMongoApi.Service
                 .AddToSet("Appointments", appointment.ID);
 
             _client.UpdateOne(client, update);
+        }
+
+        public void RemoveAppointment(string clientNo, string appointmentid)
+        {
+            var clientId = GetByContactNo(clientNo).ID;
+            var filter = Builders<Client>.Filter.Eq(x => x.ID, clientId);
+            var update = Builders<Client>.Update
+                .Pull("Appointments", appointmentid);
+
+            _client.FindOneAndUpdate(filter, update);
         }
     }
 }

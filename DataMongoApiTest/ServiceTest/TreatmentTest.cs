@@ -68,7 +68,7 @@ namespace DataMongoApiTest.ServiceTest
             foreach (var treatment in result)
             {
                 Assert.NotNull(treatment);
-                Assert.AreEqual(treatment.Name, _treatment.Name);
+                Assert.AreEqual(treatment.About.TreatmentName, _treatment.About.TreatmentName);
                 break;
             }
 
@@ -94,7 +94,7 @@ namespace DataMongoApiTest.ServiceTest
             var result = _treatmentService.Create(treatment);
 
             Assert.NotNull(result);
-            Assert.AreEqual(result.Name, treatment.Name);
+            Assert.AreEqual(result.About.TreatmentName, treatment.About.TreatmentName);
             Assert.IsNotEmpty(result.ID);
 
         }
@@ -105,7 +105,7 @@ namespace DataMongoApiTest.ServiceTest
             var result = _treatmentService.Get(_treatment.ID);
 
             Assert.NotNull(result);
-            Assert.AreEqual(result.Name, _treatment.Name);
+            Assert.AreEqual(result.About.TreatmentName, _treatment.About.TreatmentName);
             Assert.IsNotEmpty(result.ID);
 
         }

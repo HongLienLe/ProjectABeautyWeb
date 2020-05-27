@@ -68,7 +68,6 @@ namespace DataMongoApiTest.ControllerTest
             Assert.AreEqual(actual.StatusCode, 200);
             Assert.IsNotNull(actual.Value as Employee);
             Assert.AreEqual(actual.Value, employee);
-            
         }
 
         [Test]
