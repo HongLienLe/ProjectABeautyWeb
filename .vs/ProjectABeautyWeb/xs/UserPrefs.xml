@@ -20,7 +20,11 @@
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="ProjectABeautyWeb" expanded="True" />
+          <Node name="ProjectABeautyWeb" expanded="True">
+            <Node name="DataMongoDbIntegrationTest" expanded="True">
+              <Node name="AvailableAppControllerTest.cs" selected="True" />
+            </Node>
+          </Node>
         </State>
       </Pad>
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
