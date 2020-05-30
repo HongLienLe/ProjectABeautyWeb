@@ -1,17 +1,18 @@
 ﻿<Properties StartupConfiguration="{7C3EE540-AE97-49DF-B915-81E4FBCA9F2F}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
   <MonoDevelop.Ide.ItemProperties.DataMongoDbIntegrationTest PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="DataMongoApi/Service/AppointmentService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="DataMongoApi/Service/MerchantService.cs">
     <Files>
-      <File FileName="DataMongoDbIntegrationTest/AvailableAppControllerTest.cs" Line="120" Column="46" />
-      <File FileName="DataMongoDbIntegrationTest/AppointmentControllerTest.cs" Line="260" Column="10" />
+      <File FileName="DataMongoDbIntegrationTest/AvailableAppControllerTest.cs" Line="100" Column="18" />
+      <File FileName="DataMongoDbIntegrationTest/AppointmentControllerTest.cs" Line="132" Column="75" />
       <File FileName="DataMongoDbIntegrationTest/ClientControllerTest.cs" Line="181" Column="12" />
       <File FileName="DataMongoApi/Service/AppointmentService.cs" Line="1" Column="1" />
+      <File FileName="DataMongoApi/Service/MerchantService.cs" Line="25" Column="1" />
       <File FileName="DataMongoDbIntegrationTest/EmployeeControllerTest.cs" Line="68" Column="17" NotebookId="1" />
       <File FileName="DataMongoApi/Controllers/AdminController/TreatmentController.cs" Line="57" Column="34" NotebookId="1" />
       <File FileName="DataMongoApi/Service/TreatmentService.cs" Line="36" Column="1" NotebookId="1" />
       <File FileName="DataMongoApi/Models/Appointment.cs" Line="1" Column="1" NotebookId="1" />
       <File FileName="DataMongoApi/Controllers/AvailabilityController.cs" Line="1" Column="1" NotebookId="1" />
-      <File FileName="DataMongoApi/Controllers/ClientController/BookController.cs" Line="48" Column="1" NotebookId="1" />
+      <File FileName="DataMongoApi/Controllers/ClientController/BookController.cs" Line="40" Column="33" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -25,7 +26,7 @@
               <Node name="Exceptions" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Service" expanded="True">
-                <Node name="AppointmentService.cs" selected="True" />
+                <Node name="MerchantService.cs" selected="True" />
               </Node>
             </Node>
             <Node name="DataMongoApiTest" expanded="True">
@@ -39,12 +40,10 @@
       </Pad>
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
         <State name="__root__">
-          <Node name="ProjectABeautyWeb" expanded="True">
+          <Node name="ProjectABeautyWeb" expanded="True" selected="True">
             <Node name="DataMongoDbIntegrationTest" expanded="True">
               <Node name="DataMongoDbIntegrationTest" expanded="True">
-                <Node name="AppointmentControllerTest" expanded="True">
-                  <Node name="PostEndpoint_Create_Single_Valid" selected="True" />
-                </Node>
+                <Node name="AppointmentControllerTest" expanded="True" />
                 <Node name="AvailableAppControllerTest" expanded="True" />
                 <Node name="ClientControllerTest" expanded="True" />
                 <Node name="EmployeeControllerTest" expanded="True" />
