@@ -162,22 +162,22 @@ namespace DataMongoDbIntegrationTest
             updateResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
-        [Fact]
-        public async Task DeleteEndpoint_Vaild()
-        {
+        //[Fact]
+        //public async Task DeleteEndpoint_Vaild()
+        //{
 
-        }
+        //}
 
-        [Fact]
-        public async Task DeleteEndpoint_Invalid()
-        {
+        //[Fact]
+        //public async Task DeleteEndpoint_Invalid()
+        //{
 
-        }
+        //}
 
-        [Fact]
-        public async Task DeleteClient_AndExistApp()
-        {
+        //[Fact]
+        //public async Task DeleteClient_AndExistApp()
+        //{
 
-        }
+        //}
     }
 }

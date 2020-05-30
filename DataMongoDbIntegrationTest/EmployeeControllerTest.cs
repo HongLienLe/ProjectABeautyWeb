@@ -71,9 +71,6 @@ namespace DataMongoDbIntegrationTest
         public async Task GetEndpoint_Get_Valid(string endpoint)
         {
             var response = await _client.GetAsync(endpoint);
-
-            response.EnsureSuccessStatusCode();
-
             var stringResponse = await response.Content.ReadAsStringAsync();
             //var employees = JsonConvert.DeserializeObject<IEnumerable<Employee>>(stringResponse);
             //Assert.Contains(employees, e => e.Details.Name == "UpdatedName");

@@ -47,7 +47,7 @@ namespace DataMongoApi.Controllers.ClientController
         {
             _appointmentService.Remove(id);
 
-            return Ok();
+            return Ok("");
         }
 
         [HttpPut("{id}")]
@@ -56,7 +56,7 @@ namespace DataMongoApi.Controllers.ClientController
             var response = _appointmentService.UpdateAppointment(id, app);
 
             if (response == null)
-                return Conflict();
+                return BadRequest();
 
             return Ok(response);
 
