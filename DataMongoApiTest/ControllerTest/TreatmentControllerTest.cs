@@ -71,8 +71,9 @@ namespace DataMongoApiTest.ControllerTest
         [Test]
         public void Delete_Treatment_Valid_200()
         {
+            _treatmentService.Setup(x => x.Get(It.IsAny<string>())).Returns(new Treatment());
             _treatmentService.Setup(x => x.Remove(It.IsAny<string>()));
-            var actual = _treatmentController.Delete("id") as ObjectResult;
+            var actual = _treatmentController.Delete("IDIDIDIDIDIDIDID") as ObjectResult;
 
             Assert.AreEqual(actual.StatusCode, 200);
         }

@@ -367,7 +367,7 @@ namespace DataMongoDbIntegrationTest
 
             var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
 
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Fact]
@@ -394,7 +394,7 @@ namespace DataMongoDbIntegrationTest
 
             var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
 
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Fact]

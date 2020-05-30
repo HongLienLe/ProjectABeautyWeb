@@ -27,7 +27,7 @@ namespace DataMongoApi.Controllers.AdminController
 
             if (merchant == null)
             {
-                return NotFound();
+                return NotFound(merchant);
             }
 
             return Ok(merchant);
@@ -48,12 +48,12 @@ namespace DataMongoApi.Controllers.AdminController
 
             if (merchant == null)
             {
-                return NotFound();
+                return NotFound(merchant);
             }
 
             _merchantService.Update(id, merchantIn);
 
-            return Ok();
+            return Ok(id);
         }
 
     }

@@ -54,7 +54,7 @@ namespace DataMongoApi.Controllers.AdminController
             return Ok( treatment);
         }
 
-        [HttpPut("{id:length(24)}/manage/employee")]
+        [HttpPut("{id:length(24)}")]
         public IActionResult Update(string id, [Required,FromBody] TreatmentDetails treatmentForm)
         {
             var treatment = _treatmentService.Get(id);
@@ -74,11 +74,11 @@ namespace DataMongoApi.Controllers.AdminController
         {
             var treatment = _treatmentService.Get(id);
             if (treatment == null)
-                return NotFound();
+                return BadRequest(treatment);
 
             _treatmentService.Remove(treatment.ID);
 
-            return Ok();
+            return Ok("");
         }
     
     }

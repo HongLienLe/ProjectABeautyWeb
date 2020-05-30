@@ -44,7 +44,7 @@ namespace DataMongoApi.Controllers.AdminController
 
             if (employee == null)
             {
-                return NotFound();
+                return NotFound(employee);
             }
 
             return Ok(employee);
@@ -83,12 +83,12 @@ namespace DataMongoApi.Controllers.AdminController
 
             if (employee == null)
             {
-                return NotFound();
+                return NotFound(employee);
             }
 
             _employeeService.Remove(employee.ID);
 
-            return Ok();
+            return Ok(employee);
         }
 
         [HttpPost("{id:length(24)}/manage/treatment")]

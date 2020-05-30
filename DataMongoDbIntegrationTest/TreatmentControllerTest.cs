@@ -48,7 +48,7 @@ namespace DataMongoDbIntegrationTest
 
         [Theory]
         [InlineData("/admin/treatment")]
-        [InlineData("/admin/treatement/5ec8579645e16549ec3afd7e")]
+        [InlineData("/admin/treatment/5ec8579645e16549ec3afd7e")]
         public async Task GetEndpoint(string endpoint)
         {
             var response = await _client.GetAsync(endpoint);
@@ -66,7 +66,7 @@ namespace DataMongoDbIntegrationTest
         }
 
         [Theory]
-        [InlineData("/admin/treatement/5ec8579645e16549ec3afd7e")]
+        [InlineData("/admin/treatment/5ec8579645e16549ec3afd7e")]
         public async Task PutEndpoint_Update_Treatment(string endpoint)
         {
             var body = new
@@ -84,7 +84,6 @@ namespace DataMongoDbIntegrationTest
             var treatmentValue = await getTreatment.Content.ReadAsStringAsync();
             var treatment = JsonConvert.DeserializeObject<Treatment>(treatmentValue);
 
-            response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
 
             Assert.NotNull(treatmentValue);
@@ -92,12 +91,12 @@ namespace DataMongoDbIntegrationTest
         }
 
         [Theory]
-        [InlineData("/admin/treatment/invalidtreatmentid")]
+        [InlineData("/admin/treatment/invalidtreatmentid211111")]
         public async Task DeleteEndpoint_Treatment(string endpoint)
         {
             var response = await _client.DeleteAsync(endpoint);
 
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Fact]
@@ -129,21 +128,24 @@ namespace DataMongoDbIntegrationTest
         [Fact]
         public async Task DeletedTreatment_RemoveFrom_Employees()
         {
-            var treatmentRequest = new
+
+            var newTreatmentrequest = new
             {
                 Url = "/admin/treatment",
                 Body = new
                 {
                     TreatmentName = "Full set",
-                    TreatmentType = "Acrylic",
+                    TreatmentType = "Sns",
                     IsAddOn = false,
                     Price = 22,
+                    Duration = 45
                 }
             };
 
-            var treatmentResponse = await _client.PostAsync(treatmentRequest.Url, ContentHelper.GetStringContent(treatmentRequest.Body));
-            var treatmentValue = await treatmentResponse.Content.ReadAsStringAsync();
+            var newTreatment = await _client.PostAsync(newTreatmentrequest.Url, ContentHelper.GetStringContent(newTreatmentrequest.Body));
+            var treatmentValue = await newTreatment.Content.ReadAsStringAsync();
             var treatment = JsonConvert.DeserializeObject<Treatment>(treatmentValue);
+
 
             var request = new
             {

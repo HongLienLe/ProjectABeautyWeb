@@ -45,6 +45,7 @@ namespace DataMongoApiTest.ControllerTest
         [Test]
         public void Update_Existing_Day_200()
         {
+            _operatingHoursService.Setup(x => x.Get(It.IsAny<string>())).Returns(new OperatingHours());
             _operatingHoursService.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<OperatingHoursDetails>()));
 
             _operatingHoursController = new OperatingHoursController(_operatingHoursService.Object);

@@ -65,8 +65,9 @@ namespace DataMongoApiTest.ControllerTest
         [Test]
         public void Update_Existing_Merchant_Return_200()
         {
+            _merchantService.Setup(x => x.Get(It.IsAny<string>())).Returns(new Merchant());
             _merchantService.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<Merchant>()));
-
+                
             _merchantController = new MerchantController(_merchantService.Object);
 
             var actual = _merchantController.Update("merchantid", new Merchant()) as ObjectResult;

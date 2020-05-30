@@ -37,13 +37,13 @@ namespace DataMongoApiTest.ControllerTest
         }
 
         [Test]
-        public void Get_With_No_Employees_Return_404()
+        public void Get_With_No_Employees_Return_200()
         {
             _employeeService.Setup(x => x.Get()).Returns(new List<Employee>());
             _employeeController = new EmployeeController(_employeeService.Object, _treatmentService.Object);
 
             var actual = _employeeController.Get() as ObjectResult;
-            Assert.AreEqual(actual.StatusCode, 404);
+            Assert.AreEqual(actual.StatusCode, 200);
         }
 
         [Test]
@@ -99,7 +99,7 @@ namespace DataMongoApiTest.ControllerTest
         public void Read_Employee_That_Does_Not_Exist_Return_404()
         {
             var id = "123456789012345678901234";
-            _employeeService.Setup(x => x.Get(It.IsAny<string>())).Returns(new Employee());
+            _employeeService.Setup(x => x.Get(It.IsAny<string>())).Returns((Employee)null);
             _employeeController = new EmployeeController(_employeeService.Object, _treatmentService.Object);
 
             var actual = _employeeController.Get(id) as ObjectResult;
