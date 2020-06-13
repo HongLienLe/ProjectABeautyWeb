@@ -7,6 +7,7 @@ using DataMongoApi.Middleware;
 using DataMongoApi.Models;
 using DataMongoApi.Service;
 using DataMongoApi.Service.InterfaceService;
+using DataMongoApi.Validation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 
@@ -32,6 +33,9 @@ namespace DataMongoApi.Controllers.AdminController
         [HttpGet("{id:length(24)}")]
         public IActionResult Get(string id)
         {
+            var merchantid = Request.Headers.TryGetValue("merchant-id",out StringValues merchantId);
+
+            
             var treatment = _treatmentService.Get(id);
 
             if (treatment == null)

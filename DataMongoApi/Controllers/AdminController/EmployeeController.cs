@@ -115,6 +115,11 @@ namespace DataMongoApi.Controllers.AdminController
             if (_employeeService.Get(id) == null)
                 return NotFound($"Employee {id} does not exist");
 
+            var days = new string[] { "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday" };
+
+            if (ids.Any(x => !days.Contains(x)))
+                return BadRequest("");
+
             _employeeService.AddWorkDays(id, ids);
 
             return Ok();

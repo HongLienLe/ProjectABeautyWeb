@@ -331,7 +331,6 @@ namespace DataMongoDbIntegrationTest
             var day = JsonConvert.DeserializeObject<OperatingHours>(dayValue);
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            response.EnsureSuccessStatusCode();
             Assert.Contains("5ec8848bfd83534c38e8c4de", day.Employees);
         }
 
@@ -340,7 +339,7 @@ namespace DataMongoDbIntegrationTest
         {
             var request = new
             {
-                Url = "/admin/employee/InvalidEmployeeId/manage/treatment",
+                Url = "/admin/employee/5ec8579645e16549ec3afd7A/manage/treatment",
                 Body = new[] { "5ec8579645e16549ec3afd7e" }
             };
 
@@ -359,12 +358,12 @@ namespace DataMongoDbIntegrationTest
             var request = new
             {
                 Url = "/admin/employee/5ec8848bfd83534c38e8c4de/manage/treatment",
-                Body = new[] { "InvalidTreatmentId" }
+                Body = new[] { "5ec8579645e16549ec3afd7A" }
             };
 
             var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
 
-            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact]
@@ -372,8 +371,8 @@ namespace DataMongoDbIntegrationTest
         {
             var request = new
             {
-                Url = "/admin/employee/InvalidEmployeeId/manage/treatment",
-                Body = new[] { "InvalidTreatmentId" }
+                Url = "/admin/employee/5ec8579645e16549ec3afd7A/manage/treatment",
+                Body = new[] { "5ec8579645e16549ec3afd7A" }
             };
 
             var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
@@ -385,22 +384,8 @@ namespace DataMongoDbIntegrationTest
         {
             var request = new
             {
-                Url = "/admin/employee/InvalidEmployeeId/manage/workdays",
+                Url = "/admin/employee/5ec8579645e16549ec3afd7A/manage/workdays",
                 Body = new[] { "tuesday" }
-            };
-
-            var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
-
-            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        }
-
-        [Fact]
-        public async Task PostEndpoint_UpdateWorkDay_ValidEmployee_InvalidDay()
-        {
-            var request = new
-            {
-                Url = "/admin/employee/5ec8848bfd83534c38e8c4de/manage/workdays",
-                Body = new[] { "invalidworkday" }
             };
 
             var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
@@ -409,12 +394,26 @@ namespace DataMongoDbIntegrationTest
         }
 
         [Fact]
+        public async Task PostEndpoint_UpdateWorkDay_ValidEmployee_InvalidDay()
+        {
+            var request = new
+            {
+                Url = "/admin/employee/5ec8848bfd83534c38e8c4de/manage/workdays",
+                Body = new[] { "5ec8579645e16549ec3afd7A" }
+            };
+
+            var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
+
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
         public async Task PostEndpoint_UpdateWorkDay_InvalidEmployee_InvalidDay()
         {
             var request = new
             {
-                Url = "/admin/employee/invalidemployeeid/manage/workdays",
-                Body = new[] { "invalidworkday" }
+                Url = "/admin/employee/5ec8579645e16549ec3afd7A/manage/workdays",
+                Body = new[] { "5ec8579645e16549ec3afd7A" }
             };
 
             var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));

@@ -12,15 +12,14 @@ namespace DataMongoApi.Middleware
     {
         private readonly RequestDelegate _next;
         private readonly List<string> DatabaseNames;
-        private string DefaultDB { get; set; } = "DefaultDb";
-
 
         public ClientConfigurationMiddleware(RequestDelegate next)
         {
             _next = next;
             DatabaseNames = new List<string>()
             {
-                "000000"
+                "000000",
+                "DefaultDb"
             };
         }
 
@@ -29,18 +28,17 @@ namespace DataMongoApi.Middleware
 
                 httpContext.Request.Headers.TryGetValue("merchant-id", out StringValues merchantId);
 
-                if (DatabaseNames.Contains(merchantId))
-                {
-                    clientConfiguration.MerchantId = merchantId.SingleOrDefault();
-                }
+            if (DatabaseNames.Contains(merchantId))
+            {
+                clientConfiguration.MerchantId = merchantId.SingleOrDefault();
+            }
+            else
+            {
+                httpContext.Response.StatusCode = 401;
+                await httpContext.Response.WriteAsync("Invalid MerchartdId");
+                return;
 
-                else
-                {
-                    
-                    clientConfiguration.MerchantId = DefaultDB;
-
-                }
-
+            }
                 await _next.Invoke(httpContext);
         }
     }

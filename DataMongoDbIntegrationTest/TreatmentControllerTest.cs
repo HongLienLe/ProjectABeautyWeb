@@ -34,6 +34,7 @@ namespace DataMongoDbIntegrationTest
                     Duration = 45
                 }
             };
+
             var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
             var value = await response.Content.ReadAsStringAsync();
             var treatment = JsonConvert.DeserializeObject<Treatment>(value);
@@ -52,7 +53,6 @@ namespace DataMongoDbIntegrationTest
         public async Task GetEndpoint(string endpoint)
         {
             var response = await _client.GetAsync(endpoint);
-
             response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
@@ -60,7 +60,7 @@ namespace DataMongoDbIntegrationTest
         [Fact]
         public async Task GetEnpoint_InvalidId()
         {
-            var response = await _client.GetAsync("/admin/treatment/invalidid");
+            var response = await _client.GetAsync("/admin/treatment/5ec8579645e16549ec3afd7A");
 
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
@@ -91,9 +91,10 @@ namespace DataMongoDbIntegrationTest
         }
 
         [Theory]
-        [InlineData("/admin/treatment/invalidtreatmentid211111")]
+        [InlineData("/admin/treatment/5ec8579645e16549ec3afd7A")]
         public async Task DeleteEndpoint_Treatment(string endpoint)
         {
+
             var response = await _client.DeleteAsync(endpoint);
 
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -155,6 +156,7 @@ namespace DataMongoDbIntegrationTest
                    $"{treatment.ID}"
                 }
             };
+
 
             await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
 

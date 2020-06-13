@@ -97,7 +97,7 @@ namespace DataMongoDbIntegrationTest
             // Add configuration for client
             Client = Server.CreateClient();
             Client.BaseAddress = new Uri("http://localhost:5001");
-            Client.DefaultRequestHeaders.Accept.Clear();
+            Client.DefaultRequestHeaders.Add("merchant-Id","DefaultDb");
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
     }

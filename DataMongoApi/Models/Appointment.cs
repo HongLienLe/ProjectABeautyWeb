@@ -25,6 +25,7 @@ namespace DataMongoApi.Models
         public string EmployeeName { get; set; }
         public List<string> TreatmentNames { get; set; }
         public int MiscPrice { get; set; }
+        public int TotalPrice { get; set; }
         public bool HasBeenProcess { get; set; } = false;
     }
 
@@ -42,6 +43,7 @@ namespace DataMongoApi.Models
         public List<string> TreatmentNames { get; set; }
         public int Price { get; set; }
         public int MiscPrice { get; set; }
+        public int TotalPrice { get; set; }
         public bool HasBeenProcess { get; set; } = false;
     }
 }

@@ -49,7 +49,8 @@ namespace DataMongoApi.Service
             {
                 Info = app,
                 ModifiedOn = DateTime.UtcNow,
-                TreatmentNames = treatments.Select(x => $"{x.About.TreatmentType} {x.About.TreatmentName}").ToList()
+                TreatmentNames = treatments.Select(x => $"{x.About.TreatmentType} {x.About.TreatmentName}").ToList(),
+                TotalPrice = treatments.Select(x => x.About.Price).Sum()
             };
 
             app.EndTime = TimeSpan.Parse(app.StartTime).Add(TimeSpan.FromMinutes(treatmentTime)).ToString();
@@ -100,7 +101,6 @@ namespace DataMongoApi.Service
         public List<ReadAppointment> GetAppointments(string date)
         {
             var app = _appointments.AsQueryable<Appointment>().Where(x => x.Info.Date.Contains(date)).ToList();
-
             var readApp = app.Select(x => new ReadAppointment()
             {
                 ID = x.ID,
@@ -164,9 +164,7 @@ namespace DataMongoApi.Service
 
             _appointments.UpdateOne(filter, updatedAppointment);
 
-            return _appointments.Find(x => x.ID == id).FirstOrDefault();
-
-
+            return _appointments.Find(x => x.ID == id).FirstOrDefault(); 
         }
 
         private List<string> EmployeeWorkingIds(List<string> treatmentId, string date)

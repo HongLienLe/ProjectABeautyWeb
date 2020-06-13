@@ -30,14 +30,11 @@ namespace DataMongoApi.Service
            return _treatment.Find(Treatment => true).ToList();
         }
 
-
         public Treatment Get(string id)
         {
             return _treatment.Find<Treatment>(t => t.ID == id).FirstOrDefault();
 
           //  var filter = Builders<Treatment>.Filter.Exists(x => x.ID == id);
-
-
         }
 
         public Treatment Create(Treatment treatment)
@@ -49,7 +46,6 @@ namespace DataMongoApi.Service
 
         public void Update(string id, TreatmentDetails treatmentIn)
         {
-
             var filter = Builders<Treatment>.Filter.Eq(t => t.ID, id);
             var update = Builders<Treatment>.Update
                 .Set(t => t.About, treatmentIn)
@@ -60,7 +56,6 @@ namespace DataMongoApi.Service
         public void Remove(string id)
         {
             var treatment = Get(id);
-
             if (treatment.Employees.Count > 0)
                 RemoveTreatmentFromEmployee(id);
 

@@ -41,7 +41,8 @@ namespace DataMongoApi.Service
             {
                 ClientPhone = bookings.Info.Client.Phone,
                 Treatments = treatments,
-                MiscPrice = bookings.MiscPrice
+                MiscPrice = bookings.MiscPrice,
+                Total = bookings.MiscPrice + treatments.Select(x => x.Price).Sum()
             };
 
             var processOrder = Create(order);

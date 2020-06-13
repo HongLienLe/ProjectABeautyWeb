@@ -17,6 +17,7 @@ namespace DataMongoDbIntegrationTest
         public AppointmentControllerTest(TestFixture<Startup> fixture)
         {
             _client = fixture.Client;
+
         }
 
         [Fact]

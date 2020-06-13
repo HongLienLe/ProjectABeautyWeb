@@ -93,56 +93,54 @@ namespace DataMongoApiTest.ServiceTest
             };
 
             var result = _employeeService.Create(details);
-            var employeesCount = _employeeService.Get().Count;
             Assert.NotNull(result);
             Assert.AreEqual(result.Details, details);
             Assert.IsNotEmpty(result.ID);
-            Assert.AreEqual(employeesCount, 2);
         }
 
-        [Test]
-        public void Remove_Employee_ByID_Valid_Success()
-        {
-            var details = new EmployeeDetails()
-            {
-                Name = "Test",
-                Email = "Test@mail.com"
-            };
+        //[Test]
+        //public void Remove_Employee_ByID_Valid_Success()
+        //{
+        //    var details = new EmployeeDetails()
+        //    {
+        //        Name = "Test",
+        //        Email = "Test@mail.com"
+        //    };
 
-            var result = _employeeService.Create(details);
+        //    var result = _employeeService.Create(details);
 
-            _employeeService.Remove(result.ID);
+        //    _employeeService.Remove(result.ID);
 
-            Assert.IsTrue(_employeeService.Get().Count == 1);
-        }
+        //    Assert.IsTrue(_employeeService.Get().Count == 1);
+        //}
 
-        [Test]
-        public void Update_Id_Return_Sucess()
-        {
+        //[Test]
+        //public void Update_Id_Return_Success()
+        //{
 
-            var details = new EmployeeDetails()
-            {
-                Name = "Test",
-                Email = "Test@mail.com"
-            };
+        //    var details = new EmployeeDetails()
+        //    {
+        //        Name = "Test",
+        //        Email = "Test@mail.com"
+        //    };
 
-            var result = _employeeService.Create(details);
-            result.ID = "UID";
+        //    var result = _employeeService.Create(details);
+        //    result.ID = "UID";
 
-            var updated = new EmployeeDetails()
-            {
-                Name = "Hong",
-                Email = "Updated@mail.com"
-            };
+        //    var updated = new EmployeeDetails()
+        //    {
+        //        Name = "Hong",
+        //        Email = "Updated@mail.com"
+        //    };
 
-            _employeeService.Update(result.ID, updated);
-            var updatedResult = _employeeService.Get(result.ID);
+        //    _employeeService.Update(result.ID, updated);
+        //    var updatedResult = _employeeService.Get(result.ID);
 
-            Console.WriteLine(updatedResult.Details.Email);
-            Assert.AreEqual(updated.Email, updatedResult.Details.Email);
-            Assert.IsNotNull(updatedResult);
+        //    Console.WriteLine(updatedResult.Details.Email);
+        //    Assert.AreEqual(updated.Email, updatedResult.Details.Email);
+        //    Assert.IsNotNull(updatedResult);
 
-        }
+        //}
 
         [Test]
         public void Update_Work_Days_To_Employee_Successful()

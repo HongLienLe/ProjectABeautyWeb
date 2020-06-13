@@ -36,10 +36,10 @@ namespace DataMongoApiTest.ControllerTest
         [Test]
         public void Get_Treatment_Valid_200()
         {
-            _treatmentService.Setup(x => x.Get(It.IsAny<string>()));
+            _treatmentService.Setup(x => x.Get(It.IsAny<string>())).Returns(new Treatment());
             _treatmentController = new TreatmentController(_treatmentService.Object);
 
-            var actual = _treatmentController.Get("TreatmentId") as ObjectResult;
+            var actual = _treatmentController.Get("TreatmentIdshouldbe2424") as ObjectResult;
 
             Assert.AreEqual(actual.StatusCode, 200);
 
@@ -59,11 +59,13 @@ namespace DataMongoApiTest.ControllerTest
         [Test]
         public void Update_Treatment_Valid_200()
         {
+            _treatmentService.Setup(x => x.Get(It.IsAny<string>())).Returns(new Treatment());
             _treatmentService.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<TreatmentDetails>()));
 
+            
             _treatmentController = new TreatmentController(_treatmentService.Object);
 
-            var actual = _treatmentController.Update("id", new TreatmentDetails()) as ObjectResult;
+            var actual = _treatmentController.Update("TreatmentIdshouldbe2424", new TreatmentDetails()) as ObjectResult;
 
             Assert.AreEqual(actual.StatusCode, 200);
         }
@@ -73,7 +75,9 @@ namespace DataMongoApiTest.ControllerTest
         {
             _treatmentService.Setup(x => x.Get(It.IsAny<string>())).Returns(new Treatment());
             _treatmentService.Setup(x => x.Remove(It.IsAny<string>()));
-            var actual = _treatmentController.Delete("IDIDIDIDIDIDIDID") as ObjectResult;
+
+            _treatmentController = new TreatmentController(_treatmentService.Object);
+            var actual = _treatmentController.Delete("TreatmentIdshouldbe2424") as ObjectResult;
 
             Assert.AreEqual(actual.StatusCode, 200);
         }

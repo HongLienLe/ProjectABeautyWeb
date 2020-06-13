@@ -78,5 +78,7 @@ namespace DataMongoApi.Service
 
             _client.FindOneAndUpdate(filter, update);
         }
+
+        //Delete Payment 
     }
 }
