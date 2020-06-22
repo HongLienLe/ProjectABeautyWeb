@@ -17,7 +17,6 @@ namespace DataMongoApi.Service
         public MerchantService(IMongoDbContext context)
         {
             _context = context;
-
             _merchant = _context.GetCollection<Merchant>("Merchant");
         }
 

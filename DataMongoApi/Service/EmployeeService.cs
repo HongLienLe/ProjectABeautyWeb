@@ -20,15 +20,13 @@ namespace DataMongoApi.Service
         public EmployeeService(IMongoDbContext context)
         {
             _context = context;
-
             _employee = _context.GetCollection<Employee>("Employees");
             _treatment = _context.GetCollection<Treatment>("Treatments");
             _operatingHours = _context.GetCollection<OperatingHours>("OperatingHours");
-
         }
 
         public List<Employee> Get()
-        {
+        { 
             return _employee.Find(Employee => true).ToList();
         }
 
@@ -37,94 +35,98 @@ namespace DataMongoApi.Service
             return _employee.Find<Employee>(e => e.ID == id).FirstOrDefault();
         }
 
-        public Employee Create(EmployeeDetails employee)
+
+        public Employee Create(EmployeeForm eF)
         {
-            Employee employee1 = new Employee()
+            var employee = new Employee()
             {
-                Details = employee,
+                Details = eF.Details,
+                Treatments = eF.Treatments,
+                WorkDays = eF.WorkDays,
+                ModifiedOn = DateTime.Now
             };
 
-            employee1.ModifiedOn = DateTime.UtcNow;
-            _employee.InsertOne(employee1);
-            return employee1;
+            _employee.InsertOne(employee);
+            return employee;
         }
 
-        public void Update(string id, EmployeeDetails employeeIn)
+        public void Update(string id, EmployeeForm eF)
         {
-            var filter = Builders<Employee>.Filter.Eq(e => e.ID, id);
-            var update = Builders<Employee>.Update
-                .Set(e => e.Details, employeeIn)
-                .CurrentDate(e => e.ModifiedOn);
+            UpdateEmployeeDetails(id, eF.Details);
 
-            _employee.UpdateOne(filter, update);
+            if(eF.Treatments != null)
+            AddTreatmentsSkills(id, eF.Treatments);
+            if(eF.WorkDays != null)
+            AddWorkDays(id, eF.WorkDays);
         }
 
         public void Remove(string id)
         {
             var employee = Get(id);
-
-            if(employee.Treatments.Count() > 0)
+            if(employee.Treatments !=  null)
                 RemoveEmployeeFromTreatment(id);
-
-            if(employee.WorkDays.Count() > 0)
+            if(employee.WorkDays != null)
                 RemoveEmployeeFromWorkDays(id);
-
             _employee.DeleteOne(e => e.ID == id);
         }
 
-        public void AddTreatmentsSkills(string id, List<string> treatmentIds)
+        private void UpdateEmployeeDetails(string id, EmployeeDetails employeeIn)
+        {
+            var filter = Builders<Employee>.Filter.Eq(e => e.ID, id);
+            var update = Builders<Employee>.Update
+                .Set(e => e.Details, employeeIn)
+                .CurrentDate(e => e.ModifiedOn);
+            _employee.UpdateOne(filter, update);
+        }
+
+
+        private void AddTreatmentsSkills(string id, List<TreatmentSkills> treatments)
         {
             var employee = Builders<Employee>.Filter.Eq(e => e.ID,id);
-
             var updateEmployee = Builders<Employee>.Update
-                .AddToSetEach("Treatments", treatmentIds)
+                .Set("Treatments", treatments)
                 .CurrentDate(e => e.ModifiedOn);
             _employee.UpdateOne(employee, updateEmployee);
 
-            var treatment = Builders<Treatment>.Filter.In("ID",treatmentIds);
+
+
+            var treatment = Builders<Treatment>.Filter.In("ID",treatments.Select(x => x.TreatmentId).ToList());
             var updateTreatment = Builders<Treatment>.Update
                 .AddToSet("Employees", id)
                 .CurrentDate(t => t.ModifiedOn);
-
             _treatment.UpdateMany(treatment, updateTreatment);
         }
 
-        public void AddWorkDays(string id, List<string> operatingDayIds)
+        private void AddWorkDays(string id, List<WorkDay> day)
         {
             var employee = Builders<Employee>.Filter.Eq(e => e.ID, id);
-
             var updateEmployee = Builders<Employee>.Update
-                .AddToSetEach("WorkDays", operatingDayIds)
+                .Set("WorkDays", day)
                 .CurrentDate(e => e.ModifiedOn);
             _employee.UpdateOne(employee, updateEmployee);
 
-            var operatingDays = Builders<OperatingHours>.Filter.In("ID", operatingDayIds);
+            var dayId = day.Select(x => x.OperatingHoursId);
+
+            var operatingDays = Builders<OperatingHours>.Filter.In("ID", dayId);
             var updateOperatingHours = Builders<OperatingHours>.Update
                 .AddToSet("Employees", id)
                 .CurrentDate(t => t.ModifiedOn);
-
             _operatingHours.UpdateMany(operatingDays, updateOperatingHours);
-
         }
 
-        public void RemoveEmployeeFromTreatment(string id)
+        private void RemoveEmployeeFromTreatment(string id)
         {
             var treatmentfilter = Builders<Treatment>.Filter.AnyEq("Employees", id);
-
             var treatmentupdate = Builders<Treatment>.Update
                 .Pull("Employees", id);
-
             _treatment.UpdateMany(treatmentfilter, treatmentupdate);
-
         }
 
-        public void RemoveEmployeeFromWorkDays(string id)
+        private void RemoveEmployeeFromWorkDays(string id)
         {
             var dayFilter = Builders<OperatingHours>.Filter.AnyEq("Employees", id);
-
             var dayUpdate = Builders<OperatingHours>.Update
                 .Pull("Employees", id);
-
             _operatingHours.UpdateMany(dayFilter, dayUpdate);
         }
 

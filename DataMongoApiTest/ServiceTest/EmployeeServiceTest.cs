@@ -30,6 +30,7 @@ namespace DataMongoApiTest.ServiceTest
                     Name = "Hong",
                     Email = "H@gmail.com"
                 }
+
             };
 
             _mockCollection = new Mock<IMongoCollection<Employee>>();
@@ -86,10 +87,13 @@ namespace DataMongoApiTest.ServiceTest
         [Test]
         public void Create_Employee_Entry_Valid_Success()
         {
-            var details = new EmployeeDetails()
+            var details = new EmployeeForm()
             {
-                Name = "Test",
-                Email = "Test@mail.com"
+                Details = new EmployeeDetails()
+                {
+                    Name = "Test",
+                    Email = "Test@mail.com"
+                }
             };
 
             var result = _employeeService.Create(details);

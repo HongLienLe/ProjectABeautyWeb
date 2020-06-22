@@ -10,7 +10,7 @@ namespace DataMongoApi.Models
     {
         public string TreatmentName { get; set; }
         public string TreatmentType { get; set; }
-        public bool IsAddOn { get; set; }
+        public bool isAddOn { get; set; }
         public int Price { get; set; }
         public int Duration { get; set; }
     }

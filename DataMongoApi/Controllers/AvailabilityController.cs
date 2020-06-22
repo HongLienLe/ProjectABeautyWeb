@@ -13,24 +13,29 @@ namespace DataMongoApi.Controllers.ClientController
     public class AvailabilityController : Controller
     {
         private IAvailableAppointmentService _availableAppointmentService;
+        private ITreatmentService _treatmentService;
 
-        public AvailabilityController(IAvailableAppointmentService availableAppointmentService)
+        public AvailabilityController(IAvailableAppointmentService availableAppointmentService, ITreatmentService treatmentService)
         {
             _availableAppointmentService = availableAppointmentService;
+            _treatmentService = treatmentService;
         }
 
         [HttpPost()]
         public IActionResult Get([FromBody] AvailableAppRequestForm appRequestForm)
         {
-            var times = _availableAppointmentService.GetAvailableTimeSlot(appRequestForm.DateTime, appRequestForm.TreatmentIds);
-
-            if( times.Count == 0)
+            foreach (var treatment in appRequestForm.TreatmentIds)
             {
-                return Ok(new List<Appointment>());
+                if (_treatmentService.Get(treatment) == null)
+                    return BadRequest();
             }
 
+            var times = _availableAppointmentService.GetAvailableTimeSlot(appRequestForm.DateTime, appRequestForm.TreatmentIds);
+
+            if (times.Count == 0)
+                return Ok(new List<Appointment>());
+
             return Ok(times);
-        }
-            
+        }    
     }
 }

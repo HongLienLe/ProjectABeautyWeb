@@ -24,10 +24,10 @@ namespace DataMongoApi.Controllers.AdminController
         public IActionResult Get() =>
             Ok(_operatingHoursService.Get());
 
-        [HttpGet("{id}")]
-        public IActionResult Get(string Id)
+        [HttpGet("{dayOfWeek}")]
+        public IActionResult Get(string dayOfWeek)
         {
-            var day = _operatingHoursService.Get(Id);
+            var day = _operatingHoursService.Get(dayOfWeek);
 
             if (day == null)
             {
@@ -50,17 +50,17 @@ namespace DataMongoApi.Controllers.AdminController
             return Ok(ophr);
         }
 
-        [HttpPut("{id:length(24)}")]
-        public IActionResult Update(string Id, OperatingHoursDetails opHrsIn)
+        [HttpPut("{dayOfWeek}")]
+        public IActionResult Update(string dayOfWeek, OperatingHoursDetails opHrsIn)
         {
-            var opHrs = _operatingHoursService.Get(Id);
+            var opHrs = _operatingHoursService.Get(dayOfWeek);
 
             if (opHrs == null)
             {
                 return NotFound();
             }
 
-            _operatingHoursService.Update(Id, opHrsIn);
+            _operatingHoursService.Update(dayOfWeek, opHrsIn);
 
             return Ok("Update Successful");
         }

@@ -13,14 +13,12 @@ namespace DataMongoApiTest.ControllerTest
     public class EmployeeControllerTest
     {
         private Mock<IEmployeeService> _employeeService;
-        private Mock<ITreatmentService> _treatmentService;
         private EmployeeController _employeeController;
 
         [SetUp]
         public void SetUp()
         {
             _employeeService = new Mock<IEmployeeService>();
-            _treatmentService = new Mock<ITreatmentService>();
         }
 
 
@@ -28,7 +26,7 @@ namespace DataMongoApiTest.ControllerTest
         public void Get_All_Employees_List_Return_200()
         {
             _employeeService.Setup(x => x.Get()).Returns(SeedEmployeeData());
-            _employeeController = new EmployeeController(_employeeService.Object, _treatmentService.Object);
+            _employeeController = new EmployeeController(_employeeService.Object);
 
             var actual = _employeeController.Get() as ObjectResult;
 
@@ -40,7 +38,7 @@ namespace DataMongoApiTest.ControllerTest
         public void Get_With_No_Employees_Return_200()
         {
             _employeeService.Setup(x => x.Get()).Returns(new List<Employee>());
-            _employeeController = new EmployeeController(_employeeService.Object, _treatmentService.Object);
+            _employeeController = new EmployeeController(_employeeService.Object);
 
             var actual = _employeeController.Get() as ObjectResult;
             Assert.AreEqual(actual.StatusCode, 200);
@@ -60,10 +58,15 @@ namespace DataMongoApiTest.ControllerTest
                 }
             };
 
-            _employeeService.Setup(x => x.Create(It.IsAny<EmployeeDetails>())).Returns(employee);
-            _employeeController = new EmployeeController(_employeeService.Object, _treatmentService.Object);
+            var employeeForm = new EmployeeForm()
+            {
+                Details = employee.Details
+            };
 
-            var actual = _employeeController.Create(employee.Details) as ObjectResult;
+            _employeeService.Setup(x => x.Create(It.IsAny<EmployeeForm>())).Returns(employee);
+            _employeeController = new EmployeeController(_employeeService.Object);
+
+            var actual = _employeeController.Create(employeeForm) as ObjectResult;
 
             Assert.AreEqual(actual.StatusCode, 200);
             Assert.IsNotNull(actual.Value as Employee);
@@ -85,7 +88,7 @@ namespace DataMongoApiTest.ControllerTest
             };
 
             _employeeService.Setup(x => x.Get(It.IsAny<string>())).Returns(employee);
-            _employeeController = new EmployeeController(_employeeService.Object, _treatmentService.Object);
+            _employeeController = new EmployeeController(_employeeService.Object);
 
             var actual = _employeeController.Get(id) as ObjectResult;
 
@@ -100,7 +103,7 @@ namespace DataMongoApiTest.ControllerTest
         {
             var id = "123456789012345678901234";
             _employeeService.Setup(x => x.Get(It.IsAny<string>())).Returns((Employee)null);
-            _employeeController = new EmployeeController(_employeeService.Object, _treatmentService.Object);
+            _employeeController = new EmployeeController(_employeeService.Object);
 
             var actual = _employeeController.Get(id) as ObjectResult;
 
@@ -122,11 +125,16 @@ namespace DataMongoApiTest.ControllerTest
                 }
             };
 
-            _employeeService.Setup(x => x.Update(It.IsAny<string>(), employee.Details));
-            _employeeService.Setup(x => x.Get(It.IsAny<string>())).Returns(employee);
-            _employeeController = new EmployeeController(_employeeService.Object, _treatmentService.Object);
+            var employeeForm = new EmployeeForm()
+            {
+                Details = employee.Details
+            };
 
-            var actual = _employeeController.Update(id, employee.Details) as ObjectResult;
+            _employeeService.Setup(x => x.Update(It.IsAny<string>(), employeeForm));
+            _employeeService.Setup(x => x.Get(It.IsAny<string>())).Returns(employee);
+            _employeeController = new EmployeeController(_employeeService.Object);
+
+            var actual = _employeeController.Update(id, employeeForm) as ObjectResult;
             var actualUpdated = _employeeController.Get(id) as ObjectResult;
 
             Assert.AreEqual(actual.StatusCode, 200);
@@ -151,7 +159,7 @@ namespace DataMongoApiTest.ControllerTest
             _employeeService.Setup(x => x.Remove(It.IsAny<string>()));
             _employeeService.Setup(x => x.Get(It.IsAny<string>())).Returns(employee);
 
-            _employeeController = new EmployeeController(_employeeService.Object, _treatmentService.Object);
+            _employeeController = new EmployeeController(_employeeService.Object);
 
             var actual = _employeeController.Delete(id) as ObjectResult;
 

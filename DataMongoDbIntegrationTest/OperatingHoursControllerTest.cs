@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using DataMongoApi;
 using DataMongoApi.Models;
+using FluentAssertions;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -17,35 +19,20 @@ namespace DataMongoDbIntegrationTest
             _client = fixture.Client;
         }
 
-        //[Fact]
-        //public async Task PostEndpoint_ValidDay()
-        //{
-        //    var request = new
-        //    {
-        //        Url = "/admin/operatinghours",
-        //        Body = new
-        //        {
-        //            Day = "sunday",
-        //            OpeningHr = "10:00",
-        //            ClosingHr = "19:00",
-        //            isOpen = false
-        //        }
-        //    };
-
-        //    var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
-        //    var value = await response.Content.ReadAsStringAsync();
-        //    var workDay = JsonConvert.DeserializeObject<OperatingHours>(value);
-
-        //    response.EnsureSuccessStatusCode();
-        //}
-
         [Theory]
         [InlineData("admin/operatinghours")]
+        [InlineData("admin/operatinghours/monday")]
+        [InlineData("admin/operatinghours/tuesday")]
+        [InlineData("admin/operatinghours/wednesday")]
+        [InlineData("admin/operatinghours/thursday")]
+        [InlineData("admin/operatinghours/friday")]
+        [InlineData("admin/operatinghours/saturday")]
+        [InlineData("admin/operatinghours/sunday")]
         public async Task GetEndpoint(string endpoint)
         {
             var response = await _client.GetAsync(endpoint);
 
-            response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
         [Fact]
@@ -53,10 +40,10 @@ namespace DataMongoDbIntegrationTest
         {
             var request = new
             {
-                Url = "admin/operatinghours",
+                Url = "admin/operatinghours/thursday",
                 Body = new
                 {
-                    Day = "Thursday",
+                    Day = "thursday",
                     OpeningHr = "10:00",
                     ClosingHr = "20:00",
                     isOpen = true
@@ -65,7 +52,12 @@ namespace DataMongoDbIntegrationTest
 
             var response = await _client.PutAsync(request.Url, ContentHelper.GetStringContent(request.Body));
 
-            response.EnsureSuccessStatusCode();
+            var updateResponse = await _client.GetAsync(request.Url);
+            var readUpdate = await updateResponse.Content.ReadAsStringAsync();
+            var day = JsonConvert.DeserializeObject<OperatingHours>(readUpdate);
+
+            Assert.Contains(request.Body.ClosingHr, day.About.ClosingHr);
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
     }
 }

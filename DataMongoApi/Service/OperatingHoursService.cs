@@ -19,9 +19,7 @@ namespace DataMongoApi.Service
         public OperatingHoursService(IMongoDbContext context)
         {
             _context = context;
-
             _operatinghrs = _context.GetCollection<OperatingHours>("OperatingHours");
-
         }
 
         public List<OperatingHours> Get() =>
@@ -39,13 +37,12 @@ namespace DataMongoApi.Service
             return ophrs;
         }
 
-        public void Update(string id, OperatingHoursDetails ophrsIn)
+        public void Update(string dayOfWeek, OperatingHoursDetails ophrsIn)
         {
-            var filter = Builders<OperatingHours>.Filter.Eq(d => d.ID, id);
+            var filter = Builders<OperatingHours>.Filter.Eq(d => d.About.Day, dayOfWeek);
             var update = Builders<OperatingHours>.Update
                 .Set(d => d.About, ophrsIn)
                 .CurrentDate(d => d.ModifiedOn);
-
             _operatinghrs.UpdateOne(filter, update);
         }
 

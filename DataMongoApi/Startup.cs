@@ -59,17 +59,17 @@ namespace DataMongoApi
             services.AddTransient<IOperatingHoursService, OperatingHoursService>();
             services.AddTransient<IAppointmentService, AppointmentService>();
             services.AddTransient<IAvailableAppointmentService, AvailableAppointmentService>();
-            services.AddTransient<IPaymentService,PaymentService>();
+            services.AddTransient<IPaymentService, PaymentService>();
 
             services.AddControllers(options =>
                          options.Filters.Add(new HttpResponseExceptionFilter()))
                         .AddNewtonsoftJson(options => options.UseMemberCasing())
                         .AddFluentValidation(fv =>
-                        fv.RegisterValidatorsFromAssemblyContaining<EmployeeDetailsValidator>()
+                        fv.RegisterValidatorsFromAssemblyContaining<EmployeeFormValidator>()
                         .RegisterValidatorsFromAssemblyContaining<TreatmentDetailsValidator>()
                         .RegisterValidatorsFromAssemblyContaining<OperatingHoursDetailsValidatior>()
                         .RegisterValidatorsFromAssemblyContaining<ClientDetailsValidator>());
-                        
+
 
             services.AddAuthentication(options =>
             {
@@ -121,11 +121,12 @@ namespace DataMongoApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-           
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            } else
+            }
+            else
             {
                 app.UseExceptionHandler("/error");
             }

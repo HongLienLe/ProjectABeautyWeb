@@ -17,7 +17,6 @@ namespace DataMongoDbIntegrationTest
         public AppointmentControllerTest(TestFixture<Startup> fixture)
         {
             _client = fixture.Client;
-
         }
 
         [Fact]
@@ -33,9 +32,9 @@ namespace DataMongoDbIntegrationTest
                     Email = "AppFL@mail.com",
                     Phone = "12345678901"
                 },
-                TreatmentId = new[]{ "5ec8579645e16549ec3afd7e" },
+                TreatmentId = new[]{ "5eecc6790fcc0e79a1973bb9" },
                 Notes = "asd",
-                Date = "2020-07-17",
+                Date = "2020-06-22",
                 StartTime = "12:00:00"
             };
 
@@ -45,7 +44,6 @@ namespace DataMongoDbIntegrationTest
 
             await _client.DeleteAsync($"{url}/{app.ID}");
 
-            response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
@@ -62,10 +60,10 @@ namespace DataMongoDbIntegrationTest
                     Email = "AppFL@mail.com",
                     Phone = "09876543211"
                 },
-                TreatmentId = new[] { "5ec8579645e16549ec3afd7e",
-                "5ec8579645e16549ec3afd7e"},
+                TreatmentId = new[] { "5eecc6790fcc0e79a1973bb9",
+                "5eecc6790fcc0e79a1973bb9"},
                 Notes = "",
-                Date = "2020-07-17",
+                Date = "2020-06-22",
                 StartTime = "14:00:00"
             };
 
@@ -75,8 +73,6 @@ namespace DataMongoDbIntegrationTest
 
             await _client.DeleteAsync($"{url}/{app.ID}");
 
-
-            response.EnsureSuccessStatusCode();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
@@ -93,10 +89,10 @@ namespace DataMongoDbIntegrationTest
                     Email = "AppFL@mail.com",
                     Phone = "09876543211"
                 },
-                TreatmentId = new[] { "5ec8579645e16549ec3afd7e",
-                "5ec8579645e16549ec3afd7e"},
+                TreatmentId = new[] { "5eecc6790fcc0e79a1973bb9",
+                "5eecc6790fcc0e79a1973bb9"},
                 Notes = "",
-                Date = "2020-05-30",
+                Date = "2020-06-15",
                 StartTime = "10:00:00"
             };
 
@@ -120,7 +116,7 @@ namespace DataMongoDbIntegrationTest
         [Fact]
         public async Task PutEndpoint_ValidApp()
         {
-            var url = "/book";
+            var url = "/book/5eed3a2d1c232380f6a593ef";
             var appRequest = new AppointmentDetails
             {
                 Client = new ClientDetails
@@ -130,9 +126,11 @@ namespace DataMongoDbIntegrationTest
                     Email = "AppFL@mail.com",
                     Phone = "09876543211"
                 },
-                TreatmentId = new List<string>{ "5ec8579645e16549ec3afd7e"},
+                TreatmentId = new List<string>(){
+                    "5eecc6790fcc0e79a1973bb9"
+                },
                 Notes = "",
-                Date = "2020-07-14",
+                Date = "2020-06-22",
                 StartTime = "10:00:00"
             };
 
@@ -156,7 +154,7 @@ namespace DataMongoDbIntegrationTest
         [Fact]
         public async Task PutEndpoint_ValidApp_EmployeeNA()
         {
-            var url = "/book/5ed1a0e1ec6a11218b7420ae";
+            var url = "/book/5eed3a2d1c232380f6a593ef";
             var appRequest = new AppointmentDetails
             {
                 Client = new ClientDetails
@@ -166,10 +164,13 @@ namespace DataMongoDbIntegrationTest
                     Email = "AppFL@mail.com",
                     Phone = "09876543211"
                 },
-                TreatmentId = new List<string>{ "5ec8579645e16549ec3afd7e",
-                "5ec8579645e16549ec3afd7e"},
+                TreatmentId = new List<string>()
+                {
+                    "5eecc6790fcc0e79a1973bb9",
+                    "5eecc6790fcc0e79a1973bb9"
+                },
                 Notes = "",
-                Date = "2020-05-30",
+                Date = "2020-06-15",
                 StartTime = "10:00:00"
             };
 
@@ -196,8 +197,11 @@ namespace DataMongoDbIntegrationTest
                     Email = "AppFL@mail.com",
                     Phone = "09876543211"
                 },
-                TreatmentId = new List<string>{ "5ec8579645e16549ec3afd7e",
-                "5ec8579645e16549ec3afd7e"},
+                TreatmentId = new List<string>()
+                {
+                    "5eecc6790fcc0e79a1973bb9",
+                    "5eecc6790fcc0e79a1973bb9"
+                },
                 Notes = "",
                 Date = "2020-05-31",
                 StartTime = "10:00:00"
@@ -225,10 +229,12 @@ namespace DataMongoDbIntegrationTest
                     Email = "AppFL@mail.com",
                     Phone = "09876543211"
                 },
-                TreatmentId = new List<string>{ "5ec8579645e16549ec3afd7e"
+                TreatmentId = new List<string>()
+                {
+                    "5eecc6790fcc0e79a1973bb9"
                 },
                 Notes = "",
-                Date = "2020-05-16",
+                Date = "2020-06-15",
                 StartTime = "15:00:00"
             };
 

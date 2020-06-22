@@ -8,10 +8,8 @@ namespace DataMongoApi.Service.InterfaceService
     {
         public List<Employee> Get();
         public Employee Get(string id);
-        public Employee Create(EmployeeDetails employee);
-        public void Update(string id, EmployeeDetails employeeIn);
+        public Employee Create(EmployeeForm eF);
+        public void Update(string id, EmployeeForm eF);
         public void Remove(string id);
-        public void AddTreatmentsSkills(string id, List<string> treatmentIds);
-        public void AddWorkDays(string id, List<string> operatingDayIds);
     }
 }

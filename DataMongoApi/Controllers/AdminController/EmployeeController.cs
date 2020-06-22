@@ -18,12 +18,10 @@ namespace DataMongoApi.Controllers.AdminController
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService _employeeService;
-        private readonly ITreatmentService _treatmentService;
 
-        public EmployeeController(IEmployeeService employeeService, ITreatmentService treatmentService)
+        public EmployeeController(IEmployeeService employeeService )
         {
             _employeeService = employeeService;
-            _treatmentService = treatmentService;
         }
 
         [HttpGet]
@@ -51,16 +49,15 @@ namespace DataMongoApi.Controllers.AdminController
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody]EmployeeDetails employee)
+        public IActionResult Create([FromBody]EmployeeForm employee)
         {
-           
             var response = _employeeService.Create(employee);
 
             return Ok(response);
         }
 
         [HttpPut("{id:length(24)}")]
-        public IActionResult Update(string id, [FromBody]EmployeeDetails employeeIn)
+        public IActionResult Update(string id, [FromBody]EmployeeForm employeeIn)
         {
             var employee = _employeeService.Get(id);
 
@@ -91,38 +88,5 @@ namespace DataMongoApi.Controllers.AdminController
             return Ok(employee);
         }
 
-        [HttpPost("{id:length(24)}/manage/treatment")]
-        public IActionResult UpdateTreatment(string id, [Required ,FromBody]List<string> ids)
-        {
-
-            if (_employeeService.Get(id) == null)
-                return NotFound($"Employee {id} does not exist");
-
-            if (ids.Any(x => x.Count() != 24))
-                return BadRequest($"Contains an Id that is not Length 24");
-
-            if(ids.Any(x => _treatmentService.Get(x) == null))
-                return NotFound($"Treatment ids contain {id} does not exist");
-
-            _employeeService.AddTreatmentsSkills(id, ids);
-
-            return Ok();
-        }
-
-        [HttpPost("{id:length(24)}/manage/workdays")]
-        public IActionResult UpdateWorkDays(string id, [Required, FromBody]List<string> ids)
-        {
-            if (_employeeService.Get(id) == null)
-                return NotFound($"Employee {id} does not exist");
-
-            var days = new string[] { "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday" };
-
-            if (ids.Any(x => !days.Contains(x)))
-                return BadRequest("");
-
-            _employeeService.AddWorkDays(id, ids);
-
-            return Ok();
-        }
     }
 }

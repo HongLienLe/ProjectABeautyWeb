@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataMongoApi.Models;
-using DataMongoApi.Service;
+using DataMongoApi.Service.InterfaceService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DataMongoApi.Controllers.AdminController
@@ -11,9 +11,9 @@ namespace DataMongoApi.Controllers.AdminController
     [Route("[controller]")]
     public class PaymentController : Controller
     {
-        private PaymentService _paymentService;
+        private IPaymentService _paymentService;
 
-        public PaymentController(PaymentService paymentService)
+        public PaymentController(IPaymentService paymentService)
         {
             _paymentService = paymentService;
         }
@@ -25,7 +25,7 @@ namespace DataMongoApi.Controllers.AdminController
         }
 
         [HttpPost()]
-        public IActionResult Post([FromBody] Appointment booking)
+        public IActionResult Post([FromBody]OrderDetails booking)
         {
             var response = _paymentService.ProcessAppointment(booking);
             return Ok(response);

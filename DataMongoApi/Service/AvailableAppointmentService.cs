@@ -21,7 +21,6 @@ namespace DataMongoApi.Service
 
         public AvailableAppointmentService(IMongoDbContext context, IOperatingHoursService operatingHoursService, ITreatmentService treatmentService)
         {
-
             _context = context;
             _appointments = _context.GetCollection<Appointment>("Appointments");
             _employees = _context.GetCollection<Employee>("Employees");
@@ -31,17 +30,20 @@ namespace DataMongoApi.Service
 
         public List<DateTime> GetAvailableTimeSlot(DateTime date, List<string> treatmentIds)
         {
+            var day = _operatingHoursService.Get(date.DayOfWeek.ToString());
             var employees = new List<string>();
             int duration = 0;
 
             foreach (var id in treatmentIds)
             {
-                employees.AddRange(EmployeeWorkingIds(id, date));
-                duration = duration + _treatmentService.Get(id).About.Duration;
+                var treatment = _treatmentService.Get(id);
+                if (treatment == null)
+                    return null;
+                employees.AddRange(EmployeeWorkingIds(treatment, day));
+                duration = duration + treatment.About.Duration;
             }
 
             var freeslots = GetEmployeesFreeTimeSlot(employees, date);
-
             return AppFunction.GetFreeSlots(freeslots, duration);
         }
 
@@ -58,27 +60,28 @@ namespace DataMongoApi.Service
                 var bookedAppTimePeriods = new TimePeriodCollection();
                 var dateId = date.ToString("u").Substring(0, 10);
                 var appointments = _appointments.AsQueryable<Appointment>().Where(x => x.EmployeeId == employee && x.Info.Date.Contains(dateId)).ToList();
-
                 var bookingPeriods = appointments.Select(x => AppFunction.CastBookingToTimeRange(x));
 
                 bookedAppTimePeriods.AddAll(bookingPeriods);
-
+                 
                 if (bookedAppTimePeriods == null)
                     bookedAppTimePeriods.AddAll(TimeGapWithNoAppointments(date));
 
                 var freeperiods = timegapcalculator.GetGaps(bookedAppTimePeriods, openingHours);
-
                 allFreeTimeSlotForTreatment.AddAll(freeperiods);
             }
 
             return periodCombiner.CombinePeriods(allFreeTimeSlotForTreatment);
         }
 
-        private List<string> EmployeeWorkingIds(string treatmentId, DateTime date)
+        private List<string> EmployeeWorkingIds(Treatment treatment, OperatingHours day)
         {
-            var dayId = _operatingHoursService.Get(date.DayOfWeek.ToString()).ID;
+            var treatmentName = $"{treatment.About.TreatmentType} {treatment.About.TreatmentName}"; 
+            var skill = new TreatmentSkills(){ TreatmentId = treatment.ID, TreatmentName = treatmentName };
+            var workday = new WorkDay() { OperatingHoursId = day.ID, Day = day.About.Day };
+
             return _employees.AsQueryable<Employee>()
-                .Where(x => x.WorkDays.Contains(dayId) && x.Treatments.Contains(treatmentId))
+                .Where(x => x.WorkDays.Contains(workday) && x.Treatments.Contains(skill))
                 .Select(x => x.ID)
                 .ToList();
         }
@@ -101,7 +104,6 @@ namespace DataMongoApi.Service
 
             return timegapcalculator.GetGaps(new TimePeriodCollection(), range);
         }
-
     }
 }
 
@@ -119,11 +121,9 @@ public static class AppFunction
             while (startTimePeriod < endTimePeriod)
             {
                 avaliableTimeSlots.Add(startTimePeriod);
-
                 startTimePeriod = startTimePeriod.AddMinutes(15);
             }
         }
-
         return avaliableTimeSlots;
     }
 
@@ -131,7 +131,5 @@ public static class AppFunction
     {
         return new TimeRange(DateTime.Parse(booking.Info.Date).Add(TimeSpan.Parse(booking.Info.StartTime)), DateTime.Parse(booking.Info.Date).Add(TimeSpan.Parse(booking.Info.EndTime)));
     }
-
-
 }
 

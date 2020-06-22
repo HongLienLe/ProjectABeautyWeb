@@ -1,39 +1,31 @@
-﻿//using System;
-//using DataMongoApi.DbContext;
-//using DataMongoApi.Models;
-//using System.Collections.Generic;
-//using MongoDB.Driver;
+﻿using System;
+using DataMongoApi.DbContext;
+using DataMongoApi.Models;
+using System.Collections.Generic;
+using MongoDB.Driver;
 
-//namespace DataMongoApi.Validation
-//{
-//    public class MerchantValidator : IMerchantValidator
-//    {
-//        private IMongoDbContext _context;
+namespace DataMongoApi.Validation
+{
+    public class MerchantValidator : IMerchantValidator
+    {
+        private IMongoDbContext _context;
 
-//        public MerchantValidator(IMongoDbContext context)
-//        {
-//            _context = context;
-//        }
+        private Dictionary<string, List<string>> AllMerchantDb { get; set; }
 
-//        public bool DoesMerchantExist(string merchantId)
-//        {
-//            _context.AssignDb("PaperAndPen");
+        public MerchantValidator(IMongoDbContext context)
+        {
+            _context = context;
+            AllMerchantDb = _context.GetDatabasesAndCollections();
+        }
 
-//            var merchantIds = _context.GetCollection<Merchant>("Merchant");
+        public bool DoesMerchantExist(string merchantId)
+        {
+            return AllMerchantDb.ContainsKey(merchantId);
+        }
+    }
 
-//            var merchant = merchantIds.Find(x => x.MerchantId == merchantId);
-
-//            if (merchant == null)
-//                return false;
-
-//            _context.AssignDb(merchantId);
-
-//            return true;
-//        }
-//    }
-
-//    public interface IMerchantValidator
-//    {
-//        public bool DoesMerchantExist(string merchantId);
-//    }
-//}
+    public interface IMerchantValidator
+    {
+        public bool DoesMerchantExist(string merchantId);
+    }
+}

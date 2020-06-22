@@ -21,14 +21,14 @@ namespace DataMongoApi.DbContext
             _db = _mongoClient.GetDatabase(clientConf.MerchantId);
         }
 
-        public async Task<Dictionary<string, List<string>>> GetDatabasesAndCollections()
+        public Dictionary<string, List<string>> GetDatabasesAndCollections()
         {
             if (_databasesAndCollections != null) return _databasesAndCollections;
 
             _databasesAndCollections = new Dictionary<string, List<string>>();
             var databasesResult = _mongoClient.ListDatabaseNames();
 
-            await databasesResult.ForEachAsync(async databaseName =>
+            databasesResult.ForEachAsync(async databaseName =>
             {
                 var collectionNames = new List<string>();
                 var database = _mongoClient.GetDatabase(databaseName);
@@ -54,5 +54,6 @@ namespace DataMongoApi.DbContext
     public interface IMongoDbContext
     {
         IMongoCollection<T> GetCollection<T>(string name);
+        Dictionary<string, List<string>> GetDatabasesAndCollections();
     }
 }

@@ -47,7 +47,7 @@ namespace DataMongoApiTest.ServiceTest
                 },
                 EmployeeId = "EMPLOYEEID"
 
-               
+
             };
 
             _mockCollection = new Mock<IMongoCollection<Appointment>>();
@@ -72,9 +72,6 @@ namespace DataMongoApiTest.ServiceTest
             _mockContext.Setup(c => c.GetCollection<Appointment>("Appointments")).Returns(_mockCollection.Object);
 
 
-            
-
-           
             _clientService = new Mock<IClientService>();
             _treatmentService = new Mock<ITreatmentService>();
             _ophrService = new Mock<IOperatingHoursService>();
@@ -113,7 +110,7 @@ namespace DataMongoApiTest.ServiceTest
                         TreatmentType = "SNS",
                         Duration = 45,
                         Price = 28,
-                        IsAddOn = false
+                        isAddOn = false
                     }
                 });
             _ophrService.Setup(x => x.Get(It.IsAny<string>())).
@@ -121,14 +118,14 @@ namespace DataMongoApiTest.ServiceTest
                 {
                     ID = "DAYID",
                     About = new OperatingHoursDetails()
-                {
-                    Day = "Saturday",
-                    OpeningHr = "10:00:00",
-                    ClosingHr = "19:00:00",
-                    isOpen = true
-                },
+                    {
+                        Day = "Saturday",
+                        OpeningHr = "10:00:00",
+                        ClosingHr = "19:00:00",
+                        isOpen = true
+                    },
                     Employees = new List<string>() { "employeeId" }
-                    
+
                 });
 
             _employeeService.Setup(x => x.Get(It.IsAny<string>())).Returns(
@@ -141,8 +138,8 @@ namespace DataMongoApiTest.ServiceTest
                          Email = "E1@mail.com"
                      },
 
-                     Treatments = new List<string>() { "TREATMENTID" },
-                     WorkDays = new List<string>() { "DAYID" }
+                     Treatments = new List<TreatmentSkills>() { new TreatmentSkills() { TreatmentId = "TREATMENTID", TreatmentName = "TT" } },
+                     WorkDays = new List<WorkDay>() { new WorkDay { OperatingHoursId = "DAYID", Day = "monday" } }
 
                  });
 
@@ -172,7 +169,7 @@ namespace DataMongoApiTest.ServiceTest
                     Phone = "123"
                 },
                 StartTime = "10:00:00",
-                EndTime =  "10:45:00",
+                EndTime = "10:45:00",
                 TreatmentId = new List<string>() { "TREATMENTID" },
                 Date = "2020-05-09"
 
@@ -188,7 +185,7 @@ namespace DataMongoApiTest.ServiceTest
                         TreatmentType = "SNS",
                         Duration = 45,
                         Price = 28,
-                        IsAddOn = false
+                        isAddOn = false
                     }
                 });
             _ophrService.Setup(x => x.Get(It.IsAny<string>())).
@@ -215,8 +212,8 @@ namespace DataMongoApiTest.ServiceTest
                     Email = "E1@mail.com"
                 },
 
-                Treatments = new List<string>() { "TREATMENTID" },
-                WorkDays = new List<string>() { "DAYID" }
+                Treatments = new List<TreatmentSkills>() { new TreatmentSkills() { TreatmentId = "TREATMENTID", TreatmentName = "TT" } },
+                WorkDays = new List<WorkDay>() { new WorkDay { OperatingHoursId = "DAYID", Day = "monday" } }
 
             });
 

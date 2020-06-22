@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataMongoDbIntegrationTest"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminAPI", "AdminAPI\AdminAPI.csproj", "{CC53948E-C75B-4AFF-809F-10D999CEFADB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoReadCSV", "..\..\..\Projects\DemoReadCSV\DemoReadCSV\DemoReadCSV.csproj", "{097094F1-92D4-493A-8927-F07F8280BE86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,5 +33,9 @@ Global
 		{CC53948E-C75B-4AFF-809F-10D999CEFADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC53948E-C75B-4AFF-809F-10D999CEFADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC53948E-C75B-4AFF-809F-10D999CEFADB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{097094F1-92D4-493A-8927-F07F8280BE86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{097094F1-92D4-493A-8927-F07F8280BE86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{097094F1-92D4-493A-8927-F07F8280BE86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{097094F1-92D4-493A-8927-F07F8280BE86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -70,12 +70,12 @@ namespace DataMongoDbIntegrationTest
 
         [Theory]
         [InlineData("/admin/client")]
-        [InlineData("/admin/client/5ecc38d0fa31a5694cbe8aed")]
+        [InlineData("/admin/client/5eecea02b7dfd57c4e35bfdb")]
         public async Task GetEndpoint_ReadClient(string endpoint)
         {
             var response = await _client.GetAsync(endpoint);
 
-            response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
         [Fact]
@@ -162,17 +162,36 @@ namespace DataMongoDbIntegrationTest
             updateResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
-        //[Fact]
-        //public async Task DeleteEndpoint_Vaild()
-        //{
+        [Fact]
+        public async Task DeleteEndpoint_Vaild()
+        {
+            var newClientRequest = new
+            {
+                Url = "/admin/client",
+                Body = new
+                {
+                    FirstName = "Test",
+                    LastName = "Test",
+                    Email = "Email@mail.com",
+                    Phone = "12345678901"
+                }
+            };
 
-        //}
+            var newClientResponse = await _client.PostAsync(newClientRequest.Url, ContentHelper.GetStringContent(newClientRequest.Body));
+            var value = await newClientResponse.Content.ReadAsStringAsync();
+            var client = JsonConvert.DeserializeObject<Client>(value);
 
-        //[Fact]
-        //public async Task DeleteEndpoint_Invalid()
-        //{
+            var response = await _client.DeleteAsync($"{newClientRequest.Url}/{client.ID}");
 
-        //}
+            response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        }
+
+        [Fact]
+        public async Task DeleteEndpoint_Invalid()
+        {
+            var response = await _client.DeleteAsync($"/admin/client/invalidclientid");
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
 
         //[Fact]
         //public async Task DeleteClient_AndExistApp()

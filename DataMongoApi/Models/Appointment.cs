@@ -26,7 +26,6 @@ namespace DataMongoApi.Models
         public List<string> TreatmentNames { get; set; }
         public int MiscPrice { get; set; }
         public int TotalPrice { get; set; }
-        public bool HasBeenProcess { get; set; } = false;
     }
 
     public class ReadAppointment : Entity

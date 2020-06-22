@@ -24,34 +24,13 @@ namespace DataMongoApi.Service
             _treatmentService = treatmentService;
         }
 
-        public string ProcessAppointment(Appointment bookings)
+        public string ProcessAppointment(OrderDetails bookings)
         {
-            var treatments = new List<TreatmentOrder>();
-
-            foreach (var treatmentId in bookings.Info.TreatmentId)
-            {
-                treatments.Add(new TreatmentOrder()
-                {
-                    TreatmentId = treatmentId,
-                    Price = _treatmentService.Get(treatmentId).About.Price
-                });
-            }
-
-            var order = new OrderDetails()
-            {
-                ClientPhone = bookings.Info.Client.Phone,
-                Treatments = treatments,
-                MiscPrice = bookings.MiscPrice,
-                Total = bookings.MiscPrice + treatments.Select(x => x.Price).Sum()
-            };
-
-            var processOrder = Create(order);
-
-            var filter = Builders<Client>.Filter.Eq(c => c.About.Phone, bookings.Info.Client.Phone);
+            var processOrder = Create(bookings);
+            var filter = Builders<Client>.Filter.Eq(c => c.ID, bookings.ID);
             var updateClient = Builders<Client>.Update
                 .AddToSet("Orders", processOrder.ID)
                 .CurrentDate(x => x.ModifiedOn);
-
             _client.UpdateOne(filter, updateClient);
 
             return "Payment Done";
@@ -77,7 +56,6 @@ namespace DataMongoApi.Service
                 .Set(o => o.Treatments, orderDetails.Treatments)
                 .Set(o => o.Total, orderDetails.Total)
                 .CurrentDate(o => o.ModifiedOn);
-
             _orders.UpdateOne(filter, update);
         }
 

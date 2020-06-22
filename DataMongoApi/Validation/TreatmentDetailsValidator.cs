@@ -11,12 +11,12 @@ namespace DataMongoApi.Validation
         {
             RuleFor(t => t.TreatmentName)
                .BeValidLength()
-               .NotEmpty().WithMessage("{Name} should not be empty")
+               .NotEmpty().WithMessage("{TreatmentName} should not be empty")
                .BeValidName();
 
             RuleFor(t => t.TreatmentType)
                .BeValidLength()
-               .NotEmpty().WithMessage("{Type} should not be empty")
+               .NotEmpty().WithMessage("{TreatmentType} should not be empty")
                .BeValidName();
 
             RuleFor(t => t.Price)

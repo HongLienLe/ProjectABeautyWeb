@@ -25,22 +25,10 @@ namespace DataMongoDbIntegrationTest
         {
             var requests = new []
             {
-                new {datetime = new DateTime(2020, 07, 24),
+                new {datetime = new DateTime(2020, 07, 20),
                 treatmentids = new[]
                {
-                   "5ec8579645e16549ec3afd7e"
-               } },
-
-                new {datetime = new DateTime(2020, 07, 25),
-                treatmentids = new[]
-               {
-                   "5ec8579645e16549ec3afd7e"
-               } },
-
-                new {datetime = new DateTime(2020, 07, 26),
-                treatmentids = new[]
-               {
-                   "5ec8579645e16549ec3afd7e"
+                   "5eecc6790fcc0e79a1973bb9"
                } }
             };
 
@@ -57,25 +45,22 @@ namespace DataMongoDbIntegrationTest
         {
             var requests = new[]
            {
-                new {datetime = new DateTime(2020, 07, 24),
+                new {datetime = new DateTime(2020, 07, 20),
                 treatmentids = new[]
                {
-                   "5ec8579645e16549ec3afd7e",
-                   "5ed186269b7dd7208a4e0631"
+                   "5eecc6790fcc0e79a1973bb9"
                } },
 
-                new {datetime = new DateTime(2020, 07, 25),
+                new {datetime = new DateTime(2020, 07, 21),
                 treatmentids = new[]
                {
-                   "5ec8579645e16549ec3afd7e",
-                   "5ed186269b7dd7208a4e0631"
+                   "5eecc6790fcc0e79a1973bb9"
                } },
 
-                new {datetime = new DateTime(2020, 07, 26),
+                new {datetime = new DateTime(2020, 07, 22),
                 treatmentids = new[]
                {
-                   "5ec8579645e16549ec3afd7e",
-                   "5ed186269b7dd7208a4e0631"
+                   "5eecc6790fcc0e79a1973bb9"
                } }
             };
 
@@ -96,7 +81,7 @@ namespace DataMongoDbIntegrationTest
                 datetime = new DateTime(2020, 05, 30),
                 treatmentids = new[]
                 {
-                    "5ec8579645e16549ec3afd7e"
+                    "5eecc6790fcc0e79a1973bb9"
                 }
             };
 
@@ -122,7 +107,7 @@ namespace DataMongoDbIntegrationTest
             };
 
             var response = await _client.PostAsync(url, ContentHelper.GetStringContent(request));
-            response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
     }

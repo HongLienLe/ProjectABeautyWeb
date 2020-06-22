@@ -27,10 +27,28 @@ namespace DataMongoDbIntegrationTest
             var request = new
             {
                 Url = "/admin/employee",
-                Body = new
+                Body = new EmployeeForm()
                 {
+                    Details = new EmployeeDetails{
                     Name = "EmployeeTest",
                     Email = "ETest@mail.com"
+                    },
+                    Treatments = new List<TreatmentSkills>()
+                    {
+                        new TreatmentSkills()
+                        {
+                            TreatmentId = "5eecc6790fcc0e79a1973bb9",
+                            TreatmentName = "SNS Full set"
+                        }
+                    },
+                    WorkDays = new List<WorkDay>()
+                    {
+                        new WorkDay()
+                        {
+                            OperatingHoursId = "5eecccd79c8f9d7a387d98d9",
+                            Day = "Monday"
+                        }
+                    }  
                 }
             };
 
@@ -45,36 +63,62 @@ namespace DataMongoDbIntegrationTest
         }
 
         [Fact]
+        public async Task EmployeeId_In_Treatment()
+        {
+            var url = "/admin/treatment/5eecc6790fcc0e79a1973bb9";
+
+            var response = await _client.GetAsync(url);
+            var value = await response.Content.ReadAsStringAsync();
+            var treatment = JsonConvert.DeserializeObject<Treatment>(value);
+
+            var employeeId = "5eecd0ebb807827a992c1189";
+            Assert.Contains(employeeId, treatment.Employees);
+        }
+
+        [Fact]
+        public async Task EmployeeId_In_OperatingHours()
+        {
+            var url = "/admin/operatinghours/monday";
+
+            var response = await _client.GetAsync(url);
+            var value = await response.Content.ReadAsStringAsync();
+            var day = JsonConvert.DeserializeObject<OperatingHours>(value);
+
+            var employeeId = "5eecd0ebb807827a992c1189";
+
+            Assert.Contains(employeeId, day.Employees);
+        }
+
+        [Fact]
         public async Task PostEndpoint_InvalidEmployee_ReturnUnSuccess()
         {
             var request = new
             {
                 Url = "/admin/employee",
-                Body = new
+                Body = new EmployeeForm()
                 {
-                    Name = "E1",
-                    Email = "Invalid@mail.com"
+                    Details = new EmployeeDetails()
+                    {
+                        Name = "E1",
+                        Email = "Invalid@mail.com"
+                    }
                 }
             };
 
             var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
-            var value = await response.Content.ReadAsStringAsync();
-            var employee = JsonConvert.DeserializeObject<Employee>(value);
-
-            Assert.Null(employee.ID);
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Theory]
         [InlineData("/admin/employee")]
-        [InlineData("/admin/employee/5ec8848bfd83534c38e8c4de")]
+        [InlineData("/admin/employee/5eecc564b265f0798517e647")]
         public async Task GetEndpoint_Get_Valid(string endpoint)
         {
             var response = await _client.GetAsync(endpoint);
             var stringResponse = await response.Content.ReadAsStringAsync();
             //var employees = JsonConvert.DeserializeObject<IEnumerable<Employee>>(stringResponse);
             //Assert.Contains(employees, e => e.Details.Name == "UpdatedName");
-            response.EnsureSuccessStatusCode();
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
         [Fact]
@@ -91,10 +135,13 @@ namespace DataMongoDbIntegrationTest
             var newRequest = new
             {
                 Url = "/admin/employee",
-                Body = new
+                Body = new EmployeeForm()
                 {
-                    Name = "EmployeeTestUpdate",
-                    Email = "ETest@mail.com"
+                    Details = new EmployeeDetails()
+                    {
+                        Name = "EmployeeTestUpdate",
+                        Email = "ETest@mail.com"
+                    }
                 }
             };
 
@@ -105,10 +152,13 @@ namespace DataMongoDbIntegrationTest
             var request = new
             {
                 Url = $"/admin/employee/{newEmployee.ID}",
-                Body = new
+                Body = new EmployeeForm()
                 {
-                    Name = "UpdatedName",
-                    Email = "Update@mail.com"
+                    Details = new EmployeeDetails()
+                    {
+                        Name = "UpdatedName",
+                        Email = "Update@mail.com"
+                    }
                 }
             };
 
@@ -119,7 +169,7 @@ namespace DataMongoDbIntegrationTest
             await _client.DeleteAsync($"/admin/employee/{newEmployee.ID}");
 
             response.EnsureSuccessStatusCode();
-            Assert.Equal(request.Body.Name, employee.Details.Name);
+            Assert.Equal(request.Body.Details.Name, employee.Details.Name);
         }
 
         [Fact]
@@ -128,10 +178,13 @@ namespace DataMongoDbIntegrationTest
             var request = new
             {
                 Url = "admin/employee/InvalidEmployeeId",
-                Body = new
+                Body = new EmployeeForm()
                 {
-                    Name = "X",
-                    Email = "Invalid@mail.com"
+                    Details = new EmployeeDetails()
+                    {
+                        Name = "X",
+                        Email = "Invalid@mail.com"
+                    }
                 }
             };
 
@@ -146,10 +199,12 @@ namespace DataMongoDbIntegrationTest
             var newEmployeeRequest = new
             {
                 Url = "/admin/employee",
-                Body = new
+                Body = new EmployeeForm()
                 {
+                    Details = new EmployeeDetails(){
                     Name = "EmployeeTestUpdateInvalid",
                     Email = "ETest@mail.com"
+                    }
                 }
             };
 
@@ -160,10 +215,13 @@ namespace DataMongoDbIntegrationTest
             var request = new
             {
                 Url = $"/admin/employee/{newemployee.ID}",
-                Body = new
+                Body = new EmployeeForm()
                 {
-                    Name = "invalidNumber123",
-                    Email = "Update@mail.com"
+                    Details = new EmployeeDetails()
+                    {
+                        Name = "invalidNumber123",
+                        Email = "Update@mail.com"
+                    }
                 }
             };
 
@@ -184,10 +242,13 @@ namespace DataMongoDbIntegrationTest
             var newRequest = new
             {
                 Url = "/admin/employee",
-                Body = new
+                Body = new EmployeeForm()
                 {
-                    Name = "EmployeeTestDelete",
-                    Email = "ETest@mail.com"
+                    Details = new EmployeeDetails()
+                    {
+                        Name = "EmployeeTestDelete",
+                        Email = "ETest@mail.com"
+                    }
                 }
             };
 
@@ -215,10 +276,21 @@ namespace DataMongoDbIntegrationTest
             var newRequest = new
             {
                 Url = "/admin/employee",
-                Body = new
+                Body = new EmployeeForm()
                 {
-                    Name = "EmployeeTestRemoveTreatment",
-                    Email = "ETest@mail.com"
+                    Details = new EmployeeDetails()
+                    {
+                        Name = "EmployeeTestRemoveTreatment",
+                        Email = "ETest@mail.com"
+                    },
+                    Treatments = new List<TreatmentSkills>()
+                    {
+                        new TreatmentSkills()
+                        {
+                            TreatmentId = "5eecc6790fcc0e79a1973bb9",
+                            TreatmentName = "SNS Full set"
+                        }
+                    }
                 }
             };
 
@@ -226,20 +298,10 @@ namespace DataMongoDbIntegrationTest
             var newValue = await newResponse.Content.ReadAsStringAsync();
             var newEmployee = JsonConvert.DeserializeObject<Employee>(newValue);
 
-
-            var requestTreatment = new
-            {
-                Url = $"/admin/employee/{newEmployee.ID}/manage/treatment",
-                Body = new[] { "5ec8579645e16549ec3afd7e" }
-
-            };
-
-            await _client.PostAsync(requestTreatment.Url, ContentHelper.GetStringContent(requestTreatment.Body));
-
             await _client.DeleteAsync($"/admin/employee/{newEmployee.ID}");
 
 
-            var treatmentResponse = await _client.GetAsync("/admin/treatment/5ec8579645e16549ec3afd7e");
+            var treatmentResponse = await _client.GetAsync("/admin/treatment/5eecc6790fcc0e79a1973bb9");
             var treatmentValue = await treatmentResponse.Content.ReadAsStringAsync();
             var treatment = JsonConvert.DeserializeObject<Treatment>(treatmentValue);
 
@@ -253,26 +315,27 @@ namespace DataMongoDbIntegrationTest
             var newRequest = new
             {
                 Url = "/admin/employee",
-                Body = new
+                Body = new EmployeeForm()
                 {
-                    Name = "EmployeeTestRemoveFromWorkdays",
-                    Email = "ETest@mail.com"
+                    Details = new EmployeeDetails()
+                    {
+                        Name = "EmployeeTestRemoveFromWorkdays",
+                        Email = "ETest@mail.com"
+                    },
+                    WorkDays = new List<WorkDay>()
+                    {
+                        new WorkDay()
+                        {
+                            OperatingHoursId = "5eecccd79c8f9d7a387d98d9",
+                            Day = "Monday"
+                        }
+                    }
                 }
             };
 
             var newResponse = await _client.PostAsync(newRequest.Url, ContentHelper.GetStringContent(newRequest.Body));
             var newValue = await newResponse.Content.ReadAsStringAsync();
             var newEmployee = JsonConvert.DeserializeObject<Employee>(newValue);
-
-
-            var requestWorkDay = new
-            {
-                Url = $"/admin/employee/{newEmployee.ID}/manage/workdays",
-                Body = new[] { "5ec8838bfa32864c1f2e5e19" }
-
-            };
-
-            await _client.PostAsync(requestWorkDay.Url, ContentHelper.GetStringContent(requestWorkDay.Body));
 
             await _client.DeleteAsync($"/admin/employee/{newEmployee.ID}");
 
@@ -282,143 +345,8 @@ namespace DataMongoDbIntegrationTest
             var day = JsonConvert.DeserializeObject<OperatingHours>(dayValue);
 
             Assert.DoesNotContain(newEmployee.ID, day.Employees);
-
         }
 
-        [Fact]
-        public async Task PostEndpoint_UpdateTreatment_Return_Success()
-        {
-            var request = new
-            {
-                Url = "/admin/employee/5ec8848bfd83534c38e8c4de/manage/treatment",
-                Body = new[] { "5ec8579645e16549ec3afd7e" }
-
-            };
-
-            var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
-
-            var treatmentResponse = await _client.GetAsync("/admin/treatment/5ec8579645e16549ec3afd7e");
-            var treatmentValue = await treatmentResponse.Content.ReadAsStringAsync();
-            var treatment = JsonConvert.DeserializeObject<Treatment>(treatmentValue);
-
-            response.EnsureSuccessStatusCode();
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-
-            Assert.Contains("5ec8848bfd83534c38e8c4de", treatment.Employees);
-        }
-
-        [Fact]
-        public async Task PostEndpoint_UpdateWorkdays_Return_Success()
-        {
-            var request = new
-            {
-                Url = "/admin/employee/5ec8848bfd83534c38e8c4de/manage/workdays",
-                Body = new[] {
-                    "5ec8838bfa32864c1f2e5e19",
-                    "5ec8845003d7e24c2b997c16",
-                    "5ec8848e54b3e34c392900c8",
-                    "5ec969c33de2bd5095082b98",
-                    "5ecaecfb541d4c5e2395e9b6",
-                    "5ecd444deab8e770dfab68c1"
-
-                }
-            };
-
-            var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
-
-            var dayResponse = await _client.GetAsync("/admin/operatinghours/Monday");
-            var dayValue = await dayResponse.Content.ReadAsStringAsync();
-            var day = JsonConvert.DeserializeObject<OperatingHours>(dayValue);
-
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
-            Assert.Contains("5ec8848bfd83534c38e8c4de", day.Employees);
-        }
-
-        [Fact]
-        public async Task PostEndpoint_UpdateTreatment_InvalidEmployee()
-        {
-            var request = new
-            {
-                Url = "/admin/employee/5ec8579645e16549ec3afd7A/manage/treatment",
-                Body = new[] { "5ec8579645e16549ec3afd7e" }
-            };
-
-            var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
-
-            var treatmentResponse = await _client.GetAsync("/admin/treatment/5ec8579645e16549ec3afd7e");
-            var treatmentValue = await treatmentResponse.Content.ReadAsStringAsync();
-            var treatment = JsonConvert.DeserializeObject<Treatment>(treatmentValue);
-
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        }
-
-        [Fact]
-        public async Task PostEndpoint_InvalidTreatment_ValidEmployee()
-        {
-            var request = new
-            {
-                Url = "/admin/employee/5ec8848bfd83534c38e8c4de/manage/treatment",
-                Body = new[] { "5ec8579645e16549ec3afd7A" }
-            };
-
-            var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
-
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        }
-
-        [Fact]
-        public async Task PostEndpoint_InvalidTreatment_InvalidEmployee()
-        {
-            var request = new
-            {
-                Url = "/admin/employee/5ec8579645e16549ec3afd7A/manage/treatment",
-                Body = new[] { "5ec8579645e16549ec3afd7A" }
-            };
-
-            var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        }
-
-        [Fact]
-        public async Task PostEndpoint_UpdateWorkdays_InvalidEmployee_ValidDay()
-        {
-            var request = new
-            {
-                Url = "/admin/employee/5ec8579645e16549ec3afd7A/manage/workdays",
-                Body = new[] { "tuesday" }
-            };
-
-            var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
-
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        }
-
-        [Fact]
-        public async Task PostEndpoint_UpdateWorkDay_ValidEmployee_InvalidDay()
-        {
-            var request = new
-            {
-                Url = "/admin/employee/5ec8848bfd83534c38e8c4de/manage/workdays",
-                Body = new[] { "5ec8579645e16549ec3afd7A" }
-            };
-
-            var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
-
-            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        }
-
-        [Fact]
-        public async Task PostEndpoint_UpdateWorkDay_InvalidEmployee_InvalidDay()
-        {
-            var request = new
-            {
-                Url = "/admin/employee/5ec8579645e16549ec3afd7A/manage/workdays",
-                Body = new[] { "5ec8579645e16549ec3afd7A" }
-            };
-
-            var response = await _client.PostAsync(request.Url, ContentHelper.GetStringContent(request.Body));
-
-            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        }
+        
     }
 }

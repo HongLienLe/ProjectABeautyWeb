@@ -40,9 +40,10 @@ namespace DataMongoApi.Service
             if (!day.About.isOpen)
                 return null;
 
-            var treatments = app.TreatmentId.Select(x => _treatmentService.Get(x));
+            var treatments = app.TreatmentId.Select(x => _treatmentService.Get(x)).ToList();
             var treatmentTime = treatments.Select(x => x.About.Duration).Sum();
-            if (treatmentTime == 0)
+            var treatmentTotalPrice = treatments.Select(x => x.About.Price).Sum();
+            if (treatments == null)
                 return null;
 
             var appointment = new Appointment()
@@ -50,7 +51,7 @@ namespace DataMongoApi.Service
                 Info = app,
                 ModifiedOn = DateTime.UtcNow,
                 TreatmentNames = treatments.Select(x => $"{x.About.TreatmentType} {x.About.TreatmentName}").ToList(),
-                TotalPrice = treatments.Select(x => x.About.Price).Sum()
+                TotalPrice = treatmentTotalPrice
             };
 
             app.EndTime = TimeSpan.Parse(app.StartTime).Add(TimeSpan.FromMinutes(treatmentTime)).ToString();
@@ -67,7 +68,7 @@ namespace DataMongoApi.Service
             _clientService.AddAppointment(client.ID, bookedApp);
 
             return bookedApp;
-            
+
         }
 
         private Employee FreeEmployee(List<string> employees, Appointment app)
@@ -100,7 +101,7 @@ namespace DataMongoApi.Service
 
         public List<ReadAppointment> GetAppointments(string date)
         {
-            var app = _appointments.AsQueryable<Appointment>().Where(x => x.Info.Date.Contains(date)).ToList();
+            var app = _appointments.AsQueryable().Where(x => x.Info.Date.Contains(date)).ToList();
             var readApp = app.Select(x => new ReadAppointment()
             {
                 ID = x.ID,
@@ -114,7 +115,7 @@ namespace DataMongoApi.Service
                 TreatmentId = x.Info.TreatmentId,
                 TreatmentNames = x.TreatmentNames,
                 MiscPrice = x.MiscPrice,
-                HasBeenProcess = x.HasBeenProcess,
+                TotalPrice = x.TotalPrice,
                 Notes = x.Info.Notes
             }).ToList();
 
@@ -123,8 +124,7 @@ namespace DataMongoApi.Service
 
         public void Remove(string appointmentId)
         {
-            var clientNo = _appointments.Find<Appointment>(x => x.ID == appointmentId).FirstOrDefault().Info.Client.Phone;
-
+            var clientNo = _appointments.Find(x => x.ID == appointmentId).FirstOrDefault().Info.Client.Phone;
             _clientService.RemoveAppointment(clientNo, appointmentId);
             _appointments.DeleteOne(x => x.ID == appointmentId);
         }
@@ -132,7 +132,6 @@ namespace DataMongoApi.Service
         public Appointment UpdateAppointment(string id, AppointmentDetails app)
         {
             var filter = Builders<Appointment>.Filter.Eq(x => x.ID, id);
-
             var treatments = app.TreatmentId.Select(x => _treatmentService.Get(x));
             var treatmentTime = treatments.Select(x => x.About.Duration).Sum();
             if (treatmentTime == 0)
@@ -160,23 +159,14 @@ namespace DataMongoApi.Service
                 .Set(x => x.EmployeeId, updatedEmployeeId)
                 .Set(x => x.EmployeeName, updatedEmployeeName)
                 .CurrentDate(x => x.ModifiedOn);
-
-
             _appointments.UpdateOne(filter, updatedAppointment);
-
-            return _appointments.Find(x => x.ID == id).FirstOrDefault(); 
+            return _appointments.Find(x => x.ID == id).FirstOrDefault();
         }
 
         private List<string> EmployeeWorkingIds(List<string> treatmentId, string date)
         {
             var workingEmployees = _operatingHoursService.Get(date).Employees;
-
-            return workingEmployees.Where(x => _employeesService.Get(x).Treatments.Any(x => treatmentId.Contains(x))).ToList();
-            //return _employees.AsQueryable<Employee>()
-            //    .Where(x => x.WorkDays.Contains(dayId)
-            //        && x.Treatments.Any(e => treatmentId.Contains(e)))
-            //    .Select(x => x.ID)
-            //    .ToList();
+            return workingEmployees.Where(x => _employeesService.Get(x).Treatments.Any(x => treatmentId.Contains(x.TreatmentId))).ToList();
         }
 
     }

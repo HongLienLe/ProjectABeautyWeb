@@ -25,7 +25,7 @@ namespace DataMongoApiTest.ServiceTest
         {
             _order = new OrderDetails()
             {
-                ClientPhone = "123",
+                ClientId = "123",
                 Treatments = new List<TreatmentOrder>()
                 {
                     new TreatmentOrder()
@@ -34,7 +34,8 @@ namespace DataMongoApiTest.ServiceTest
                         Price = 1
                     }
                 },
-                Total = 1
+                MiscPrice = 1,
+                Total = 2
             };
 
             _mockCollection = new Mock<IMongoCollection<OrderDetails>>();
@@ -57,45 +58,6 @@ namespace DataMongoApiTest.ServiceTest
 
             //Mock GetCollection
             _mockContext.Setup(c => c.GetCollection<OrderDetails>("Orders")).Returns(_mockCollection.Object);
-
-        }
-
-        [Test]
-        public void Process_Appointment_Valid()
-        {
-            var app = new Appointment()
-            {
-                ID = "1",
-                Info = new AppointmentDetails()
-                {
-                    TreatmentId = new List<string>() { "1" },
-                    Client = new ClientDetails()
-                    {
-                        FirstName = "Test",
-                        LastName = "Test",
-                        Email = "Test@gmail.com",
-                        Phone = "123"
-                    },
-                }
-            };
-
-            _treatmentService = new Mock<ITreatmentService>();
-            _treatmentService.Setup(x => x.Get(It.IsAny<string>())).Returns( new Treatment()
-            {
-                About = new TreatmentDetails()
-                {
-                    TreatmentName = "Full Set",
-                    TreatmentType = "SNS",
-                    Duration = 45,
-                    Price = 28
-                }
-            });
-
-            _paymentService = new PaymentService(_mockContext.Object, _treatmentService.Object);
-
-            var actual = _paymentService.ProcessAppointment(app);
-
-            Assert.IsNotNull(actual);
 
         }
 

@@ -33,16 +33,12 @@ namespace DataMongoApi.Controllers.AdminController
         [HttpGet("{id:length(24)}")]
         public IActionResult Get(string id)
         {
-            var merchantid = Request.Headers.TryGetValue("merchant-id",out StringValues merchantId);
-
-            
             var treatment = _treatmentService.Get(id);
 
             if (treatment == null)
             {
-                return NotFound();
+                return NotFound(id);
             }
-
             return Ok(treatment);
         }
 
@@ -65,7 +61,7 @@ namespace DataMongoApi.Controllers.AdminController
 
             if (treatment == null)
             {
-                return NotFound();
+                return NotFound(id);
             }
 
             _treatmentService.Update(id, treatmentForm);
