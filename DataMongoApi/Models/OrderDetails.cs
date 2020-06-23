@@ -8,6 +8,7 @@ namespace DataMongoApi.Models
 {
     public class OrderDetails : Entity
     {
+        [BsonRepresentation(BsonType.ObjectId)]
         public string ClientId { get; set; }
         public List<TreatmentOrder> Treatments { get; set; }
         public int MiscPrice { get; set; }

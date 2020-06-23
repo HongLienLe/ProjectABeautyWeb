@@ -22,6 +22,7 @@ namespace DataMongoApi.Validation
             RuleFor(t => t.Price)
                 .NotEmpty().WithMessage("{Price} can not be empty")
                 .Must(BeMoreThanZero).WithMessage("{{Price} must be more than 0");
+            
 
             RuleFor(t => t.Duration)
                 .NotEmpty().WithMessage("{Duration} can not be empty")

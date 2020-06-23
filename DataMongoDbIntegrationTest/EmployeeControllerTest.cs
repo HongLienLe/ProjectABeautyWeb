@@ -347,6 +347,7 @@ namespace DataMongoDbIntegrationTest
             Assert.DoesNotContain(newEmployee.ID, day.Employees);
         }
 
-        
+        //Check that treatment ids are 24 string
+        //work includes day and ids
     }
 }

@@ -13,21 +13,19 @@ namespace DataMongoApi.Service
     {
         private IMongoCollection<OrderDetails> _orders { get; set; }
         private IMongoCollection<Client> _client { get; set; }
-        private ITreatmentService _treatmentService { get; set; }
         private readonly IMongoDbContext _context;
 
-        public PaymentService(IMongoDbContext context, ITreatmentService treatmentService)
+        public PaymentService(IMongoDbContext context)
         {
             _context = context;
             _orders = _context.GetCollection<OrderDetails>("Orders");
             _client = _context.GetCollection<Client>("Clients");
-            _treatmentService = treatmentService;
         }
 
         public string ProcessAppointment(OrderDetails bookings)
         {
             var processOrder = Create(bookings);
-            var filter = Builders<Client>.Filter.Eq(c => c.ID, bookings.ID);
+            var filter = Builders<Client>.Filter.Eq(c => c.ID, bookings.ClientId);
             var updateClient = Builders<Client>.Update
                 .AddToSet("Orders", processOrder.ID)
                 .CurrentDate(x => x.ModifiedOn);

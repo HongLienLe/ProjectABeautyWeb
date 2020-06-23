@@ -1,43 +1,18 @@
-﻿<Properties StartupConfiguration="{E276B61B-CDAC-4D7E-AE76-FD48BE3488FD}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
+﻿<Properties StartupConfiguration="{7C3EE540-AE97-49DF-B915-81E4FBCA9F2F}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
   <MonoDevelop.Ide.ItemProperties.DataMongoDbIntegrationTest PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="DataMongoApi/Service/AppointmentService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="DataMongoApi/appsettings.json">
     <Files>
-      <File FileName="DataMongoDbIntegrationTest/AppointmentControllerTest.cs" Line="133" Column="35" />
-      <File FileName="DataMongoApi/Controllers/ClientController/BookController.cs" Line="1" Column="1" />
-      <File FileName="DataMongoApi/Service/AppointmentService.cs" Line="1" Column="1" />
+      <File FileName="DataMongoDbIntegrationTest/PaymentControllerTest.cs" Line="43" Column="76" />
+      <File FileName="DataMongoApi/appsettings.json" Line="4" Column="3" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ProjectABeautyWeb" expanded="True">
             <Node name="DataMongoApi" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="AdminController" expanded="True" />
-                <Node name="ClientController" expanded="True" />
-              </Node>
-              <Node name="Service" expanded="True">
-                <Node name="AppointmentService.cs" selected="True" />
-              </Node>
+              <Node name="appsettings.json" selected="True" />
             </Node>
             <Node name="DataMongoDbIntegrationTest" expanded="True" />
-            <Node name="DemoReadCSV" expanded="True">
-              <Node name="Controllers" expanded="True" />
-              <Node name="Mappers" expanded="True" />
-              <Node name="Models" expanded="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node name="ProjectABeautyWeb" expanded="True">
-            <Node name="DataMongoDbIntegrationTest" expanded="True">
-              <Node name="DataMongoDbIntegrationTest" expanded="True">
-                <Node name="AppointmentControllerTest" expanded="True">
-                  <Node name="PutEndpoint_ValidApp" selected="True" />
-                </Node>
-              </Node>
-            </Node>
           </Node>
         </State>
       </Pad>
@@ -77,6 +52,7 @@
       <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/Service/AppointmentService.cs" relfile="DataMongoApi/Service/AppointmentService.cs" line="60" column="1" />
       <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/Service/AppointmentService.cs" relfile="DataMongoApi/Service/AppointmentService.cs" line="166" column="1" />
       <Breakpoint file="/Users/hongle/Projects/DemoReadCSV/DemoReadCSV/Controllers/CvsController.cs" line="111" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/Controllers/AdminController/PaymentController.cs" relfile="DataMongoApi/Controllers/AdminController/PaymentController.cs" line="29" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

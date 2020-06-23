@@ -116,7 +116,7 @@ namespace DataMongoDbIntegrationTest
         [Fact]
         public async Task PutEndpoint_ValidApp()
         {
-            var url = "/book/5eed3a2d1c232380f6a593ef";
+            var url = "/book";
             var appRequest = new AppointmentDetails
             {
                 Client = new ClientDetails

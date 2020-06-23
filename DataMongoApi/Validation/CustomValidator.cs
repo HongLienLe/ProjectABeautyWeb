@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentValidation;
 
@@ -29,6 +30,16 @@ namespace DataMongoApi.Validation
         public static IRuleBuilderOptions<T, string> BeAllNumber<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder.Must(m => m.Replace(" ", "").Replace("-", "").All(char.IsDigit)).WithMessage("{Phone} must be all digits");
+        }
+
+        public static IRuleBuilderOptions<T, string> BeAValid24HexStringId<T>(this IRuleBuilder<T, string> ruleBuilder)
+        {
+            return ruleBuilder.Must(m => m.Length == 24).WithMessage("{ID} must be length 24 Characters");
+        }
+
+        public static IRuleBuilderOptions<T, IList<string>> BeAValid24HexStringId<T>(this IRuleBuilder<T, IList<string>> ruleBuilder)
+        {
+            return ruleBuilder.Must(m => m.Any(x => x.Length == 24)).WithMessage("{ID} must be length 24 Characters");
         }
     }
 }

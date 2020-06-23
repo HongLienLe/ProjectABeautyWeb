@@ -68,7 +68,9 @@ namespace DataMongoApi
                         fv.RegisterValidatorsFromAssemblyContaining<EmployeeFormValidator>()
                         .RegisterValidatorsFromAssemblyContaining<TreatmentDetailsValidator>()
                         .RegisterValidatorsFromAssemblyContaining<OperatingHoursDetailsValidatior>()
-                        .RegisterValidatorsFromAssemblyContaining<ClientDetailsValidator>());
+                        .RegisterValidatorsFromAssemblyContaining<ClientDetailsValidator>()
+                        .RegisterValidatorsFromAssemblyContaining<AppointmentValidator>()
+                        .RegisterValidatorsFromAssemblyContaining<OrderDetailsValidator>());
 
 
             services.AddAuthentication(options =>

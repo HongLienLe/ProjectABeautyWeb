@@ -166,5 +166,12 @@ namespace DataMongoDbIntegrationTest
             //  Assert.DoesNotContain(treatment.ID, employee.Treatments);
 
         }
+
+        //Check if treatment name is empty
+        //check treatment name length not too looong
+        //check if the type is emptyy
+        //check if the price is more than 0
+        //check that the price is not ridiculous
+        
     }
 }

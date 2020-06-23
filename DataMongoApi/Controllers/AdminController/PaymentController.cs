@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DataMongoApi.Controllers.AdminController
 {
-    [Route("[controller]")]
+    [Route("admin/[controller]")]
     public class PaymentController : Controller
     {
         private IPaymentService _paymentService;

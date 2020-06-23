@@ -59,5 +59,9 @@ namespace DataMongoDbIntegrationTest
             Assert.Contains(request.Body.ClosingHr, day.About.ClosingHr);
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
+
+        //update, is opening time greater then closing time
+
+        //timespan needs to be in the correct formatt
     }
 }
