@@ -18,7 +18,13 @@ namespace DataMongoApi.Models
     {
         public OperatingHoursDetails About { get; set; }
 
+        public List<EmployeeIdName> Employees { get; set; } = new List<EmployeeIdName>();
+    }
+
+    public class EmployeeIdName
+    {
         [BsonRepresentation(BsonType.ObjectId)]
-        public List<string> Employees { get; set; } = new List<string>();
+        public string Id { get; set; }
+        public string Name { get; set; }
     }
 }

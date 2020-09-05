@@ -44,11 +44,13 @@ namespace DataMongoApi.Service
             return treatment;
         }
 
-        public void Update(string id, TreatmentDetails treatmentIn)
+        public void Update(string id, TreatmentForm treatmentIn)
         {
             var filter = Builders<Treatment>.Filter.Eq(t => t.ID, id);
             var update = Builders<Treatment>.Update
-                .Set(t => t.About, treatmentIn)
+                .Set(t => t.Name, treatmentIn.Name)
+                .Set(t => t.Price, treatmentIn.Price)
+                .Set(t => t.isAddOn, treatmentIn.isAddOn)
                 .CurrentDate(t => t.ModifiedOn);
             _treatment.UpdateOne(filter, update);
         }
@@ -79,23 +81,5 @@ namespace DataMongoApi.Service
 
             _employee.UpdateMany(employeeFilter, employeeUpdate);
         }
-
-
-        //public void UpdateEmployees(string id, List<string> employeeIds)
-        //{
-        //    var treatment = Builders<Treatment>.Filter.Eq(t => t.ID, id);
-
-        //    var updateTreatment = Builders<Treatment>.Update
-        //        .AddToSetEach("Employees", employeeIds)
-        //        .CurrentDate(t => t.ModifiedOn);
-        //    _treatment.UpdateOne(treatment, updateTreatment);
-
-        //    var employees = Builders<Employee>.Filter.In("ID", employeeIds);
-        //    var updateEmployees = Builders<Employee>.Update
-        //        .AddToSet("Treatments", id)
-        //        .CurrentDate(t => t.ModifiedOn);
-        //    _employee.UpdateMany(employees, updateEmployees);
-
-        //}
     }
 }

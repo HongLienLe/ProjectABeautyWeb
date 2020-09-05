@@ -11,7 +11,7 @@ namespace DataMongoApi.Validation
             RuleFor(x => x.ClientId)
                 .BeAValid24HexStringId();
 
-            RuleFor(x => x.Treatments)
+            RuleFor(x => x.TreatmentOrders)
                 .NotEmpty().WithMessage("{Treatments} can not be empty");
 
         }

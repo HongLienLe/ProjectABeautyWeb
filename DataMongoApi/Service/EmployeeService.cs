@@ -38,15 +38,43 @@ namespace DataMongoApi.Service
 
         public Employee Create(EmployeeForm eF)
         {
+            var treatments = new List<TreatmentIdName>();
+
+            if (eF.Treatments != null)
+            {
+
+                foreach (var treatmentId in eF.Treatments)
+                {
+                    var treatment = _treatment.Find(x => x.ID == treatmentId).FirstOrDefault();
+                    if (treatment == null)
+                        return null;
+
+                    var tIdName = new TreatmentIdName()
+                    {
+                        Id = treatment.ID,
+                        TreatmentName = $"{treatment.About.TreatmentType} {treatment.About.TreatmentName}"
+                    };
+
+                    treatments.Add(tIdName);
+                }
+            }
+
             var employee = new Employee()
             {
                 Details = eF.Details,
-                Treatments = eF.Treatments,
+                Treatments = treatments,
                 WorkDays = eF.WorkDays,
                 ModifiedOn = DateTime.Now
             };
 
             _employee.InsertOne(employee);
+
+            if (employee.Treatments != null)
+                AddTreatmentsSkills(employee.ID, eF.Treatments);
+
+            if (employee.WorkDays != null)
+                AddWorkDays(employee.ID, employee.WorkDays);
+
             return employee;
         }
 
@@ -66,7 +94,7 @@ namespace DataMongoApi.Service
             if(employee.Treatments !=  null)
                 RemoveEmployeeFromTreatment(id);
             if(employee.WorkDays != null)
-                RemoveEmployeeFromWorkDays(id);
+                RemoveEmployeeFromWorkDays(employee);
             _employee.DeleteOne(e => e.ID == id);
         }
 
@@ -80,7 +108,7 @@ namespace DataMongoApi.Service
         }
 
 
-        private void AddTreatmentsSkills(string id, List<TreatmentSkills> treatments)
+        private void AddTreatmentsSkills(string id, List<string> treatments)
         {
             var employee = Builders<Employee>.Filter.Eq(e => e.ID,id);
             var updateEmployee = Builders<Employee>.Update
@@ -90,26 +118,30 @@ namespace DataMongoApi.Service
 
 
 
-            var treatment = Builders<Treatment>.Filter.In("ID",treatments.Select(x => x.TreatmentId).ToList());
+            var treatment = Builders<Treatment>.Filter.In("ID",treatments);
             var updateTreatment = Builders<Treatment>.Update
                 .AddToSet("Employees", id)
                 .CurrentDate(t => t.ModifiedOn);
             _treatment.UpdateMany(treatment, updateTreatment);
         }
 
-        private void AddWorkDays(string id, List<WorkDay> day)
+        private void AddWorkDays(string id, List<string> days)
         {
             var employee = Builders<Employee>.Filter.Eq(e => e.ID, id);
             var updateEmployee = Builders<Employee>.Update
-                .Set("WorkDays", day)
+                .Set("WorkDays", days)
                 .CurrentDate(e => e.ModifiedOn);
             _employee.UpdateOne(employee, updateEmployee);
 
-            var dayId = day.Select(x => x.OperatingHoursId);
+                var employeeIdName = new EmployeeIdName()
+                {
+                    Id = id,
+                    Name = Get(id).Details.Name
+                };
 
-            var operatingDays = Builders<OperatingHours>.Filter.In("ID", dayId);
+            var operatingDays = Builders<OperatingHours>.Filter.In(x => x.About.Day, days);
             var updateOperatingHours = Builders<OperatingHours>.Update
-                .AddToSet("Employees", id)
+                .AddToSet("Employees", employeeIdName)
                 .CurrentDate(t => t.ModifiedOn);
             _operatingHours.UpdateMany(operatingDays, updateOperatingHours);
         }
@@ -122,11 +154,17 @@ namespace DataMongoApi.Service
             _treatment.UpdateMany(treatmentfilter, treatmentupdate);
         }
 
-        private void RemoveEmployeeFromWorkDays(string id)
+        private void RemoveEmployeeFromWorkDays(Employee employee)
         {
-            var dayFilter = Builders<OperatingHours>.Filter.AnyEq("Employees", id);
+            var employeeIDName = new EmployeeIdName()
+            {
+                Id = employee.ID,
+                Name = employee.Details.Name
+            };
+
+            var dayFilter = Builders<OperatingHours>.Filter.AnyEq(x => x.Employees, employeeIDName);
             var dayUpdate = Builders<OperatingHours>.Update
-                .Pull("Employees", id);
+                .Pull("Employees", employeeIDName);
             _operatingHours.UpdateMany(dayFilter, dayUpdate);
         }
 

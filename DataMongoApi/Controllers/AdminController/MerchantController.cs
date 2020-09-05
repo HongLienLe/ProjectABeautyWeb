@@ -20,10 +20,10 @@ namespace DataMongoApi.Controllers.AdminController
             _merchantService = merchantService;
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Get(string id)
+        [HttpGet()]
+        public IActionResult Get()
         {
-            var merchant = _merchantService.Get(id);
+            var merchant = _merchantService.Get();
 
             if (merchant == null)
             {
@@ -33,27 +33,14 @@ namespace DataMongoApi.Controllers.AdminController
             return Ok(merchant);
         }
 
-        [HttpPost]
-        public IActionResult Create([FromBody]Merchant merchant)
+
+        [HttpPut()]
+        public IActionResult Update([FromBody] Merchant merchantIn)
         {
-            var response = _merchantService.Create(merchant);
+              _merchantService.Update(merchantIn);
 
-            return Ok(response);
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult Update(string id, [FromBody] Merchant merchantIn)
-        {
-            var merchant = _merchantService.Get(id);
-
-            if (merchant == null)
-            {
-                return NotFound(merchant);
-            }
-
-            _merchantService.Update(id, merchantIn);
-
-            return Ok(id);
+            var merchant = _merchantService.Get();
+            return Ok(merchant);
         }
 
     }

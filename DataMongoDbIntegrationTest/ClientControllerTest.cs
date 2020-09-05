@@ -70,7 +70,7 @@ namespace DataMongoDbIntegrationTest
 
         [Theory]
         [InlineData("/admin/client")]
-        [InlineData("/admin/client/5eecea02b7dfd57c4e35bfdb")]
+        [InlineData("/admin/client/5ef3b8645e3b112e5c423d3e")]
         public async Task GetEndpoint_ReadClient(string endpoint)
         {
             var response = await _client.GetAsync(endpoint);

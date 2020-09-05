@@ -6,11 +6,7 @@ namespace DataMongoApi.Service.InterfaceService
 {
     public interface IMerchantService
     {
-        public Merchant Get(string id);
-        public Merchant Create(Merchant merchant);
-        public void Update(string id, Merchant merchantIn);
-        public void Remove(Merchant merchantIn);
-        public void Remove(string id);
-
+        public Merchant Get();
+        public void Update(Merchant merchantIn);
     }
 }

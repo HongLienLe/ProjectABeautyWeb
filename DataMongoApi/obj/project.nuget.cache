@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "VE08bjEqRarnwQ1Q8LiwklniQxvhjT6wbJxrKEdP9iZClxZvoNZY+ox9398lU0ha9Sq4+FGMJ0fjvbT1PAqN3Q==",
+  "dgSpecHash": "oETPxqV/qD4tgP885tMWC6rDTOMawnC00V6D4AYTeHbRiHb3b+cAKZgUN+eaXrW0/mRw2Nl/E2nsBT1XjJMBKg==",
   "success": true,
   "projectFilePath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/DataMongoApi.csproj",
   "expectedPackageFiles": [
+    "/Users/hongle/.nuget/packages/automapper/9.0.0/automapper.9.0.0.nupkg.sha512",
+    "/Users/hongle/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/7.0.0/automapper.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512",
     "/Users/hongle/.nuget/packages/dnsclient/1.3.1/dnsclient.1.3.1.nupkg.sha512",
     "/Users/hongle/.nuget/packages/fluentvalidation/9.0.0-preview3/fluentvalidation.9.0.0-preview3.nupkg.sha512",
     "/Users/hongle/.nuget/packages/fluentvalidation.aspnetcore/9.0.0-preview3/fluentvalidation.aspnetcore.9.0.0-preview3.nupkg.sha512",

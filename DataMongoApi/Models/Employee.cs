@@ -16,29 +16,23 @@ namespace DataMongoApi.Models
     public class Employee : Entity
     {
         public EmployeeDetails Details { get; set; }
-        public List<TreatmentSkills> Treatments { get; set; } = new List<TreatmentSkills>();
-        public List<WorkDay> WorkDays { get; set; } = new List<WorkDay>();
-    }
 
-    public class TreatmentSkills
-    {
         [BsonRepresentation(BsonType.ObjectId)]
-        public string TreatmentId { get; set; }
-        public string TreatmentName { get; set; }
-    }
-
-    public class WorkDay
-    {
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string OperatingHoursId { get; set; }
-        public string Day { get; set; }
+        public List<TreatmentIdName> Treatments { get; set; } = new List<TreatmentIdName>();
+        public List<string> WorkDays { get; set; } = new List<string>();
     }
 
     public class EmployeeForm
     {
         public EmployeeDetails Details { get; set; }
-        public List<TreatmentSkills> Treatments { get; set; }
-        public List<WorkDay> WorkDays { get; set; }
+
+        public List<string> Treatments { get; set; }
+        public List<string> WorkDays { get; set; }
     }
-    
+
+    public class TreatmentIdName
+    {
+        public string Id { get; set; }
+        public string TreatmentName { get; set;}
+    }
 }

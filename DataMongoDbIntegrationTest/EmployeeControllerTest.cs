@@ -33,21 +33,27 @@ namespace DataMongoDbIntegrationTest
                     Name = "EmployeeTest",
                     Email = "ETest@mail.com"
                     },
-                    Treatments = new List<TreatmentSkills>()
+                    Treatments = new List<string>()
                     {
-                        new TreatmentSkills()
-                        {
-                            TreatmentId = "5eecc6790fcc0e79a1973bb9",
-                            TreatmentName = "SNS Full set"
-                        }
+                        "5eecc6790fcc0e79a1973bb9",
+                        "5eecc67a0fcc0e79a1973bba",
+                        "5eecc67a0fcc0e79a1973bbb",
+                        "5eecc67a0fcc0e79a1973bbc",
+                        "5eecc67a0fcc0e79a1973bbd",
+                        "5eecc67a0fcc0e79a1973bbe",
+                        "5eecc67a0fcc0e79a1973bbf",
+                        "5eecc67a0fcc0e79a1973bc0",
+                        "5eecc67a0fcc0e79a1973bc1",
+                        "5eecc67a0fcc0e79a1973bc2"
                     },
-                    WorkDays = new List<WorkDay>()
+                    WorkDays = new List<string>()
                     {
-                        new WorkDay()
-                        {
-                            OperatingHoursId = "5eecccd79c8f9d7a387d98d9",
-                            Day = "Monday"
-                        }
+                         "monday",
+                         "tuesday",
+                         "wednesday",
+                         "thursday",
+                         "friday",
+                         "saturday"
                     }  
                 }
             };
@@ -65,13 +71,13 @@ namespace DataMongoDbIntegrationTest
         [Fact]
         public async Task EmployeeId_In_Treatment()
         {
-            var url = "/admin/treatment/5eecc6790fcc0e79a1973bb9";
+            var url = "/admin/treatment/5ef3b8605e3b112e5c423d34";
 
             var response = await _client.GetAsync(url);
             var value = await response.Content.ReadAsStringAsync();
             var treatment = JsonConvert.DeserializeObject<Treatment>(value);
 
-            var employeeId = "5eecd0ebb807827a992c1189";
+            var employeeId = "5ef3b8695e3b112e5c423d48";
             Assert.Contains(employeeId, treatment.Employees);
         }
 
@@ -84,7 +90,13 @@ namespace DataMongoDbIntegrationTest
             var value = await response.Content.ReadAsStringAsync();
             var day = JsonConvert.DeserializeObject<OperatingHours>(value);
 
-            var employeeId = "5eecd0ebb807827a992c1189";
+
+            var employeeId = new EmployeeIdName()
+            {
+                Id = "5ef3b8695e3b112e5c423d48"
+                ,
+                Name = "Michael"
+            };
 
             Assert.Contains(employeeId, day.Employees);
         }
@@ -111,7 +123,7 @@ namespace DataMongoDbIntegrationTest
 
         [Theory]
         [InlineData("/admin/employee")]
-        [InlineData("/admin/employee/5eecc564b265f0798517e647")]
+        [InlineData("/admin/employee/5ef3b8695e3b112e5c423d48")]
         public async Task GetEndpoint_Get_Valid(string endpoint)
         {
             var response = await _client.GetAsync(endpoint);
@@ -283,13 +295,9 @@ namespace DataMongoDbIntegrationTest
                         Name = "EmployeeTestRemoveTreatment",
                         Email = "ETest@mail.com"
                     },
-                    Treatments = new List<TreatmentSkills>()
+                    Treatments = new List<string>()
                     {
-                        new TreatmentSkills()
-                        {
-                            TreatmentId = "5eecc6790fcc0e79a1973bb9",
-                            TreatmentName = "SNS Full set"
-                        }
+                            "5eecc6790fcc0e79a1973bb9"
                     }
                 }
             };
@@ -322,13 +330,10 @@ namespace DataMongoDbIntegrationTest
                         Name = "EmployeeTestRemoveFromWorkdays",
                         Email = "ETest@mail.com"
                     },
-                    WorkDays = new List<WorkDay>()
+                    WorkDays = new List<string>()
                     {
-                        new WorkDay()
-                        {
-                            OperatingHoursId = "5eecccd79c8f9d7a387d98d9",
-                            Day = "Monday"
-                        }
+
+                        "monday"
                     }
                 }
             };
@@ -344,10 +349,19 @@ namespace DataMongoDbIntegrationTest
             var dayValue = await dayResponse.Content.ReadAsStringAsync();
             var day = JsonConvert.DeserializeObject<OperatingHours>(dayValue);
 
-            Assert.DoesNotContain(newEmployee.ID, day.Employees);
+            var employeeId = new EmployeeIdName()
+            {
+                Id = newEmployee.ID
+               ,
+                Name = newRequest.Body.Details.Name
+            };
+
+            Assert.DoesNotContain(employeeId, day.Employees);
         }
 
         //Check that treatment ids are 24 string
         //work includes day and ids
+
+        //deletes in the correct areas
     }
 }

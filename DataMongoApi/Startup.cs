@@ -60,6 +60,7 @@ namespace DataMongoApi
             services.AddTransient<IAppointmentService, AppointmentService>();
             services.AddTransient<IAvailableAppointmentService, AvailableAppointmentService>();
             services.AddTransient<IPaymentService, PaymentService>();
+            services.AddTransient<ITreatmentTypeService, TreatmentTypeService>();
 
             services.AddControllers(options =>
                          options.Filters.Add(new HttpResponseExceptionFilter()))
@@ -72,6 +73,7 @@ namespace DataMongoApi
                         .RegisterValidatorsFromAssemblyContaining<AppointmentValidator>()
                         .RegisterValidatorsFromAssemblyContaining<OrderDetailsValidator>());
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddAuthentication(options =>
             {
@@ -118,6 +120,8 @@ namespace DataMongoApi
                 });
 
             });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

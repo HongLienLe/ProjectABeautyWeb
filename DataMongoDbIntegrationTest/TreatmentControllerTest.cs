@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -49,7 +50,7 @@ namespace DataMongoDbIntegrationTest
 
         [Theory]
         [InlineData("/admin/treatment")]
-        [InlineData("/admin/treatment/5eecc6790fcc0e79a1973bb9")]
+        [InlineData("/admin/treatment/5ef3b8605e3b112e5c423d34")]
         public async Task GetEndpoint(string endpoint)
         {
             var response = await _client.GetAsync(endpoint);
@@ -65,7 +66,7 @@ namespace DataMongoDbIntegrationTest
         }
 
         [Theory]
-        [InlineData("/admin/treatment/5eecc67a0fcc0e79a1973bba")]
+        [InlineData("/admin/treatment/5ef3b8605e3b112e5c423d34")]
         public async Task PutEndpoint_Update_Treatment(string endpoint)
         {
             var body = new

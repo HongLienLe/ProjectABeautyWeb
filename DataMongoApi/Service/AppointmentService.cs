@@ -36,7 +36,9 @@ namespace DataMongoApi.Service
 
         public Appointment ProcessAppointment(AppointmentDetails app)
         {
-            var day = _operatingHoursService.Get(DateTime.Parse(app.Date).DayOfWeek.ToString());
+            var dayOfWeek = DateTime.Parse(app.Date).DayOfWeek.ToString();
+
+            var day = _operatingHoursService.Get(dayOfWeek);
             if (!day.About.isOpen)
                 return null;
 
@@ -55,9 +57,15 @@ namespace DataMongoApi.Service
             };
 
             app.EndTime = TimeSpan.Parse(app.StartTime).Add(TimeSpan.FromMinutes(treatmentTime)).ToString();
-            var client = _clientService.GetByContactNo(app.Client.Phone) == null ? _clientService.Create(app.Client) : _clientService.GetByContactNo(app.Client.Phone);
-            var employees = EmployeeWorkingIds(app.TreatmentId, DateTime.Parse(app.Date).DayOfWeek.ToString());
+            var client = _clientService.GetByContactNo(app.Client.Phone);
+            if (client == null)
+                client = _clientService.Create(app.Client);
+
+            appointment.ClientID = client.ID;
+
+            var employees = EmployeeWorkingIds(app.TreatmentId, dayOfWeek);
             var employee = FreeEmployee(employees, appointment);
+
 
             if (employee == null)
                 return null;
@@ -71,23 +79,22 @@ namespace DataMongoApi.Service
 
         }
 
-        private Employee FreeEmployee(List<string> employees, Appointment app)
+        private Employee FreeEmployee(List<Employee> employees, Appointment app)
         {
             foreach (var employee in employees)
             {
                 var appointmentsTimePeriods = new TimePeriodCollection();
 
-                var appointments = _appointments.Find(x => x.EmployeeId == employee && x.Info.Date.Contains(app.Info.Date)).ToList();
+                var appointments = _appointments.Find(x => x.EmployeeId == employee.ID && x.Info.Date.Contains(app.Info.Date)).ToList();
 
                 if (appointments.Count() == 0 || appointments == null)
-                    return _employeesService.Get(employee);
+                    return employee;
 
                 appointmentsTimePeriods.AddAll(appointments.Select(x => AppFunction.CastBookingToTimeRange(x)));
-
                 var requestedAppTimeSlot = AppFunction.CastBookingToTimeRange(app);
 
                 if (!appointmentsTimePeriods.IntersectsWith(requestedAppTimeSlot))
-                    return _employeesService.Get(employee);
+                    return employee;
             }
             return null;
         }
@@ -163,10 +170,10 @@ namespace DataMongoApi.Service
             return _appointments.Find(x => x.ID == id).FirstOrDefault();
         }
 
-        private List<string> EmployeeWorkingIds(List<string> treatmentId, string date)
+        private List<Employee> EmployeeWorkingIds(List<string> treatmentId, string date)
         {
-            var workingEmployees = _operatingHoursService.Get(date).Employees;
-            return workingEmployees.Where(x => _employeesService.Get(x).Treatments.Any(x => treatmentId.Contains(x.TreatmentId))).ToList();
+            var workingEmployees = _operatingHoursService.Get(date).Employees.Select(x => x.Id);
+             return workingEmployees.Select(x => _employeesService.Get(x)).Where(x => x.Treatments.Any(x => treatmentId.Contains(x))).ToList();
         }
 
     }

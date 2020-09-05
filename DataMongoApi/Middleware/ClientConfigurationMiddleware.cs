@@ -34,9 +34,11 @@ namespace DataMongoApi.Middleware
             }
             else
             {
-                httpContext.Response.StatusCode = 401;
-                await httpContext.Response.WriteAsync("Invalid MerchartdId");
-                return;
+                //httpContext.Response.StatusCode = 401;
+                //await httpContext.Response.WriteAsync("Invalid MerchartdId");
+                //return;
+
+                clientConfiguration.MerchantId = "DefaultDb";
 
             }
                 await _next.Invoke(httpContext);

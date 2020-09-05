@@ -25,7 +25,7 @@ namespace DataMongoDbIntegrationTest
         {
             var requests = new []
             {
-                new {datetime = new DateTime(2020, 07, 20),
+                new {datetime = new DateTime(2020, 06, 21),
                 treatmentids = new[]
                {
                    "5eecc6790fcc0e79a1973bb9"
@@ -45,19 +45,19 @@ namespace DataMongoDbIntegrationTest
         {
             var requests = new[]
            {
-                new {datetime = new DateTime(2020, 07, 20),
+                new {datetime = new DateTime(2020, 06, 18),
                 treatmentids = new[]
                {
                    "5eecc6790fcc0e79a1973bb9"
                } },
 
-                new {datetime = new DateTime(2020, 07, 21),
+                new {datetime = new DateTime(2020, 06, 19),
                 treatmentids = new[]
                {
                    "5eecc6790fcc0e79a1973bb9"
                } },
 
-                new {datetime = new DateTime(2020, 07, 22),
+                new {datetime = new DateTime(2020, 06, 22),
                 treatmentids = new[]
                {
                    "5eecc6790fcc0e79a1973bb9"

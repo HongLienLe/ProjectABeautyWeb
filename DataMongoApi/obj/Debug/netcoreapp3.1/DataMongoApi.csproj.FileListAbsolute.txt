@@ -110,3 +110,4 @@
 /Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/staticwebassets/DataMongoApi.StaticWebAssets.Manifest.cache
 /Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/staticwebassets/DataMongoApi.StaticWebAssets.xml
 /Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/obj/Debug/netcoreapp3.1/DataMongoApi.genruntimeconfig.cache
+/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/bin/Debug/netcoreapp3.1/mono_crash.1cfb5decbf.0.json

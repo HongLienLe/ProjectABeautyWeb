@@ -53,6 +53,9 @@ namespace DataMongoApi.Controllers.AdminController
         {
             var response = _employeeService.Create(employee);
 
+            if (response == null)
+                return BadRequest();
+
             return Ok(response);
         }
 

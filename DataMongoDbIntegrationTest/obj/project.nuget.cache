@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "XMtOsQC1mTkAS5UHQIrjXLG0s6n2BOpVt6pZrV13M4d/iF9H1c+L2SyE5PKaQA/rom6cLAiCMkQz19TraRNdYw==",
+  "dgSpecHash": "JEQ5NxnhBr3vyepnT2OxECMk+jB2y6qBzCbF39mv3nq8cjHvBDkESEzVTpzsHtPuzkH4zE0p3uicie76jY+Bhg==",
   "success": true,
   "projectFilePath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/DataMongoDbIntegrationTest.csproj",
   "expectedPackageFiles": [
+    "/Users/hongle/.nuget/packages/automapper/9.0.0/automapper.9.0.0.nupkg.sha512",
+    "/Users/hongle/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/7.0.0/automapper.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512",
     "/Users/hongle/.nuget/packages/coverlet.collector/1.2.0/coverlet.collector.1.2.0.nupkg.sha512",
     "/Users/hongle/.nuget/packages/dnsclient/1.3.1/dnsclient.1.3.1.nupkg.sha512",
     "/Users/hongle/.nuget/packages/fluentassertions/5.10.3/fluentassertions.5.10.3.nupkg.sha512",

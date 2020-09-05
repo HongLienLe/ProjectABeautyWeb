@@ -12,32 +12,78 @@ namespace DataMongoApi.Service
     public class PaymentService : IPaymentService
     {
         private IMongoCollection<OrderDetails> _orders { get; set; }
+        private IMongoCollection<Appointment> _appointments { get; set; }
         private IMongoCollection<Client> _client { get; set; }
+        private ITreatmentService _treatmentService;
         private readonly IMongoDbContext _context;
 
-        public PaymentService(IMongoDbContext context)
+        public PaymentService(IMongoDbContext context, ITreatmentService treatmentService)
         {
             _context = context;
-            _orders = _context.GetCollection<OrderDetails>("Orders");
+            _orders = _context.GetCollection<OrderDetails>("OrderDetails");
             _client = _context.GetCollection<Client>("Clients");
+            _appointments = _context.GetCollection<Appointment>("Appointments");
+            _treatmentService = treatmentService;
         }
 
-        public string ProcessAppointment(OrderDetails bookings)
+        public OrderDetails ProcessPayment(OrderEntry entry)
         {
-            var processOrder = Create(bookings);
-            var filter = Builders<Client>.Filter.Eq(c => c.ID, bookings.ClientId);
+            ProcessAppointment(entry.AppointmentID);
+
+            var treatmentOrder = new List<TreatmentOrder>();
+            var totalPrice = 0;
+
+            foreach (var treatment in entry.TreatmentIds)
+            {
+                var choosenTreatment = _treatmentService.Get(treatment);
+                if (choosenTreatment == null)
+                    return null;
+
+
+                treatmentOrder.Add(new TreatmentOrder()
+                {
+                    TreatmentId = choosenTreatment.ID,
+                    TreatmentName = $"{choosenTreatment.About.TreatmentType} {choosenTreatment.About.TreatmentName}",
+                    Price = choosenTreatment.About.Price
+                });
+
+                totalPrice += choosenTreatment.About.Price;
+            }
+            var order = Create(new OrderDetails()
+            {
+                ClientId = entry.ClientId,
+                TreatmentOrders = treatmentOrder,
+                MiscPrice = entry.MiscPrice,
+                Total = totalPrice,
+                ModifiedOn = DateTime.Now
+            });
+
+            ProcessOrder(order);
+            return order;
+        }
+
+        private void ProcessOrder(OrderDetails order)
+        {
+            var filter = Builders<Client>.Filter.Eq(c => c.ID, order.ClientId);
             var updateClient = Builders<Client>.Update
-                .AddToSet("Orders", processOrder.ID)
+                .AddToSet("Orders", order.ID)
                 .CurrentDate(x => x.ModifiedOn);
             _client.UpdateOne(filter, updateClient);
+        }
 
-            return "Payment Done";
+        private void ProcessAppointment(string id)
+        {
+            var filter = Builders<Appointment>.Filter.Eq(x => x.ID, id);
+            var update = Builders<Appointment>.Update
+                .Set(x => x.HasBeenProcess, true)
+                .CurrentDate(x => x.ModifiedOn);
+
+            _appointments.UpdateOne(filter, update);
         }
 
         public OrderDetails Create(OrderDetails order)
         {
             order.ModifiedOn = DateTime.Now;
-            order.Total = order.Treatments.Select(x => x.Price).Sum();
             _orders.InsertOne(order);
             return order;
         }
@@ -51,7 +97,7 @@ namespace DataMongoApi.Service
         {
             var filter = Builders<OrderDetails>.Filter.Eq(o => o.ID, id);
             var update = Builders<OrderDetails>.Update
-                .Set(o => o.Treatments, orderDetails.Treatments)
+                .Set(o => o.TreatmentOrders, orderDetails.TreatmentOrders)
                 .Set(o => o.Total, orderDetails.Total)
                 .CurrentDate(o => o.ModifiedOn);
             _orders.UpdateOne(filter, update);

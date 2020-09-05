@@ -20,8 +20,8 @@ namespace DataMongoApi.Service
             _merchant = _context.GetCollection<Merchant>("Merchant");
         }
 
-        public Merchant Get(string id) =>
-            _merchant.Find<Merchant>(t => t.ID == id).FirstOrDefault();
+        public Merchant Get() =>
+            _merchant.Find(Merchant => true).FirstOrDefault();
 
         public Merchant Create(Merchant merchant)
         {
@@ -30,13 +30,10 @@ namespace DataMongoApi.Service
             return merchant;
         }
 
-        public void Update(string id, Merchant merchantIn) =>
-            _merchant.ReplaceOne(t => t.ID == id, merchantIn);
-
-        public void Remove(Merchant merchantIn) =>
-            _merchant.DeleteOne(t => t.ID == merchantIn.ID);
-
-        public void Remove(string id) =>
-            _merchant.DeleteOne(t => t.ID == id);
+        public void Update(Merchant merchantIn)
+        {
+            var merchant = Get();
+            _merchant.ReplaceOne(t => t.ID == merchant.ID, merchantIn);
+        }
     }
 }

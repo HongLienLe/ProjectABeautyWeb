@@ -570,3 +570,4 @@
 /Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApiTest/bin/Debug/netcoreapp3.1/refs/System.Security.Permissions.dll
 /Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApiTest/bin/Debug/netcoreapp3.1/refs/System.Security.Principal.Windows.dll
 /Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApiTest/bin/Debug/netcoreapp3.1/refs/System.Windows.Extensions.dll
+/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApiTest/bin/Debug/netcoreapp3.1/mono_crash.1cfb5decbf.0.json

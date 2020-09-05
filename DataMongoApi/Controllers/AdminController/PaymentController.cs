@@ -21,13 +21,21 @@ namespace DataMongoApi.Controllers.AdminController
         [HttpGet("{id}")]
         public IActionResult Get(string id)
         {
-            return Ok(_paymentService.Get(id));
+            var response = _paymentService.Get(id);
+
+            if (response == null)
+                return NotFound();
+
+            return Ok(response);
         }
 
         [HttpPost()]
-        public IActionResult Post([FromBody]OrderDetails booking)
+        public IActionResult Post([FromBody]OrderEntry entry)
         {
-            var response = _paymentService.ProcessAppointment(booking);
+            var response = _paymentService.ProcessPayment(entry);
+
+            if (response == null)
+                return BadRequest();
             return Ok(response);
         }
 

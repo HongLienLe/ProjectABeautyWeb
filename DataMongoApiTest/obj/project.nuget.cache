@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "oHeF57sOFXgm18GOw3KQUHKWmkUgOACinqymNYEdQw4LJ9bEyD9Dj/cZ1953ySer+b7xwcvxMgjgMUR71JXJXA==",
+  "dgSpecHash": "IcJu0cWJIW0k4uphIwEXvywiLDPR2IEOq2qlXlmlJWWGHTTzGAAB9dHA7pRGOvyojf0bXvcWwC6PlFMfGE1kLQ==",
   "success": true,
   "projectFilePath": "/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApiTest/DataMongoApiTest.csproj",
   "expectedPackageFiles": [
+    "/Users/hongle/.nuget/packages/automapper/9.0.0/automapper.9.0.0.nupkg.sha512",
+    "/Users/hongle/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/7.0.0/automapper.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512",
     "/Users/hongle/.nuget/packages/castle.core/4.4.0/castle.core.4.4.0.nupkg.sha512",
     "/Users/hongle/.nuget/packages/dnsclient/1.3.1/dnsclient.1.3.1.nupkg.sha512",
     "/Users/hongle/.nuget/packages/fluentassertions/5.10.3/fluentassertions.5.10.3.nupkg.sha512",

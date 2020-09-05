@@ -76,12 +76,8 @@ namespace DataMongoApi.Service
 
         private List<string> EmployeeWorkingIds(Treatment treatment, OperatingHours day)
         {
-            var treatmentName = $"{treatment.About.TreatmentType} {treatment.About.TreatmentName}"; 
-            var skill = new TreatmentSkills(){ TreatmentId = treatment.ID, TreatmentName = treatmentName };
-            var workday = new WorkDay() { OperatingHoursId = day.ID, Day = day.About.Day };
-
             return _employees.AsQueryable<Employee>()
-                .Where(x => x.WorkDays.Contains(workday) && x.Treatments.Contains(skill))
+                .Where(x => x.WorkDays.Contains(day.About.Day) && x.Treatments.Contains(treatment.ID))
                 .Select(x => x.ID)
                 .ToList();
         }

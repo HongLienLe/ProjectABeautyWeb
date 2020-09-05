@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using DataMongoApi.Middleware;
 using DataMongoApi.Models;
 using DataMongoApi.Service;
@@ -18,10 +19,13 @@ namespace DataMongoApi.Controllers.AdminController
     public class TreatmentController : ControllerBase
     {
         private readonly ITreatmentService _treatmentService;
+        private IMapper _mapper;
 
-        public TreatmentController(ITreatmentService treatmentService)
+        public TreatmentController(ITreatmentService treatmentService, IMapper mapper)
         {
+            _mapper = mapper;
             _treatmentService = treatmentService;
+
         }
 
         [HttpGet]
@@ -43,19 +47,16 @@ namespace DataMongoApi.Controllers.AdminController
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody]TreatmentDetails treatmentForm)
+        public IActionResult Create([FromBody]TreatmentForm treatmentForm)
         {
-            var treatment = new Treatment()
-            {
-                About = treatmentForm
-            };
+            var treatment = _mapper.Map<Treatment>(treatmentForm);
             _treatmentService.Create(treatment);
 
             return Ok( treatment);
         }
 
         [HttpPut("{id:length(24)}")]
-        public IActionResult Update(string id, [Required,FromBody] TreatmentDetails treatmentForm)
+        public IActionResult Update(string id, [Required,FromBody] TreatmentForm treatmentForm)
         {
             var treatment = _treatmentService.Get(id);
 

@@ -1,18 +1,56 @@
 ﻿<Properties StartupConfiguration="{7C3EE540-AE97-49DF-B915-81E4FBCA9F2F}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
   <MonoDevelop.Ide.ItemProperties.DataMongoDbIntegrationTest PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="DataMongoApi/appsettings.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../../Projects/DemoReadCSV/DemoReadCSV/ICvsParserService.cs">
     <Files>
-      <File FileName="DataMongoDbIntegrationTest/PaymentControllerTest.cs" Line="43" Column="76" />
-      <File FileName="DataMongoApi/appsettings.json" Line="4" Column="3" />
+      <File FileName="DataMongoApi/Controllers/AdminController/MerchantController.cs" Line="1" Column="1" />
+      <File FileName="DataMongoApi/Service/InterfaceService/IMerchantService.cs" />
+      <File FileName="DataMongoDbIntegrationTest/PaymentControllerTest.cs" />
+      <File FileName="DataMongoApi/Controllers/AdminController/EmployeeController.cs" />
+      <File FileName="DataMongoApi/Models/Appointment.cs" />
+      <File FileName="DataMongoApi/Models/AvailableAppRequestForm.cs" />
+      <File FileName="DataMongoApi/Models/Employee.cs" />
+      <File FileName="DataMongoApi/Models/Treatment.cs" />
+      <File FileName="DataMongoApi/Mappers/AutoMapperProfile.cs" />
+      <File FileName="DataMongoApi/Service/TreatmentService.cs" Line="54" Column="1" />
+      <File FileName="DataMongoApi/Service/InterfaceService/ITreatmentService.cs" />
+      <File FileName="../../../Projects/DemoReadCSV/DemoReadCSV/Controllers/CvsController.cs" Line="1" Column="1" />
+      <File FileName="../../../Projects/DemoReadCSV/DemoReadCSV/ICvsParserService.cs" Line="1" Column="1" />
+      <File FileName="../../../Projects/DemoReadCSV/DemoReadCSV/Startup.cs" Line="1" Column="1" />
+      <File FileName="DataMongoApi/Service/MerchantService.cs" Line="15" Column="1" NotebookId="1" />
+      <File FileName="../../../Projects/DemoReadCSV/DemoReadCSV/Models/Appointment.cs" NotebookId="1" />
+      <File FileName="DataMongoApi/Controllers/AdminController/PaymentController.cs" NotebookId="1" />
+      <File FileName="DataMongoApi/Controllers/AdminController/TreatmentController.cs" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ProjectABeautyWeb" expanded="True">
             <Node name="DataMongoApi" expanded="True">
-              <Node name="appsettings.json" selected="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="AdminController" expanded="True" />
+                <Node name="ClientController" expanded="True" />
+              </Node>
+              <Node name="Exceptions" expanded="True" />
+              <Node name="Mappers" expanded="True" />
+              <Node name="Middleware" expanded="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="Service" expanded="True">
+                <Node name="InterfaceService" expanded="True" />
+              </Node>
+              <Node name="Validation" expanded="True" />
+            </Node>
+            <Node name="DataMongoApiTest" expanded="True">
+              <Node name="ControllerTest" expanded="True" />
+              <Node name="ServiceTest" expanded="True" />
             </Node>
             <Node name="DataMongoDbIntegrationTest" expanded="True" />
+            <Node name="DemoReadCSV" expanded="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="Data" expanded="True" />
+              <Node name="Mappers" expanded="True" />
+              <Node name="Models" expanded="True" />
+              <Node name="ICvsParserService.cs" selected="True" />
+            </Node>
           </Node>
         </State>
       </Pad>
@@ -29,30 +67,35 @@
       <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApiTest/IntergratedTest/DbFixture.cs" relfile="DataMongoApiTest/IntergratedTest/DbFixture.cs" line="17" column="1" />
       <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApiTest/ServiceTest/EmployeeServiceTest.cs" relfile="DataMongoApiTest/ServiceTest/EmployeeServiceTest.cs" line="144" column="1" />
       <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/AccessDataApi/Repo/AppointmentService.cs" relfile="AccessDataApi/Repo/AppointmentService.cs" line="42" column="1" />
-      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/EmployeeControllerTest.cs" relfile="DataMongoDbIntegrationTest/EmployeeControllerTest.cs" line="241" column="1" />
-      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/EmployeeControllerTest.cs" relfile="DataMongoDbIntegrationTest/EmployeeControllerTest.cs" line="275" column="1" />
-      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/TreatmentControllerTest.cs" relfile="DataMongoDbIntegrationTest/TreatmentControllerTest.cs" line="127" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/EmployeeControllerTest.cs" relfile="DataMongoDbIntegrationTest/EmployeeControllerTest.cs" line="253" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/EmployeeControllerTest.cs" relfile="DataMongoDbIntegrationTest/EmployeeControllerTest.cs" line="287" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/TreatmentControllerTest.cs" relfile="DataMongoDbIntegrationTest/TreatmentControllerTest.cs" line="128" column="1" />
       <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/AvailableAppControllerTest.cs" relfile="DataMongoDbIntegrationTest/AvailableAppControllerTest.cs" line="36" column="1" />
       <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApiTest/ControllerTest/EmployeeControllerTest.cs" relfile="DataMongoApiTest/ControllerTest/EmployeeControllerTest.cs" line="103" column="1" />
       <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApiTest/ControllerTest/MerchantControllerTest.cs" relfile="DataMongoApiTest/ControllerTest/MerchantControllerTest.cs" line="67" column="1" />
       <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApiTest/ControllerTest/TreatmentControllerTest.cs" relfile="DataMongoApiTest/ControllerTest/TreatmentControllerTest.cs" line="75" column="1" />
-      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/Controllers/AdminController/TreatmentController.cs" relfile="DataMongoApi/Controllers/AdminController/TreatmentController.cs" line="73" column="1" />
-      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/TreatmentControllerTest.cs" relfile="DataMongoDbIntegrationTest/TreatmentControllerTest.cs" line="93" column="1" />
-      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/TreatmentControllerTest.cs" relfile="DataMongoDbIntegrationTest/TreatmentControllerTest.cs" line="70" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/Controllers/AdminController/TreatmentController.cs" relfile="DataMongoApi/Controllers/AdminController/TreatmentController.cs" line="74" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/TreatmentControllerTest.cs" relfile="DataMongoDbIntegrationTest/TreatmentControllerTest.cs" line="94" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/TreatmentControllerTest.cs" relfile="DataMongoDbIntegrationTest/TreatmentControllerTest.cs" line="71" column="1" />
       <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/AvailableAppControllerTest.cs" relfile="DataMongoDbIntegrationTest/AvailableAppControllerTest.cs" line="77" column="1" />
       <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/Controllers/AvailabilityController.cs" relfile="DataMongoApi/Controllers/AvailabilityController.cs" line="26" column="1" />
-      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/Controllers/AdminController/TreatmentController.cs" relfile="DataMongoApi/Controllers/AdminController/TreatmentController.cs" line="52" column="1" />
-      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/TreatmentControllerTest.cs" relfile="DataMongoDbIntegrationTest/TreatmentControllerTest.cs" line="54" column="1" />
-      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/EmployeeControllerTest.cs" relfile="DataMongoDbIntegrationTest/EmployeeControllerTest.cs" line="94" column="1" />
-      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/EmployeeControllerTest.cs" relfile="DataMongoDbIntegrationTest/EmployeeControllerTest.cs" line="199" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/Controllers/AdminController/TreatmentController.cs" relfile="DataMongoApi/Controllers/AdminController/TreatmentController.cs" line="53" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/TreatmentControllerTest.cs" relfile="DataMongoDbIntegrationTest/TreatmentControllerTest.cs" line="55" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/EmployeeControllerTest.cs" relfile="DataMongoDbIntegrationTest/EmployeeControllerTest.cs" line="106" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/EmployeeControllerTest.cs" relfile="DataMongoDbIntegrationTest/EmployeeControllerTest.cs" line="211" column="1" />
       <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/EmployeeControllerTest.cs" relfile="DataMongoDbIntegrationTest/EmployeeControllerTest.cs" line="26" column="1" />
-      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/EmployeeControllerTest.cs" relfile="DataMongoDbIntegrationTest/EmployeeControllerTest.cs" line="80" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/EmployeeControllerTest.cs" relfile="DataMongoDbIntegrationTest/EmployeeControllerTest.cs" line="86" column="1" />
       <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/ClientControllerTest.cs" relfile="DataMongoDbIntegrationTest/ClientControllerTest.cs" line="167" column="1" />
       <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/AppointmentControllerTest.cs" relfile="DataMongoDbIntegrationTest/AppointmentControllerTest.cs" line="221" column="1" />
-      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/Service/AppointmentService.cs" relfile="DataMongoApi/Service/AppointmentService.cs" line="60" column="1" />
-      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/Service/AppointmentService.cs" relfile="DataMongoApi/Service/AppointmentService.cs" line="166" column="1" />
-      <Breakpoint file="/Users/hongle/Projects/DemoReadCSV/DemoReadCSV/Controllers/CvsController.cs" line="111" column="1" />
-      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/Controllers/AdminController/PaymentController.cs" relfile="DataMongoApi/Controllers/AdminController/PaymentController.cs" line="29" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/Service/AppointmentService.cs" relfile="DataMongoApi/Service/AppointmentService.cs" line="173" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/Controllers/AdminController/PaymentController.cs" relfile="DataMongoApi/Controllers/AdminController/PaymentController.cs" line="34" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/AppointmentControllerTest.cs" relfile="DataMongoDbIntegrationTest/AppointmentControllerTest.cs" line="23" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/PaymentControllerTest.cs" relfile="DataMongoDbIntegrationTest/PaymentControllerTest.cs" line="25" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/Controllers/AdminController/TreatmentTypeController.cs" relfile="DataMongoApi/Controllers/AdminController/TreatmentTypeController.cs" line="37" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/TreatmentTypeController.cs" relfile="DataMongoDbIntegrationTest/TreatmentTypeController.cs" line="34" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/Controllers/AdminController/TreatmentTypeController.cs" relfile="DataMongoApi/Controllers/AdminController/TreatmentTypeController.cs" line="43" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoDbIntegrationTest/TreatmentTypeController.cs" relfile="DataMongoDbIntegrationTest/TreatmentTypeController.cs" line="53" column="1" />
+      <Breakpoint file="/Users/hongle/Documents/GitHub/ProjectABeautyWeb/DataMongoApi/Service/EmployeeService.cs" relfile="DataMongoApi/Service/EmployeeService.cs" line="129" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
